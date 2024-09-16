@@ -1,5 +1,5 @@
 package app.classes;
 
-public class Member {
+public class State {
     
 }

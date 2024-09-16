@@ -20,6 +20,18 @@ public class App {
     }
 
     public static void configureRoutes(Javalin app) {
-    }
+        app.get("/", new HomePage());
+        app.get("/global", new GlobalTracker());
+        app.get("/city", new CityTracker());
+        app.get("/period", new PeriodTracker());
+        app.get("/timeline", new TimelineTracker());
 
+        app.post("/global", new GlobalTracker());
+        app.post("/city", new CityTracker());
+        app.post("/period", new PeriodTracker());
+        app.post("/timeline", new TimelineTracker());
+
+       
+
+    }
 }

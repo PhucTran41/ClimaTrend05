@@ -1,11 +1,10 @@
 package app.JDBC;
 
-
-public class JDBCConnection {
+public class JDBCforCityTracker {
 
     public static final String DATABASE = "jdbc:sqlite:database/Movies.db";
 
-    public JDBCConnection() {
+    public JDBCforCityTracker() {
         System.out.println("Created JDBC Connection Object");
     }
 
