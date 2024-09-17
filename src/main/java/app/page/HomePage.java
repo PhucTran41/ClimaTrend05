@@ -10,7 +10,7 @@ public class HomePage implements Handler {
 
 
         
-       String html = "<html><body><h1>Home Page</h1></body></html>";
+       String html = "<html><body><h1>Clima Trend Home Page</h1></body></html>";
         context.html(html);
     }
     
