@@ -1,0 +1,374 @@
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif
+}
+
+nav{
+    position: sticky;
+    top: 0;
+    height:  100px;
+    display: flex;
+    justify-content: space-between;
+    align-items:  center;
+    padding: 0rem calc((100vw -1300px)/2);
+    width: 100%;
+    margin:  auto;
+    border-radius: 0 0 25px 25px;
+    background-color: white;
+
+}
+.heading-title{
+    font-size: 50px;
+    margin-top: -50px;
+}
+logo{
+    list-style: none;
+    margin-right: auto;
+    cursor:pointer;
+}
+
+&:hover, & focus{
+    fill:bisque
+}
+
+
+.description{
+    font-size: 30px;
+}
+nav {
+    margin: 0;
+    padding: 0;
+}
+
+.hero {
+    margin: 0;
+    padding: 0;
+}
+
+.hero-container{
+    margin-top: 0;
+}
+
+body::after {
+    content: '';
+    display: block;
+    height: 1500px; /* Chiều cao của trang để cuộn xuống */
+}
+
+nav.shrink {
+    height: 60px; /* Chiều cao của thanh điều hướng khi cuộn xuống */
+    padding: 0 1rem; /* Padding nhỏ hơn khi cuộn xuống */
+    transform: translateY(-40px); /* Di chuyển thanh điều hướng lên một chút để tạo cảm giác nhỏ lại */
+}
+
+/* Thay đổi chiều cao thanh điều hướng khi cuộn trang */
+body.scrolled nav {
+    height: 60px; /* Chiều cao của thanh điều hướng khi cuộn xuống */
+    padding: 0 1rem; /* Padding nhỏ hơn khi cuộn xuống */
+}
+
+.hero-container{
+margin-top: 0px;
+}
+.nav-elements{
+    display: flex;
+    gap: 2rem;
+    padding: 2rem;
+}
+
+heading-title{
+    font-size: 1.8rem
+}
+
+
+.logo img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 50px;
+    width: 60%;
+}
+nav a{
+    /*navigation elements-size*/
+    text-decoration: none;
+    color: black;
+    padding: 0 1.5rem;
+    font-weight: bold; 
+    font-size: 1.2rem;
+}
+
+nav a:hover {
+    text-decoration: underline;
+}
+.hero {
+    margin-top: 100px;
+    background: white;
+    display: grid;
+    place-items: center; /* Căn giữa nội dung theo cả chiều dọc và chiều ngang */
+    height: 95vh; /* Đảm bảo hero có chiều cao đầy đủ */
+}
+
+
+.hero-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: 100%; /* Đảm bảo phần hero-container chiếm toàn bộ chiều rộng */
+    max-width: 1300px; /* Giới hạn chiều rộng của hero-container */
+    padding: 3rem; /* Padding đều quanh hero-container */
+    box-sizing: border-box; /* Đảm bảo padding không làm tăng chiều rộng */
+}
+
+.column-center {
+    display: flex; 
+    flex-direction: column; /* Sắp xếp các phần tử theo chiều dọc */
+    align-items: center; /* Căn giữa các phần tử theo chiều ngang */
+    margin-bottom: 2rem;
+    font-size: 1.5rem;
+    line-height: 1.5;
+}
+
+.highlight{
+    /* highligh Population and Temperature */
+    background-color: #ffd700;
+    border-radius: 5px;
+}
+
+button {
+    padding: 1.5rem 3rem;
+    font-size: 1.5rem;
+    border: none;
+    color: white;
+    background: #7695FF;
+    cursor: pointer;
+    border-radius: 50px;
+    margin-top: 4rem;
+    transition: all 0.3s ease; /* Thêm hiệu ứng chuyển đổi */
+}
+
+button:hover {
+    background: transparent; /* Make background transparent on hover */
+    color: #7695FF; 
+    border: 1px solid #7695FF; /* Keep or adjust border color on hover */
+}
+
+
+
+.hero-image{
+    /*earth images*/
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+    display: block;
+}
+
+/* available data  */
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+        .data-section {
+            padding: 40px 20px;
+            background-color: #f5f5f7;
+            text-align: center;
+            height: 500px;
+        }
+        .data-container {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+            width: 1000px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+        }
+
+        h2{
+            font-size: 50px;
+            margin-bottom: 50px;
+        }
+        .data-column {
+            flex: 1;
+            padding: 20px;
+            border-radius: 10px;
+        }
+        .data-column:first-child {
+            background-color: #e0ffff;
+        }
+        .data-column:last-child {
+            background-color: #fffacd;
+        }
+        .data-title {
+            font-size: 60px;
+            margin-bottom: 20px;
+        }
+        .data-range {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 10px;
+            gap: 100px
+        }
+        .data-year {
+            font-size: 30px;
+            font-weight: bold;
+        }
+        .data-value {
+            font-size: 30px;
+        }
+        .temperature-data {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .temperature-range {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 200px;
+        }
+        .temperature-item {
+            text-align: center;
+        }
+
+        /* Personal */
+        .box-container {
+            display: flex;
+            gap: 20px; /* Khoảng cách giữa các box */
+            padding: 20%; /* Padding để tránh box chạm vào biên */
+        }
+          
+          .Personals {
+            font-size: 24px; /* Adjust as needed */
+            font-weight: bold; /* Optional: make text bold */
+            margin-bottom: 20px; /* Space between text and boxes */
+            margin-right: -180px;
+        
+          }    
+          .box {
+            position: relative;
+            width: 383px;
+            height: 532px;
+            margin-top: 100px;
+          }
+          
+          .box .group {
+            width: 383px;
+            height: 532px;
+            background-color: #85a3f1;
+            border-radius: 30px;
+          }
+          
+          .box .overlap-group {
+            position: absolute;
+            width: 319px;
+            height: 92px;
+            top: 11px;
+            left: 23px;
+          }
+          
+          .box .rectangle {
+            height: 78px;
+            top: 13px;
+            left: 16px;
+            position: absolute;
+            width: 303px;
+            background-color: #7695FF;;
+            border-radius: 30px;
+          }
+          
+          .box .image {
+            position: absolute;
+            width: 59px;
+            height: 43px;
+            top: 0;
+            left: 0;
+            object-fit: cover;
+          }
+          
+          .box .div {
+            height: 396px;
+            top: 116px;
+            left: 39px;
+            position: absolute;
+            width: 303px;
+            background-color: white;;
+            border-radius: 30px;
+          }
+        
+   /* TeamInfo */
+/* TeamBox */
+.teamBox {
+    width: 80%;
+    margin: 0 auto;
+    position: relative; /* Đảm bảo TeamBox không bị ảnh hưởng bởi hình ảnh ở phía dưới */
+}
+
+/* Ba cột nằm cạnh nhau */
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+/* Cập nhật cột để các thẻ bài có kích cỡ bằng nhau */
+.column {
+    flex: 1 1 23%; /* Đảm bảo mỗi cột chiếm khoảng 1/4 của hàng và có khoảng cách giữa các cột */
+    margin: 10px;
+    padding: 0 8px;
+}
+
+/* Hiệu ứng thẻ bài */
+.card {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    background-color: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column; /* Đảm bảo nội dung thẻ bài nằm theo chiều dọc */
+}
+
+.teamBox-content {
+    padding: 16px;
+    flex: 1; /* Đảm bảo nội dung thẻ bài chiếm toàn bộ chiều cao có sẵn */
+}
+
+/* Tạo hiệu ứng cho tiêu đề */
+.title {
+    color: grey;
+}
+
+/* Hiệu ứng nút */
+.button {
+    border: none;
+    outline: 0;
+    display: inline-block;
+    padding: 8px;
+    color: white;
+    background-color: #000;
+    text-align: center;
+    cursor: pointer;
+    width: 100%;
+}
+
+.button:hover {
+    background-color: #555;
+}
+
+/* Tiêu đề của nhóm */
+.Team5 {
+    text-align: center;
+    font-size: 50px;
+    margin-top: 100px;
+    margin-bottom: 50px;
+    width: 100%; /* Đảm bảo tiêu đề chiếm toàn bộ chiều rộng của trang */
+    font-weight: bold;
+}
+
+
+
+
