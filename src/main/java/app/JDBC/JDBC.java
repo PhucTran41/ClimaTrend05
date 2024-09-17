@@ -98,8 +98,5 @@ public class JDBC {
                     }
         return initialYear;
     }
-    
-        return initialYear;
-    }
 
 }
