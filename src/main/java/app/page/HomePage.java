@@ -3,15 +3,183 @@ package app.page;
 import io.javalin.http.Context;
 import io.javalin.http.Handler;
 
+/**
+ * Serve the landing page using Javalin.
+ */
 public class HomePage implements Handler {
+
+    // URL of this page relative to http://localhost:7001/
+    public static final String URL = "/";
 
     @Override
     public void handle(Context context) throws Exception {
+        // Create the HTML content
+        String html = """
+            <!DOCTYPE html>
+            <html lang="en">
+            <head>
+                <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <title>Landing Page</title>
+                <link rel="stylesheet" href="LandingPage.css">
+            </head>
+            <body>
+                <!-- navigation bar -->
+                <nav> 
+                    <div class="logo">
+                        <img src="Ảnh/World_Tracker_Logo__1_-removebg-preview.png" alt="WorldChanges Logo"> 
+                    </div>    
+                    <div class="nav-elements">
+                        <a href="LandingPage.html">Home</a>
+                        <a href="GlobalTrackerPage.java">Global Tracker</a>
+                        <a href="/">City Tracker</a>
+                        <a href="/">Timeline Tracker</a>
+                        <a href="/">Periods Tracker</a>
+                    </div>
+                </nav>
+            
+                <!-- hero section -->
+                <section class="hero">
+                    <div class="hero-container"></div>
+                    <div class="column-center">
+                        <h1 class="heading-title">
+                            Explore the World Through <span class="highlight">Population</span> and <span class="highlight">Temperature</span> Data
+                        </h1>
+                        <p class="description">
+                            "How have global population and temperatures changed over the decades? 
+                            Explore trends through scientific data"
+                        </p>
+                        <a href="#available-data">
+                            <button>View Now</button>
+                        </a>
+                    </div>
+                    <div class="image">
+                        <img src="Ảnh/image-removebg.png" alt="illustration" class="hero-image"/>
+                    </div>
+                </section>
+            
+                <!-- available data section -->
+                <section id="available-data" class="data-section">
+                    <h2>Our Available Data</h2>
+                    <div class="data-container">
+                        <div class="data-column">
+                            <div class="data-title">population</div>
+                            <div class="data-range">
+                                <div>
+                                    <div class="data-year" id="popStartYear">1960</div>
+                                    <div class="data-value"><span id="popStartValue">1,900,000</span> people</div>
+                                </div>
+                                <div>
+                                    <div class="data-year" id="popEndYear">2013</div>
+                                    <div class="data-value"><span id="popEndValue">4,000,541</span> people</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="data-column">
+                            <div class="data-title">temperature</div>
+                            <div class="temperature-data">
+                                <div class="temperature-range">
+                                    <div class="temperature-item">
+                                        <div class="data-year" id="tempStartYear">1750</div>
+                                        <div class="data-value"><span id="tempStartValue">34</span>c</div>
+                                    </div>
+                                    <div class="temperature-item">
+                                        <div class="data-year" id="tempEndYear">2013</div>
+                                        <div class="data-value"><span id="tempEndValue">35.2</span>c</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            
+                <!-- team section -->
+                <div class="teamBox">
+                    <div class="row">
+                        <p class="Team5">Our Team</p>
+                        <div class="column">
+                            <div class="card">
+                                <img src="img1.jpg" alt="Jane" style="width:100%">
+                                <div class="teamBox-content">
+                                    <h2>Ting-Chu Yang</h2>
+                                    <p class="title">CEO &amp; Founder</p>
+                                    <p>Some text that describes me lorem ipsum ipsum lorem.</p>
+                                    <p>example@example.com</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="column">
+                            <div class="card">
+                                <img src="img2.jpg" alt="Mike" style="width:100%">
+                                <div class="teamBox-content">
+                                    <h2>Phuc Tran</h2>
+                                    <p class="title">Database</p>
+                                    <p>Some text that describes me lorem ipsum ipsum lorem.</p>
+                                    <p>example@example.com</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="column">
+                            <div class="card">
+                                <img src="img3.jpg" alt="Alice" style="width:100%">
+                                <div class="teamBox-content">
+                                    <h2>Khoa Nguyen</h2>
+                                    <p class="title">Database</p>
+                                    <p>Some text that describes me lorem ipsum ipsum lorem.</p>
+                                    <p>example@example.com</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="column">
+                            <div class="card">
+                                <img src="img4.jpg" alt="Bob" style="width:100%">
+                                <div class="teamBox-content">
+                                    <h2>Tuan Nguyen</h2>
+                                    <p class="title">UI-UX</p>
+                                    <p>Some text that describes me lorem ipsum ipsum lorem.</p>
+                                    <p>example@example.com</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            
+                <!-- personals section -->
+                <div class="box-container">
+                    <p class="Personals">Personals</p>
+                    <div class="box">
+                        <div class="group">
+                            <div class="overlap-group">
+                                <div class="rectangle"></div>
+                                <img class="image" src="img/image-7.png" />
+                            </div>
+                            <div class="div"></div>
+                        </div>
+                    </div>
+                    <div class="box">
+                        <div class="group">
+                            <div class="overlap-group">
+                                <div class="rectangle"></div>
+                                <img class="image" src="img/image-7.png" />
+                            </div>
+                            <div class="div"></div>
+                        </div>
+                    </div>
+                    <div class="box">
+                        <div class="group">
+                            <div class="overlap-group">
+                                <div class="rectangle"></div>
+                                <img class="image" src="img/image-7.png" />
+                            </div>
+                            <div class="div"></div>
+                        </div>
+                    </div>
+                </div>
+            </body>
+            </html>
+        """;
 
-
-        
-       String html = "<html><body><h1>Clima Trend Home Page</h1></body></html>";
+        // Render the HTML content
         context.html(html);
     }
-    
 }

@@ -31,7 +31,7 @@ public class App {
         app.post("/period", new PeriodTracker());
         app.post("/timeline", new TimelineTracker());
 
-       
+
 
     }
 }
