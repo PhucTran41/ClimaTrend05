@@ -35,5 +35,6 @@ public class Population{
     public void setYear(int year) {
         this.year = year;
     }
+    
 
 }

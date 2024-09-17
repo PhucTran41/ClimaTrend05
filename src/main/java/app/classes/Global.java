@@ -11,6 +11,9 @@ public class Global {
     private int startYear;
     private int endYear;
 
+    public Global() {
+    }
+
     public Global(int year, long population, float averageTemp) {
         this.year = year;
         this.population = population;
