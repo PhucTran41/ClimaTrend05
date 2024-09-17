@@ -2,23 +2,23 @@ package app.classes;
 
 public class Population{
 
-    private int countryID;
+    private String countryID;
     private long population;
     private int year;
     
     public Population() {
     
     }
-    public Population(int year, int countryID, long population) {
+    public Population(int year, String countryID, long population) {
         this.year = year;
         this.countryID = countryID;
         this.population = population;
     }
 
-    public void setCountryID(int countryID) {
+    public void setCountryID(String countryID) {
         this.countryID = countryID;
     }
-    public int getCountryID() {
+    public String getCountryID() {
         return countryID;
     }
     public long getPopulation() {

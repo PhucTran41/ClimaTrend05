@@ -7,11 +7,28 @@ public class Country {
     private float AverageTemp;
     private float MinimumTemp;
     private float MaximumTemp;
-
     private int startYear;
     private int endYear;
     private float AveragePopulation;
+    private int initialYear;
 
+    public Country(){
+        
+    }
+
+    public Country(int year, String countryName, float averageTemp) {
+        this.year = year;
+        this.countryName = countryName;
+        AverageTemp = averageTemp;
+    
+    }
+
+    public int getInitialYear() {
+        return initialYear;
+    }
+    public void setInitialYear(int initialYear) {
+        this.initialYear = initialYear;
+    }
     
     public int getYear() {
         return year;
