@@ -2,15 +2,11 @@ package app.JDBC;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
 
 import app.classes.Global;
-import app.classes.Population;
-import app.page.GlobalTracker;
 
 public class JDBC {
 
@@ -102,40 +98,8 @@ public class JDBC {
 
         return initialYear;
     }
-
-    // GET THE LAST YEAR FOR GLOBAL POPULATION DATA
-
-    public int getPopulationLastYear(){
-        
-        int initialYear = 0;
-
-
+    
         return initialYear;
-    }
-
-    public Population getPopulation() {
-
-        Population population = new Population();
-        String query = """
-
-                """;
-        try (Connection connection = DriverManager.getConnection(DATABASE);
-                Statement statement = connection.createStatement();) {
-
-            statement.setQueryTimeout(15);
-
-            ResultSet result = statement.executeQuery(query);
-            if(result.next()){
-                population.setPopulation(result.getLong("population"));
-                population.setYear(result.getInt("year"));
-                population.setCountryID(result.getString("countryID"));
-            }
-
-        } catch (SQLException e) {
-            System.err.println("Error found :getPopulation() " + e.getMessage());
-        }
-
-        return population;
     }
 
 }
