@@ -95,7 +95,7 @@ public class JDBC {
 
                     } catch (SQLException e) {
             System.err.println("Error found :getPopulationFirstYear() " + e.getMessage());
-
+                    }
         return initialYear;
     }
     
