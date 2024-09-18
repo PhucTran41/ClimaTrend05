@@ -94,7 +94,7 @@ body.scrolled .header {
 
 .search-panel {
     width: calc(100% - 39px);
-    height: 100px;
+    height: 175px;
     left: 13px;
     top: 114px;
     position: absolute;
@@ -116,6 +116,12 @@ body.scrolled .header {
     font-weight: 700;
     margin-bottom: 10px;
     text-align:center;
+}
+
+.select-multiple {
+    width: 220px;
+    height: 100px;
+   
 }
 
 .select-wrapper {
@@ -229,7 +235,7 @@ input[type="checkbox"]{
 
 .search-section:nth-child(4) {
     left: 805px;
-    top: 38px;
+    top: 37px;
 }
 
 
