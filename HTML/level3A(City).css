@@ -107,8 +107,6 @@ body.scrolled .header {
 }
 
 .search-section {
-    
-    
  transform: translateY(10px);
 }
 
@@ -244,8 +242,6 @@ input[type="checkbox"]{
     left: 805px;
     top: 37px;
 }
-
-
 
 .search-section:nth-child(2) .select-box {
     width: 223px;
