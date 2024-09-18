@@ -26,6 +26,7 @@ public class App {
         app.get("/PeriodTracker", new PeriodTracker());
         app.get("/TimelineTracker", new TimelineTracker());
 
+        app.post("/", new HomePage());
         app.post("/GlobalTracker", new GlobalTracker());
         app.post("/CityTracker", new CityTracker());
         app.post("/PeriodTracker", new PeriodTracker());

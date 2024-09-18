@@ -5,6 +5,8 @@ import io.javalin.http.Handler;
 
 public class HomePage implements Handler {
 
+    public static final String URL = "/";
+
     @Override
     public void handle(Context context) throws Exception {
         String html = """
@@ -23,7 +25,7 @@ public class HomePage implements Handler {
                         <img src="World_Tracker_Logo__1_-removebg-preview.png" alt="WorldChanges Logo"> 
                     </div>    
                     <div class="nav-elements">
-                        <a href="LandingPage.html">Home</a>
+                        <a href="/HomePage">Home Page</a>
                         <a href="/GlobalTracker">Global Tracker</a>
                         <a href="/CityTracker">City Tracker</a>
                         <a href="/TimeLine">Timeline Tracker</a>
@@ -105,22 +107,22 @@ public class HomePage implements Handler {
                         <div class="card">
                             <h3>Global Tracker</h3>
                             <p>Compare temperature and population changes globally and at the national level to see how different countries have been impacted by climate change over time.</p>
-                            <a href="GlobalTrackerPage.html" class="icon icon-right"></a>
+                            <a href="/GlobalTracker" class="icon icon-right"></a>
                         </div>
                         <div class="card">
-                            <h3 class ="citytracker">City Tracker</h3>
+                            <h3 class ="CityTracker">City Tracker</h3>
                             <p>Explore temperature trends in specific cities or states within a country to get a clearer view of local climate effects.</p>
                             <a href="#city-tracker" class="icon icon-right"></a>
                         </div>
                         <div class="card">
                             <h3>TimeLine Tracker</h3>
                             <p>Examine how temperatures have changed over various time periods for different regions, allowing you to compare shifts in average temperatures.</p>
-                            <a href="#timeline-tracker" class="icon icon-right"></a>
+                            <a href="/TimelineTracker" class="icon icon-right"></a>
                         </div>
                         <div class="card">
                             <h3>Period Tracker</h3>
                             <p>Identify and compare different time periods with similar temperature and population patterns to uncover trends and insights.</p>
-                            <a href="#period-tracker" class="icon icon-right"></a>
+                            <a href="/PeriodTracker" class="icon icon-right"></a>
                         </div>
                     </div>
                 </section>

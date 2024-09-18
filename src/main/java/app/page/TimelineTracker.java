@@ -4,6 +4,9 @@ import io.javalin.http.Handler;
 
 public class TimelineTracker implements Handler {
 
+    public static final String URL = "/TimelineTracker";
+
+
     @Override
     public void handle(Context context) throws Exception {
 
