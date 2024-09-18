@@ -107,14 +107,17 @@ body.scrolled .header {
 }
 
 .search-section {
- transform: translateY(44px);
+    
+    
+ transform: translateY(10px);
 }
 
 .search-title {
+    
     color: black;
     font-size: 32px;
     font-weight: 700;
-    margin-bottom: 10px;
+    margin-bottom: -px;
     text-align:center;
 }
 
@@ -125,6 +128,7 @@ body.scrolled .header {
 }
 
 .select-wrapper {
+    
     position: relative;
 }
 .select-boxforstate{
