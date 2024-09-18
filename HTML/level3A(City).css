@@ -107,8 +107,6 @@ body.scrolled .header {
 }
 
 .search-section {
-    
-    
  transform: translateY(10px);
 }
 
@@ -245,8 +243,6 @@ input[type="checkbox"]{
     top: 37px;
 }
 
-
-
 .search-section:nth-child(2) .select-box {
     width: 223px;
 }
@@ -292,6 +288,11 @@ th {
 tr:last-child td {
     border-bottom: none;
 }
+tr:nth-child(even){
+    background-color: #e4e4e4; 
+    
+}
+
 tr:nth-child(even){
     background-color: #e4e4e4; 
     

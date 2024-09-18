@@ -10,149 +10,168 @@ public class TimelineTracker implements Handler {
     @Override
     public void handle(Context context) throws Exception {
 
-            String html = "<html>";
-        
-            // Head
-            html += "<head>";
-            html += "<meta charset='UTF-8'>";
-            html += "<meta name='viewport' content='width=device-width, initial-scale=1.0'>";
-            html += "<title>ClimateTrend Dashboard</title>";
-            html += "<link rel='stylesheet' href='Level2B.css'>";
-            html += "</head>";
-        
-            // Body
-            html += "<body>";
-        
-            // Header
-            html += """
+        String html = "";
+
+        // Head
+        html = html + "<head>";
+        html = html + "<meta charset='UTF-8'>";
+        html = html + "<meta name='viewport' content='width=device-width, initial-scale=1.0'>";
+        html = html + "<title>ClimateTrend Dashboard</title>";
+        html = html + "<link rel='stylesheet' href='Level3A(Country).css'>";
+        html = html + "</head>";
+
+        // Body
+        html = html + "<body>";
+
+        // Header
+        html = html + """
+            <div class='container'>
                 <div class='header'>
                     <div class='logo'>
-                        <div class='logo-icon'></div>
+                        <img src='ClimaTrendLogo.png' alt='ClimaTrendLogo'>
                     </div>
-                    <div class='logo-text'>ClimaTrend</div>
-                    <nav>
-                        <a href='#' class='nav-item'>Home</a>
-                        <a href='#' class='nav-item'>Global Tracker</a>
-                        <a href='#' class='nav-item'>City Tracker</a>
-                        <a href='#' class='nav-item'>TimeLine Tracker</a>
-                        <a href='#' class='nav-item'>Periods Tracker</a>
-                    </nav>
-                </div>
-            """;
-        
-            // Shadow
-            html += "<div class='shadow'></div>";
-        
-            // Search Panel
-            html += """
-                <div class='search-panel'>
-                    <div class='search-section'>
-                        <div class='search-title'>Country</div>
-                        <div class='select-wrapper'>
-                            <select class='select-boxforcountry'>
-                                <option>Select</option>
-                            </select>
-                            <div class='select-arrow'></div>
-                        </div>
-                    </div>
-        
-                    <div class='search-section'>
-                        <div class='search-title'>City/State</div>
-                        <div class='select-wrapper'>
-                            <form class='select-boxforcity'>
-                                <input type='checkbox' id='CitySelect' name='CitySelect' value='City'>
-                                <label for='CitySelect'> City</label>
-                                <input type='checkbox' id='CountrySelect' name='CountrySelect' value='Country'>
-                                <label for='CountrySelect'> Country</label>
-                            </form>
-                        </div>
-                    </div>
-        
-                    <div class='search-section'>
-                        <div class='search-title'>Start Year</div>
-                        <div class='select-wrapper'>
-                            <select class='select-box'>
-                                <option>Select</option>
-                            </select>
-                            <div class='select-arrow'></div>
-                        </div>
-                    </div>
-        
-                    <div class='search-section'>
-                        <div class='search-title'>End Year</div>
-                        <div class='select-wrapper'>
-                            <select class='select-box'>
-                                <option>Select</option>
-                            </select>
-                            <div class='select-arrow'></div>
-                        </div>
-                    </div>
-        
-                    <div class='search-section'>
-                        <div class='search-title'>Output</div>
-                        <div class='select-wrapper'>
-                            <select class='select-box'>
-                                <option>Select</option>
-                            </select>
-                            <div class='select-arrow'></div>
-                        </div>
-                    </div>
-        
-                    <div class='search-section'>
-                        <div class='search-title'>Statistic</div>
-                        <div class='select-wrapper'>
-                            <select class='select-box'>
-                                <option>Select</option>
-                            </select>
-                            <div class='select-arrow'></div>
-                        </div>
+                    <div class='header-elements'>
+                        <a href='/'>Home Page</a>
+                        <a href='/GlobalTracker'>Global Tracker</a>
+                        <a href='/CityTracker'>City Tracker</a>
+                        <a href='/TimeLineTracker'>Timeline Tracker</a>
+                        <a href='/PeriodTracker'>Periods Tracker</a>
                     </div>
                 </div>
             """;
+
+        // Shadow
+        html = html + "<div class='shadow'></div>";
+
+        //HTM Form
+        html += "<form action='/findingtempandpopbycountryworld' method='post' class='form-container'>";
+
+        String typeofview = context.formParam("typeofview");
         
-            // Search Button
-            html += "<button class='search-button'>Search</button>";
-        
-            // Results Container
-            html += """
-                <div class='results-container'>
-                    <div class='results-inner'>
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>No</th>
-                                    <th>City</th>
-                                    <th>Latitude</th>
-                                    <th>Longitude</th>
-                                    <th>first year temp</th>
-                                    <th>last year temp</th>
-                                    <th>change</th>
-                                    <th>avg temp</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>city name</td>
-                                    <td>null</td>
-                                    <td>null</td>
-                                    <td>null</td>
-                                    <td>null</td>
-                                    <td>null</td>
-                                    <td>null</td>
-                                </tr>
-                            </tbody>
-                        </table>
+        // Search Panel
+        html = html + """
+            <div class='search-panel'>
+                <div class='search-section'>
+                    <div class='search-title'>Display Region</div>
+                    <div class='select-wrapper'> 
+                    """;
+                    //content
+
+                    html += "<select id='typeofview' name='typeofview' onchange='this.form.submit()' class='form-select'>";    
+                    html += "<option value='' " + (typeofview != null ? "selected" : "") + ">--Select--</option>";
+                    html += "<option value='World' " + (typeofview.equals("World") ? "selected" : "") + ">World</option>";
+                    html += "<option value='Country' " + (typeofview.equals("Country") ? "selected" : "") + ">Country</option>";
+                    html += "</select>";
+                    
+
+                    if (typeofview != null) {
+                            if (typeofview.equals("Country")) {
+                                // Sorting
+                                html += "<label for='listOfCountry'>Country</label>";
+                                html += "<select id='listOfCountry' name='listOfCountry' class='form-select'>";
+                                html += " <option value='1999'>1999</option>";
+                                html += "<option value='2000'>2000</option>";
+                                html += "<option value='1999'>1939</option>";
+                                html += "</select>";
+            
+                            }
+                    }
+
+
+                     
+                 html += """
+                    <div class='select-arrow'></div>
+                    </div>
+                </div> 
+                
+
+
+  
+              <div class='search-section'>
+                    <div class='search-title'>Start Year</div>
+                    <div class='select-wrapper'>
+                        <form>
+                            <select class='select-multiple' multiple>
+                                <option value='1999'>1999</option>
+                                <option value='2000'>2000</option>
+                                <option value='1999'>1939</option>
+                                <option value='2000'>2030</option>
+                                <option value='1999'>1239</option>
+                                <option value='2000'>2530</option>
+                                <option value='1999'>1223</option>
+                                <option value='2000'>2520</option>
+                                <option value='1999'>1039</option>
+                                <option value='2000'>2130</option>
+                                <option value='1999'>1539</option>
+                                <option value='2000'>2830</option>
+                            </select>
+                        </form>
                     </div>
                 </div>
+
+                <div class='search-section'>
+                    <div class='search-title'>Periods</div>
+                    <div class='select-wrapper'>
+                        <input type='text' id='period' name='period' placeholder='Enter'>
+                    </div>
+                </div>
+            </div>
             """;
+
+        // Search Button
+        html = html + "<button class='search-button'>Search</button>";
+
+
+
         
-            html += "</body>";
-            html += "</html>";
-        
-            // Output HTML
-            context.html(html);
-        }
-        
-    
+        // Results Container
+        html = html + """
+            <div class='results-container'>
+                <div class='results-inner'>
+                    <table>
+                        <thead>
+                          
+                            <tr>
+                                <th>NO</th>
+                                <th>NAME</th>
+                                <th>YEAR</th>
+                                <th>PERIOD</th>
+                                <th>FIRST YEAR <br/> TEMPERATURE</th>
+                                <th>LAST YEAR <br/> TEMPERATURE</th>
+                                <th>CHANGE</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>City name</td>
+                                <td>null</td>
+                                <td>null</td>
+                                <td>null</td>
+                                <td>null</td>
+                                <td>null</td>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>City name</td>
+                                <td>null</td>
+                                <td>null</td>
+                                <td>null</td>
+                                <td>null</td>
+                                <td>null</td>
+                            </tr>
+                            
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            """;
+
+        // Close Body and HTML
+        html = html + "</body></html>";
+
+        // Output HTML
+        context.html(html);
+    }
+
 }
