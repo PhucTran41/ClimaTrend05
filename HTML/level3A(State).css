@@ -107,9 +107,13 @@ text-decoration: underline;
     
     
 }
-
+.select-multiple {
+    width: 220px;
+    height: 100px;
+   
+}
 .search-section {
- transform: translateY(44px);
+ transform: translateY(10px);
 }
 
 .search-title {
