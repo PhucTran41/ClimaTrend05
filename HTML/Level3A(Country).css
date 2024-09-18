@@ -216,6 +216,8 @@ input[type="checkbox"]{
     top: 14px;
     background: #FFFEFF;
     border-radius: 51px;
+    overflow-y: scroll;
+    
 }
 
 .search-section:nth-child(1) {
@@ -265,14 +267,16 @@ input[type="checkbox"]{
 
 table {
     width: 100%;
-    border-collapse: collapse;
+    border-collapse: collapse;  
+
 }
+
 
 th,
 td {
     padding: 10px;
     text-align: center;
-    border-bottom: 1px solid #D8D8D8;
+    border-bottom: 1px solid black;
     color: black;
     font-size: 23px;
     font-weight: 400;
@@ -280,12 +284,19 @@ td {
 
 th {
     font-weight: bold;
+    background-color: #91ad8f;
 }
 
 tr:last-child td {
     border-bottom: none;
 }
 
+
+
+tr:nth-child(even){
+    background-color: rgb(255, 255, 255) /* rgba(255, 224, 189, 1) */
+    ;
+}
 .row-border {
     width: 1332px;
     height: 0;
