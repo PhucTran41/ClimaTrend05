@@ -122,6 +122,7 @@ body.scrolled .header {
 .select-multiple {
     width: 220px;
     height: 100px;
+    font-size: 14px;
    
 }
 .select-wrapper {

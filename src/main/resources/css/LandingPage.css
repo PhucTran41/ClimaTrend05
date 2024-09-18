@@ -30,10 +30,11 @@ html {
 #available-data {
     scroll-margin-top: 300px; /* Điều chỉnh giá trị này tùy theo chiều cao của thanh điều hướng */
 }
-logo{
-    list-style: none;
+.logo {
+    margin-left: auto;
     margin-right: auto;
-    cursor:pointer;
+    margin-bottom: 30px;
+    margin-top: -20px; /* Add negative margin to move it higher */
 }
 
 &:hover, & focus{
