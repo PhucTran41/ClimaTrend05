@@ -197,7 +197,6 @@ input[type="checkbox"]{
     border-top: 5px solid black;
     pointer-events: none;
 }
-
 .results-container {
     width: calc(100% - 34px);
     height: 610px;
@@ -216,6 +215,8 @@ input[type="checkbox"]{
     top: 14px;
     background: #FFFEFF;
     border-radius: 51px;
+    overflow-y: scroll;
+    
 }
 
 .search-section:nth-child(1) {
@@ -280,12 +281,16 @@ td {
 
 th {
     font-weight: bold;
+    background-color: #91ad8f;
 }
 
 tr:last-child td {
     border-bottom: none;
 }
-
+tr:nth-child(even){
+    background-color: #e4e4e4; 
+    
+}
 .row-border {
     width: 1332px;
     height: 0;
