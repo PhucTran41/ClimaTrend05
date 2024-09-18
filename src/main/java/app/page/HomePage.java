@@ -1,7 +1,10 @@
 package app.page;
 
+import app.JDBC.JDBC;
+import app.classes.Global;
 import io.javalin.http.Context;
 import io.javalin.http.Handler;
+
 
 public class HomePage implements Handler {
 
@@ -9,7 +12,14 @@ public class HomePage implements Handler {
 
     @Override
     public void handle(Context context) throws Exception {
+
+           // Step 1: Fetch the first year temperature data using JDBC
+           JDBC jdbc = new JDBC();
+           Global firstYearTemp = jdbc.getFirstYearTemp();
+           Global lastYearTemp = jdbc.getLastYearTemp();
+
         String html = """
+            
             <!DOCTYPE html>
             <html lang="en">
             <head>
@@ -88,11 +98,21 @@ public class HomePage implements Handler {
                             <div class="temperature-data">
                                 <div class="temperature-range">
                                     <div class="temperature-item">
-                                        <div class="data-year" id="tempStartYear">1750</div>
+                                    
+
+                                        <div class="data-year" id="tempStartYear">"""
+                                        + firstYearTemp.getYear() +"""
+                                              </div>
+
                                         <div class="data-value"><span id="tempStartValue">34</span>c</div>
                                     </div>
                                     <div class="temperature-item">
-                                        <div class="data-year" id="tempEndYear">2013</div>
+
+
+                                        <div class="data-year" id="tempEndYear"> """
+                                            + lastYearTemp.getYear()+ """
+                                            </div>
+
                                         <div class="data-value"><span id="tempEndValue">35.2</span>c</div>
                                     </div>
                                 </div>
@@ -100,6 +120,7 @@ public class HomePage implements Handler {
                         </div>
                     </div>
                 </section>
+
                 <!-- How to use  -->
                 <section class="how-to-use">
                     <h2>How to Use Our Website</h2>
