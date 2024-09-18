@@ -10,7 +10,7 @@ import app.classes.Global;
 
 public class JDBC {
 
-    public static final String DATABASE = "jdbc:sqlite:database/Movies.db";
+    public static final String DATABASE = "jdbc:sqlite:OfficialDatabase.db";
 
     public JDBC() {
         System.out.println("Created JDBC Connection Object");
@@ -20,38 +20,38 @@ public class JDBC {
 
     public Global getFirstYearTemp() {
         Global worldtemperature = new Global();
-
+    
         try (Connection connection = DriverManager.getConnection(DATABASE);
-                Statement statement = connection.createStatement();) {
-
+             Statement statement = connection.createStatement();) {
+    
             statement.setQueryTimeout(15);
-
+    
+            // Correct query to fetch all required fields
             String query = """
-                    SELECT *
+                    SELECT t.year
                     FROM TempOfGlobal t
-                    WHERE t.year IN
-                        (SELECT MIN(year)
-                        FROM TempOfGlobal)
+                    WHERE t.year = (SELECT MIN(year) 
+                    FROM TempOfGlobal)
                     """;
             ResultSet resultSet = statement.executeQuery(query);
-
-            worldtemperature.setYear(resultSet.getInt("year"));
-            worldtemperature.setAverageTemp(resultSet.getFloat("averageTemp"));
-            worldtemperature.setMinimumTemp(resultSet.getFloat("minimumTemp"));
-            worldtemperature.setMaximumTemp(resultSet.getFloat("maximumTemp"));
-
+    
+            // Ensure the resultSet contains data
+            if (resultSet.next()) {
+                worldtemperature.setYear(resultSet.getInt("year"));
+                worldtemperature.setAverageTemp(resultSet.getFloat("AverageTemperature"));
+            }
+    
         } catch (SQLException e) {
             System.err.println("Error found :getFirstYearTemp() " + e.getMessage());
         }
-
+    
         return worldtemperature;
     }
+    
 
     // GET THE LAST YEAR FOR GLOBAL TEMPERATURE DATA
 
     public Global getLastYearTemp() {
-
-        int year = 0;
 
         Global worldtemperature = new Global();
 
@@ -62,19 +62,19 @@ public class JDBC {
 
             String query = """
 
-                    SELECT *
-                    FROM TempOfGlobal t
-                    WHERE t.year IN
-                        (SELECT MAX(year))
-                        FROM TempOfGlobal
-                    """;
+            SELECT t.year
+            FROM TempOfGlobal t
+            WHERE t.year = (SELECT MAX(year) 
+            FROM TempOfGlobal)
+            """;
 
-            ResultSet result = statement.executeQuery(query);
+            ResultSet resultSet = statement.executeQuery(query);
 
-            worldtemperature.setYear(result.getInt("year"));
-            worldtemperature.setAverageTemp(result.getFloat("averageTemp"));
-            worldtemperature.setMinimumTemp(result.getFloat("minimumTemp"));
-            worldtemperature.setMaximumTemp(result.getFloat("maximumTemp"));
+            if (resultSet.next()) {
+                worldtemperature.setYear(resultSet.getInt("year"));
+
+            worldtemperature.setYear(resultSet.getInt("year"));
+            }
 
         } catch (SQLException e) {
 
