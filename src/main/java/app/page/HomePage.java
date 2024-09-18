@@ -32,7 +32,7 @@ public class HomePage implements Handler {
                 <!-- navigation bar -->
                 <nav> 
                     <div class="logo">
-                        <img src="WorldTrackerLogo.png" alt="WorldChanges Logo"> 
+                        <img src="ClimaTrendLogo.png" alt="ClimaTrendLogo"> 
                     </div>    
                     <div class="nav-elements">
                         <a href="/">Home Page</a>
