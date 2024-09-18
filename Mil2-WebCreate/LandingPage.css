@@ -17,11 +17,17 @@ nav{
     margin:  auto;
     border-radius: 0 0 25px 25px;
     background-color: white;
+    z-index: 1000; 
 
 }
 .heading-title{
     font-size: 50px;
-    margin-top: -50px;
+}
+html {
+    scroll-behavior: smooth;
+}
+#available-data {
+    scroll-margin-top: 300px; /* Điều chỉnh giá trị này tùy theo chiều cao của thanh điều hướng */
 }
 logo{
     list-style: none;
@@ -42,19 +48,46 @@ nav {
     padding: 0;
 }
 
-.hero {
-    margin: 0;
-    padding: 0;
+
+
+
+/* Our Mission */
+.our-mission {
+    text-align: center;
+    padding: 40px 20px;
+    background-color: white;
+    margin-bottom: 100px;
 }
 
-.hero-container{
-    margin-top: 0;
+.our-mission h2 {
+    font-size: 50px;
+    margin-bottom: 20px;
 }
+
+.our-mission p {
+    font-size: 30px;
+    max-width: 800px;
+    margin: 0 auto 20px;
+}
+
+
+
+.main-text {
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+.secondary-text {
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+
+
 
 body::after {
     content: '';
     display: block;
-    height: 1500px; /* Chiều cao của trang để cuộn xuống */
+    height: 100px; /* Chiều cao của trang để cuộn xuống */
 }
 
 nav.shrink {
@@ -69,9 +102,7 @@ body.scrolled nav {
     padding: 0 1rem; /* Padding nhỏ hơn khi cuộn xuống */
 }
 
-.hero-container{
-margin-top: 0px;
-}
+
 .nav-elements{
     display: flex;
     gap: 2rem;
@@ -103,7 +134,7 @@ nav a:hover {
     text-decoration: underline;
 }
 .hero {
-    margin-top: 100px;
+    margin-top: -20px;
     background: white;
     display: grid;
     place-items: center; /* Căn giữa nội dung theo cả chiều dọc và chiều ngang */
@@ -164,7 +195,6 @@ button:hover {
 }
 
 /* available data  */
-
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
             margin: 0;
@@ -234,72 +264,150 @@ button:hover {
         .temperature-item {
             text-align: center;
         }
+/* How to use */
+.how-to-use {
+    padding: 40px 20px;
+    background-color: white;
+    text-align: center;
+}
 
-        /* Personal */
-        .box-container {
-            display: flex;
-            gap: 20px; /* Khoảng cách giữa các box */
-            padding: 20%; /* Padding để tránh box chạm vào biên */
-        }
-          
-          .Personals {
-            font-size: 24px; /* Adjust as needed */
-            font-weight: bold; /* Optional: make text bold */
-            margin-bottom: 20px; /* Space between text and boxes */
-            margin-right: -180px;
-        
-          }    
-          .box {
-            position: relative;
-            width: 383px;
-            height: 532px;
-            margin-top: 100px;
-          }
-          
-          .box .group {
-            width: 383px;
-            height: 532px;
-            background-color: #85a3f1;
-            border-radius: 30px;
-          }
-          
-          .box .overlap-group {
-            position: absolute;
-            width: 319px;
-            height: 92px;
-            top: 11px;
-            left: 23px;
-          }
-          
-          .box .rectangle {
-            height: 78px;
-            top: 13px;
-            left: 16px;
-            position: absolute;
-            width: 303px;
-            background-color: #7695FF;;
-            border-radius: 30px;
-          }
-          
-          .box .image {
-            position: absolute;
-            width: 59px;
-            height: 43px;
-            top: 0;
-            left: 0;
-            object-fit: cover;
-          }
-          
-          .box .div {
-            height: 396px;
-            top: 116px;
-            left: 39px;
-            position: absolute;
-            width: 303px;
-            background-color: white;;
-            border-radius: 30px;
-          }
-        
+.how-to-use h2 {
+    font-size: 50px;
+    margin-bottom: 50px;
+    margin-top: 60px;
+
+}
+
+.how-to-use .grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.how-to-use .card {
+    aspect-ratio: 1 / 1;
+    padding: 20px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center; /* Center content horizontally */
+    text-align: center;  /* Center text horizontally */
+    position: relative;
+    background-color: #f0f0f0;
+}
+
+.how-to-use .card:nth-child(4n+1),
+.how-to-use .card:nth-child(4n+4) {
+    background-color: #ffffff;
+}
+.how-to-use .card:nth-child(4n+2),
+.how-to-use .card:nth-child(4n+3) {
+    background-color: #f0f0f0;
+}
+
+.how-to-use h3 {
+    font-size: 24px;
+    margin-top: 0;
+    margin-bottom: auto;
+}
+
+.how-to-use p {
+    font-size: 20px;
+    margin-bottom: 80px;
+}
+
+.how-to-use .icon {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    width: 50px;
+    height: 50px;
+    background-color: #7695FF;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    color: #333;
+    font-size: 24px;
+}
+
+.how-to-use .icon-right::after {
+    content: '→';
+    color: white;
+}
+
+
+.box-container {
+    display: flex;
+    justify-content: center; /* Căn giữa các hộp */
+    gap: 20px; /* Khoảng cách giữa các box */
+    padding: 5%; /* Giảm padding để đưa phần này lên trên */
+    margin-bottom: 50px; /* Thêm khoảng cách dưới phần "Personal" */
+}
+      
+.Personals {
+    font-size: 50px; /* Kích thước tiêu đề */
+    font-weight: bold; /* Đậm tiêu đề */
+    margin-bottom: 20px; /* Khoảng cách giữa tiêu đề và các hộp */
+    text-align: center; /* Căn giữa tiêu đề */
+    margin-top: 50px; /* Khoảng cách trên tiêu đề để đưa phần này lên */
+}    
+
+.box {
+    position: relative;
+    width: 383px;
+    height: 532px;
+    margin-top: 0; /* Giảm margin-top để đưa các hộp lên cao hơn */
+}
+
+.group {
+    width: 383px;
+    height: 532px;
+    background-color: #85a3f1;
+    border-radius: 30px;
+}
+
+.overlap-group {
+    position: absolute;
+    width: 319px;
+    height: 92px;
+    top: 11px;
+    left: 23px;
+}
+
+.rectangle {
+    height: 78px;
+    top: 13px;
+    left: 16px;
+    position: absolute;
+    width: 303px;
+    background-color: #7695FF;
+    border-radius: 30px;
+}
+
+.image {
+    position: absolute;
+    width: 59px;
+    height: 43px;
+    top: 0;
+    left: 0;
+    object-fit: cover;
+}
+
+.div {
+    height: 396px;
+    top: 116px;
+    left: 39px;
+    position: absolute;
+    width: 303px;
+    background-color: white;
+    border-radius: 30px;
+}
+
    /* TeamInfo */
 /* TeamBox */
 .teamBox {

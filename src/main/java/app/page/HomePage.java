@@ -8,49 +8,47 @@ public class HomePage implements Handler {
     @Override
     public void handle(Context context) throws Exception {
         String html = """
-                <!DOCTYPE html>
-                <html lang="en">
-                <head>
-                    <meta charset="UTF-8">
-                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                    <title>Document</title>
-                    <link rel="stylesheet" href="LandingPage.css">
-                </head>
-                <body>
-                    <!-- navigation bar -->
-                    <nav> 
-                        <div class="logo">
-                            <img src="World_Tracker_Logo__1_-removebg-preview.png" alt="WorldChanges Logo"> 
-                        </div>    
-                        <div class="nav-elements">
-                            <a href="/LandingPage">Home</a>
-                            <a href="/GlobalTracker">Global Tracker</a>
-                            <a href='/CityTracker'>City Tracker</a>
-                            <a href="/TimeLineTracker">Timeline Tracker</a>
-                            <a href="/PeriodTracker">Periods Tracker</a>
-                        </div>
-                    </nav>
-
-                    <!-- hero section -->
-                    <section class="hero">
-                        <div class="hero-container"></div>
-                        <div class="column-center">
-                            <h1 class="heading-title">
-                                Explore the World Through <span class="highlight">Population</span> and <span class="highlight">Temperature</span> Data
-                            </h1>
-                            <p class="description">
-                                "How have global population and temperatures changed over the decades? 
-                                Explore trends through scientific data"
-                            </p>
-                            <a href="#available-data">
-                                <button>View Now</button>
-                            </a>
-                        </div>
+            <!DOCTYPE html>
+            <html lang="en">
+            <head>
+                <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <title>Document</title>
+                <link rel="stylesheet" href="LandingPage.css">
+            </head>
+            <body>
+                <!-- navigation bar -->
+                <nav> 
+                    <div class="logo">
+                        <img src="Ảnh/World_Tracker_Logo__1_-removebg-preview.png" alt="WorldChanges Logo"> 
+                    </div>    
+                    <div class="nav-elements">
+                        <a href="LandingPage.html">Home</a>
+                        <a href="GlobalTrackerPage.html">Global Tracker</a>
+                        <a href="/">City Tracker</a>
+                        <a href="/">Timeline Tracker</a>
+                        <a href="/">Periods Tracker</a>
+                    </div>
+                </nav>
             
-                        <img src="image-removebg.png" alt="illustration" class="hero-image"/>
-                        </div>
-                    </section>
-
+                <!-- hero section -->
+                <section class="hero">
+                    <div class="hero-container"></div>
+                    <div class="column-center">
+                        <h1 class="heading-title">
+                            Explore the World Through <span class="highlight">Population</span> and <span class="highlight">Temperature</span> Data
+                        </h1>
+                        <p class="description">
+                            "How have global population and temperatures changed over the decades? 
+                            Explore trends through scientific data"
+                        </p>
+                        <a href="#available-data">
+                            <button>View Now</button>
+                        </a>
+                    </div>
+                        <img src="Ảnh/image-removebg.png" alt="illustration" class="hero-image"/>
+                </section>
+            
                     <!-- Our Mission -->
                     <section class="our-mission">
                         <h2>Our Mission</h2>
@@ -64,153 +62,152 @@ public class HomePage implements Handler {
                             By offering both high-level summaries and in-depth analyses, the site empowers users to make informed decisions, drive policy changes, and increase public awareness of climate trends.
                         </p> 
                     </section>
-
-                    <!-- available data section -->
-                    <section id="available-data" class="data-section">
-                        <h2>Our Available Data</h2>
-                        <div class="data-container">
-                            <div class="data-column">
-                                <div class="data-title">Population</div>
-                                <div class="data-range">
-                                    <div>
-                                        <div class="data-year" id="popStartYear">1960</div>
-                                        <div class="data-value"><span id="popStartValue">1,900,000</span> people</div>
-                                    </div>
-                                    <div>
-                                        <div class="data-year" id="popEndYear">2013</div>
-                                        <div class="data-value"><span id="popEndValue">4,000,541</span> people</div>
-                                    </div>
+                
+                
+                <!-- available data section -->
+                <section id="available-data" class="data-section">
+                    <h2>Our Available Data</h2>
+                    <div class="data-container">
+                        <div class="data-column">
+                            <div class="data-title">Population</div>
+                            <div class="data-range">
+                                <div>
+                                    <div class="data-year" id="popStartYear">1960</div>
+                                    <div class="data-value"><span id="popStartValue">1,900,000</span> people</div>
                                 </div>
-                            </div>
-                            <div class="data-column">
-                                <div class="data-title">Temperature</div>
-                                <div class="temperature-data">
-                                    <div class="temperature-range">
-                                        <div class="temperature-item">
-                                            <div class="data-year" id="tempStartYear">1750</div>
-                                            <div class="data-value"><span id="tempStartValue">34</span>°C</div>
-                                        </div>
-                                        <div class="temperature-item">
-                                            <div class="data-year" id="tempEndYear">2013</div>
-                                            <div class="data-value"><span id="tempEndValue">35.2</span>°C</div>
-                                        </div>
-                                    </div>
+                                <div>
+                                    <div class="data-year" id="popEndYear">2013</div>
+                                    <div class="data-value"><span id="popEndValue">4,000,541</span> people</div>
                                 </div>
                             </div>
                         </div>
-                    </section>
-
-                    <!-- How to use  -->
-                    <section class="how-to-use">
-                        <h2>How to Use Our Website</h2>
-                        <div class="grid">
-                            <div class="card">
-                                <h3>Global Tracker</h3>
-                                <p>Compare temperature and population changes globally and at the national level to see how different countries have been impacted by climate change over time.</p>
-                                <a href="GlobalTrackerPage.html" class="icon icon-right"></a>
-                            </div>
-                            <div class="card">
-                                <h3 class="citytracker">City Tracker</h3>
-                                <p>Explore temperature trends in specific cities or states within a country to get a clearer view of local climate effects.</p>
-                                <a href="#city-tracker" class="icon icon-right"></a>
-                            </div>
-                            <div class="card">
-                                <h3>TimeLine Tracker</h3>
-                                <p>Examine how temperatures have changed over various time periods for different regions, allowing you to compare shifts in average temperatures.</p>
-                                <a href="#timeline-tracker" class="icon icon-right"></a>
-                            </div>
-                            <div class="card">
-                                <h3>Period Tracker</h3>
-                                <p>Identify and compare different time periods with similar temperature and population patterns to uncover trends and insights.</p>
-                                <a href="#period-tracker" class="icon icon-right"></a>
-                            </div>
-                        </div>
-                    </section>
-
-                    <!-- team section -->
-                    <div class="teamBox">
-                        <div class="row">
-                            <p class="Team5">Our Team</p>
-                            <div class="column">
-                                <div class="card">
-                                    <img src="img1.jpg" alt="Jane" style="width:100%">
-                                    <div class="teamBox-content">
-                                        <h2>Ting-Chu Yang</h2>
-                                        <p class="title">CEO &amp; Founder</p>
-                                        <p>Some text that describes me lorem ipsum ipsum lorem.</p>
-                                        <p>example@example.com</p>
+                        <div class="data-column">
+                            <div class="data-title">Temperature</div>
+                            <div class="temperature-data">
+                                <div class="temperature-range">
+                                    <div class="temperature-item">
+                                        <div class="data-year" id="tempStartYear">1750</div>
+                                        <div class="data-value"><span id="tempStartValue">34</span>c</div>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="column">
-                                <div class="card">
-                                    <img src="img2.jpg" alt="Mike" style="width:100%">
-                                    <div class="teamBox-content">
-                                        <h2>Phuc Tran</h2>
-                                        <p class="title">Database</p>
-                                        <p>Some text that describes me lorem ipsum ipsum lorem.</p>
-                                        <p>example@example.com</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="column">
-                                <div class="card">
-                                    <img src="img3.jpg" alt="Alice" style="width:100%">
-                                    <div class="teamBox-content">
-                                        <h2>Khoa Nguyen</h2>
-                                        <p class="title">Database</p>
-                                        <p>Some text that describes me lorem ipsum ipsum lorem.</p>
-                                        <p>example@example.com</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="column">
-                                <div class="card">
-                                    <img src="img4.jpg" alt="Bob" style="width:100%">
-                                    <div class="teamBox-content">
-                                        <h2>Tuan Nguyen</h2>
-                                        <p class="title">UI-UX</p>
-                                        <p>Some text that describes me lorem ipsum ipsum lorem.</p>
-                                        <p>example@example.com</p>
+                                    <div class="temperature-item">
+                                        <div class="data-year" id="tempEndYear">2013</div>
+                                        <div class="data-value"><span id="tempEndValue">35.2</span>c</div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-
-                    <!-- personals section -->
-                    <div class="box-container">
-                        <p class="Personals">Personals</p>
-                        <div class="box">
-                            <div class="group">
-                                <div class="overlap-group">
-                                    <div class="rectangle"></div>
-                                    <img class="image" src="img/image-7.png" />
+                </section>
+                <!-- How to use  -->
+                <section class="how-to-use">
+                    <h2>How to Use Our Website</h2>
+                    <div class="grid">
+                        <div class="card">
+                            <h3>Global Tracker</h3>
+                            <p>Compare temperature and population changes globally and at the national level to see how different countries have been impacted by climate change over time.</p>
+                            <a href="GlobalTrackerPage.html" class="icon icon-right"></a>
+                        </div>
+                        <div class="card">
+                            <h3 class ="citytracker">City Tracker</h3>
+                            <p>Explore temperature trends in specific cities or states within a country to get a clearer view of local climate effects.</p>
+                            <a href="#city-tracker" class="icon icon-right"></a>
+                        </div>
+                        <div class="card">
+                            <h3>TimeLine Tracker</h3>
+                            <p>Examine how temperatures have changed over various time periods for different regions, allowing you to compare shifts in average temperatures.</p>
+                            <a href="#timeline-tracker" class="icon icon-right"></a>
+                        </div>
+                        <div class="card">
+                            <h3>Period Tracker</h3>
+                            <p>Identify and compare different time periods with similar temperature and population patterns to uncover trends and insights.</p>
+                            <a href="#period-tracker" class="icon icon-right"></a>
+                        </div>
+                    </div>
+                </section>
+                <!-- team section -->
+                <div class="teamBox">
+                    <div class="row">
+                        <p class="Team5">Our Team</p>
+                        <div class="column">
+                            <div class="card">
+                                <img src="img1.jpg" alt="Jane" style="width:100%">
+                                <div class="teamBox-content">
+                                    <h2>Ting-Chu Yang</h2>
+                                    <p class="title">CEO &amp; Founder</p>
+                                    <p>Some text that describes me lorem ipsum ipsum lorem.</p>
+                                    <p>example@example.com</p>
                                 </div>
-                                <div class="div"></div>
                             </div>
                         </div>
-                        <div class="box">
-                            <div class="group">
-                                <div class="overlap-group">
-                                    <div class="rectangle"></div>
-                                    <img class="image" src="img/image-7.png" />
+                        <div class="column">
+                            <div class="card">
+                                <img src="img2.jpg" alt="Mike" style="width:100%">
+                                <div class="teamBox-content">
+                                    <h2>Phuc Tran</h2>
+                                    <p class="title">Database</p>
+                                    <p>Some text that describes me lorem ipsum ipsum lorem.</p>
+                                    <p>example@example.com</p>
                                 </div>
-                                <div class="div"></div>
                             </div>
                         </div>
-                        <div class="box">
-                            <div class="group">
-                                <div class="overlap-group">
-                                    <div class="rectangle"></div>
-                                    <img class="image" src="img/image-7.png" />
+                        <div class="column">
+                            <div class="card">
+                                <img src="img3.jpg" alt="Alice" style="width:100%">
+                                <div class="teamBox-content">
+                                    <h2>Khoa Nguyen</h2>
+                                    <p class="title">Database</p>
+                                    <p>Some text that describes me lorem ipsum ipsum lorem.</p>
+                                    <p>example@example.com</p>
                                 </div>
-                                <div class="div"></div>
+                            </div>
+                        </div>
+                        <div class="column">
+                            <div class="card">
+                                <img src="Ảnh/PhotoRoom_20240201_115321 3.jpg" alt="Bob" style="width:100%">
+                                <div class="teamBox-content">
+                                    <h2>Tuan Nguyen</h2>
+                                    <p class="title">UI-UX</p>
+                                    <p>Some text that describes me lorem ipsum ipsum lorem.</p>
+                                    <p>example@example.com</p>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </body>
-                </html>
+                </div>
+            
+                <!-- personals section -->
+                <section class="personals-section">
+                    <h2 class="personals-title">Personas</h2>
+                    <div class="personals-container">
+                        <div class="personal-box">
+                            <div class="personal-box-top">
+                                <img src="img/image-7.png" alt="Personal icon" />
+                            </div>
+                            <div class="personal-box-content">
+                                <!-- Nội dung cho personal box 1 -->
+                            </div>
+                        </div>
+                        <div class="personal-box">
+                            <div class="personal-box-top">
+                                <img src="img/image-7.png" alt="Personal icon" />
+                            </div>
+                            <div class="personal-box-content">
+                                <!-- Nội dung cho personal box 2 -->
+                            </div>
+                        </div>
+                        <div class="personal-box">
+                            <div class="personal-box-top">
+                                <img src="Ảnh/premium_photo-1689568158814-3b8e9c1a9618.avif" alt="Personal icon" />
+                            </div>
+                            <div class="personal-box-content">
+                                <!-- Nội dung cho personal box 3 -->
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </body>
+            </html>
+            
                 """;
 
         context.html(html);
