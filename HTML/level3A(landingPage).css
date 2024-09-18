@@ -198,6 +198,7 @@ input[type="checkbox"]{
     pointer-events: none;
 }
 
+
 .results-container {
     width: calc(100% - 34px);
     height: 610px;
@@ -216,7 +217,10 @@ input[type="checkbox"]{
     top: 14px;
     background: #FFFEFF;
     border-radius: 51px;
+    overflow-y: scroll;
+    
 }
+
 
 
 
@@ -255,10 +259,15 @@ td {
 
 th {
     font-weight: bold;
+    background-color: #91ad8f;
 }
 
 tr:last-child td {
     border-bottom: none;
+}
+tr:nth-child(even){
+    background-color: #e4e4e4; 
+    
 }
 
 .row-border {
