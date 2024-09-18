@@ -20,14 +20,14 @@ public class HomePage implements Handler {
                     <!-- navigation bar -->
                     <nav> 
                         <div class="logo">
-                            <img src="Ảnh/World_Tracker_Logo__1_-removebg-preview.png" alt="WorldChanges Logo"> 
+                            <img src="World_Tracker_Logo__1_-removebg-preview.png" alt="WorldChanges Logo"> 
                         </div>    
                         <div class="nav-elements">
-                            <a href="LandingPage.html">Home</a>
-                            <a href="GlobalTrackerPage.html">Global Tracker</a>
-                            <a href="/">City Tracker</a>
-                            <a href="/">Timeline Tracker</a>
-                            <a href="/">Periods Tracker</a>
+                            <a href="/LandingPage">Home</a>
+                            <a href="/GlobalTracker">Global Tracker</a>
+                            <a href='/CityTracker'>City Tracker</a>
+                            <a href="/TimeLineTracker">Timeline Tracker</a>
+                            <a href="/PeriodTracker">Periods Tracker</a>
                         </div>
                     </nav>
 
@@ -47,7 +47,7 @@ public class HomePage implements Handler {
                             </a>
                         </div>
                         <div class="image">
-                            <img src="Ảnh/image-removebg.png" alt="illustration" class="hero-image"/>
+                            <img src="image-removebg.png" alt="illustration" class="hero-image"/>
                         </div>
                     </section>
 
