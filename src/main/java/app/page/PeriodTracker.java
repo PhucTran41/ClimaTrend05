@@ -5,6 +5,9 @@ import io.javalin.http.Handler;
 
 public class PeriodTracker implements Handler {
 
+    public static final String URL = "/PeriodTracker";
+
+
     @Override
     public void handle(Context context) throws Exception {
 
