@@ -36,7 +36,7 @@ nav {
 body::after {
     content: '';
     display: block;
-    height: 1500px; /* Chiều cao của trang để cuộn xuống */
+    height: 100px; /* Chiều cao của trang để cuộn xuống */
 }
 
 nav.shrink {

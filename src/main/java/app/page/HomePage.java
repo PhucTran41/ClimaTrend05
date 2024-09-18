@@ -46,8 +46,8 @@ public class HomePage implements Handler {
                                 <button>View Now</button>
                             </a>
                         </div>
-                        <div class="image">
-                            <img src="image-removebg.png" alt="illustration" class="hero-image"/>
+            
+                        <img src="image-removebg.png" alt="illustration" class="hero-image"/>
                         </div>
                     </section>
 
