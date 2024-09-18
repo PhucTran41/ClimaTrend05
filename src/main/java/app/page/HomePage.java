@@ -25,7 +25,7 @@ public class HomePage implements Handler {
                         <img src="World_Tracker_Logo__1_-removebg-preview.png" alt="WorldChanges Logo"> 
                     </div>    
                     <div class="nav-elements">
-                        <a href="/HomePage">Home Page</a>
+                        <a href="/">Home Page</a>
                         <a href="/GlobalTracker">Global Tracker</a>
                         <a href="/CityTracker">City Tracker</a>
                         <a href="/TimelineTracker">Timeline Tracker</a>
