@@ -153,7 +153,7 @@ public class HomePage implements Handler {
                         <p class="Team5">Our Team</p>
                         <div class="column">
                             <div class="card">
-                                <img src="img1.jpg" alt="Jane" style="width:100%">
+                                <img src="Per1.jpg" alt="Jane" style="width:100%">
                                 <div class="teamBox-content">
                                     <h2>Ting-Chu Yang</h2>
                                     <p class="title">CEO &amp; Founder</p>
@@ -164,7 +164,7 @@ public class HomePage implements Handler {
                         </div>
                         <div class="column">
                             <div class="card">
-                                <img src="img2.jpg" alt="Mike" style="width:100%">
+                                <img src="memberPhuc.jpg" alt="Mike" style="width:100%">
                                 <div class="teamBox-content">
                                     <h2>Phuc Tran</h2>
                                     <p class="title">Database</p>
