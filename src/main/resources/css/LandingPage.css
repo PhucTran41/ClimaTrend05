@@ -57,6 +57,7 @@ nav {
     padding: 40px 20px;
     background-color: white;
     margin-bottom: 100px;
+    margin-top: 100px;
 }
 
 .our-mission h2 {
@@ -350,65 +351,46 @@ button:hover {
 }
 
 
-.personals-section {
-    text-align: center;
-    padding: 40px 20px;
-    margin-top: 200px;
-}
+
 
 /* Tiêu đề "Personals" */
-.personals-title {
+h1 {
+    margin-top: 200px;
+    text-align: center;
+    color: #333;
     font-size: 50px;
-    font-weight: bold;
-    margin-bottom: 30px;
 }
-
-/* Container cho 3 hộp */
-.personals-container {
+.personas-container {
     display: flex;
     justify-content: center;
+    align-items: flex-start; /* Aligns items at the start vertically */
     gap: 20px;
-    max-width: 1200px;
-    margin: 0 auto;
+    width: 100%; /* Ensure the container takes full width */
+    max-width: 1200px; /* Optional: Limit max width for better layout */
+    margin: 0 auto; /* Center the container */
+    padding: 20px; /* Optional: Add some padding */
 }
-
-/* Mỗi hộp personal */
-.personal-box {
+na {
     flex: 1;
-    max-width: 383px;
-    height: 532px;
-    background-color: #85a3f1;
-    border-radius: 30px;
-    position: relative;
-    overflow: hidden;
-}
-
-/* Phần trên cùng của hộp */
-.personal-box-top {
-    background-color: #7695FF;
-    height: 200px;
-    margin: 13px 16px 0;
-    border-radius: 30px;
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-/* Hình ảnh trong phần trên cùng */
-.personal-box-top img {
-    position: relative; /* Thay đổi từ absolute sang relative */
-    width: auto; /* Đặt chiều rộng cụ thể */
-    height: 200px; /* Đặt chiều cao cụ thể */
-    object-fit: cover;
-}
-
-/* Phần nội dung chính của hộp */
-.personal-box-content {
     background-color: white;
-    height: 396px;
-    margin: 20px 39px;
-    border-radius: 30px;
+    border-radius: 0px;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    height: 10px;
+}
+.persona h2 {
+    margin-top: 0;
+    color: #2c3e50;
+}
+.persona img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+.persona p {
+    margin: 5px 0;
+    color: #34495e;
 }
    /* TeamInfo */
 /* TeamBox */

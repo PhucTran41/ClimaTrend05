@@ -20,7 +20,7 @@ public class HomePage implements Handler {
                 <!-- navigation bar -->
                 <nav> 
                     <div class="logo">
-                        <img src="Ảnh/World_Tracker_Logo__1_-removebg-preview.png" alt="WorldChanges Logo"> 
+                        <img src="WorldTrackerLogo.png" alt="WorldChanges Logo"> 
                     </div>    
                     <div class="nav-elements">
                         <a href="LandingPage.html">Home</a>
@@ -46,7 +46,7 @@ public class HomePage implements Handler {
                             <button>View Now</button>
                         </a>
                     </div>
-                        <img src="Ảnh/image-removebg.png" alt="illustration" class="hero-image"/>
+                        <img src="Earth.png" alt="illustration" class="hero-image"/>
                 </section>
             
                     <!-- Our Mission -->
@@ -174,37 +174,36 @@ public class HomePage implements Handler {
                         </div>
                     </div>
                 </div>
-            
-                <!-- personals section -->
-                <section class="personals-section">
-                    <h2 class="personals-title">Personas</h2>
-                    <div class="personals-container">
-                        <div class="personal-box">
-                            <div class="personal-box-top">
-                                <img src="img/image-7.png" alt="Personal icon" />
-                            </div>
-                            <div class="personal-box-content">
-                                <!-- Nội dung cho personal box 1 -->
-                            </div>
-                        </div>
-                        <div class="personal-box">
-                            <div class="personal-box-top">
-                                <img src="img/image-7.png" alt="Personal icon" />
-                            </div>
-                            <div class="personal-box-content">
-                                <!-- Nội dung cho personal box 2 -->
-                            </div>
-                        </div>
-                        <div class="personal-box">
-                            <div class="personal-box-top">
-                                <img src="Ảnh/premium_photo-1689568158814-3b8e9c1a9618.avif" alt="Personal icon" />
-                            </div>
-                            <div class="personal-box-content">
-                                <!-- Nội dung cho personal box 3 -->
-                            </div>
-                        </div>
-                    </div>
-                </section>
+                <h1>Personas</h1>
+    <div class="personas-container">
+        <div class="persona">
+            <img src="Per1.png" alt="Marie">
+            <h2>Marie — The Artist</h2>
+            <p><strong>Age:</strong> 26</p>
+            <p><strong>Location:</strong> London, UK</p>
+            <p><strong>Occupation:</strong> Artist/Art Buyer</p>
+            <p><strong>Income:</strong> £32,000</p>
+            <p><strong>Goal:</strong> Looking to sell her art easily online and gain exposure as an up and coming artist.</p>
+        </div>
+        <div class="persona">
+            <img src="Per2.png" alt="Alex">
+            <h2>Alex — The Tech Enthusiast</h2>
+            <p><strong>Age:</strong> 32</p>
+            <p><strong>Location:</strong> San Francisco, USA</p>
+            <p><strong>Occupation:</strong> Software Developer</p>
+            <p><strong>Income:</strong> $120,000</p>
+            <p><strong>Goal:</strong> Seeking innovative platforms to discover and invest in digital art and NFTs.</p>
+        </div>
+        <div class="persona">
+            <img src="Per3.png" alt="Sophie">
+            <h2>Sophie — The Art Collector</h2>
+            <p><strong>Age:</strong> 45</p>
+            <p><strong>Location:</strong> Paris, France</p>
+            <p><strong>Occupation:</strong> Gallery Owner</p>
+            <p><strong>Income:</strong> €90,000</p>
+            <p><strong>Goal:</strong> Wants to find emerging artists and unique pieces to feature in her gallery.</p>
+        </div>
+    </div>
             </body>
             </html>
             
