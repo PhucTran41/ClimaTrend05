@@ -22,6 +22,7 @@ nav{
 }
 .heading-title{
     font-size: 50px;
+    margin-top: 100px;
 }
 html {
     scroll-behavior: smooth;
@@ -112,6 +113,7 @@ body.scrolled nav {
 
 heading-title{
     font-size: 1.8rem
+    
 }
 
 
@@ -135,7 +137,6 @@ nav a:hover {
     text-decoration: underline;
 }
 .hero {
-    margin-top: -20px;
     background: white;
     display: grid;
     place-items: center; /* Căn giữa nội dung theo cả chiều dọc và chiều ngang */
@@ -143,14 +144,7 @@ nav a:hover {
 }
 
 
-.hero-container {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    width: 100%; /* Đảm bảo phần hero-container chiếm toàn bộ chiều rộng */
-    max-width: 1300px; /* Giới hạn chiều rộng của hero-container */
-    padding: 3rem; /* Padding đều quanh hero-container */
-    box-sizing: border-box; /* Đảm bảo padding không làm tăng chiều rộng */
-}
+
 
 .column-center {
     display: flex; 
@@ -191,7 +185,7 @@ button:hover {
     /*earth images*/
     margin-left: auto;
     margin-right: auto;
-    width: 50%;
+    width: 60%;
     display: block;
 }
 
