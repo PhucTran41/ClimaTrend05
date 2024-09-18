@@ -28,7 +28,7 @@ public class HomePage implements Handler {
                         <a href="/HomePage">Home Page</a>
                         <a href="/GlobalTracker">Global Tracker</a>
                         <a href="/CityTracker">City Tracker</a>
-                        <a href="/TimeLine">Timeline Tracker</a>
+                        <a href="/TimelineTracker">Timeline Tracker</a>
                         <a href="/PeriodTracker">Periods Tracker</a>
                     </div>
                 </nav>
