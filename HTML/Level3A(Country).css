@@ -22,9 +22,9 @@ html {
     
     position: fixed; 
     top: 0;         
-    left: 0;         /* Aligns it to the left edge */
-    width: 100%;     /* Makes it take up the full width of the screen */
-    z-index: 1000;   /* Ensures the navbar stays on top of other elements */
+    left: 0;         
+    width: 100%;     
+    z-index: 1000;   
     height: 100px;
     display: flex;
     justify-content: space-between;
@@ -36,7 +36,7 @@ html {
 
 }
 
-.header-elements{
+.header-elements{  
     display: flex;
     gap: 2rem;
     padding: 2rem;
@@ -96,7 +96,7 @@ body.scrolled .header {
 .search-panel {
     width: calc(100% - 25%);
     height: 175px;
-   top: 114px;
+    top: 114px;
     left: 50%;
     transform: translateX(-50%);
     position: absolute;
