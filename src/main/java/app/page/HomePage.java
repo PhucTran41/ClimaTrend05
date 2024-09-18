@@ -153,7 +153,7 @@ public class HomePage implements Handler {
                         <p class="Team5">Our Team</p>
                         <div class="column">
                             <div class="card">
-                                <img src="Per1.jpg" alt="Jane" style="width:100%">
+                                <img src="memberJoanna.jpg" alt="Joanna" style="width:100%">
                                 <div class="teamBox-content">
                                     <h2>Ting-Chu Yang</h2>
                                     <p class="title">CEO &amp; Founder</p>
@@ -164,7 +164,7 @@ public class HomePage implements Handler {
                         </div>
                         <div class="column">
                             <div class="card">
-                                <img src="memberPhuc.jpg" alt="Mike" style="width:100%">
+                                <img src="memberPhuc.jpg" alt="Phuc" style="width:100%">
                                 <div class="teamBox-content">
                                     <h2>Phuc Tran</h2>
                                     <p class="title">Database</p>
@@ -175,7 +175,7 @@ public class HomePage implements Handler {
                         </div>
                         <div class="column">
                             <div class="card">
-                                <img src="img3.jpg" alt="Alice" style="width:100%">
+                                <img src="memberKhoa.jpg" alt="Khoa" style="width:100%">
                                 <div class="teamBox-content">
                                     <h2>Khoa Nguyen</h2>
                                     <p class="title">Database</p>
@@ -186,7 +186,7 @@ public class HomePage implements Handler {
                         </div>
                         <div class="column">
                             <div class="card">
-                                <img src="Ảnh/PhotoRoom_20240201_115321 3.jpg" alt="Bob" style="width:100%">
+                                <img src="Ảnh/PhotoRoom_20240201_115321 3.jpg" alt="Tuan" style="width:100%">
                                 <div class="teamBox-content">
                                     <h2>Tuan Nguyen</h2>
                                     <p class="title">UI-UX</p>
