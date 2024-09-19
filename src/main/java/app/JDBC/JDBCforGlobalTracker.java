@@ -15,7 +15,7 @@ html = html + "<head>";
 html = html + "<meta charset='UTF-8'>";
 html = html + "<meta name='viewport' content='width=device-width, initial-scale=1.0'>";
 html = html + "<title>ClimateTrend Dashboard</title>";
-html = html + "<link rel='stylesheet' href='Level2A.css'>";
+html = html + "<link rel='stylesheet' href='css/Level2A.css'>";
 html = html + "</head>";
 
 // Body
