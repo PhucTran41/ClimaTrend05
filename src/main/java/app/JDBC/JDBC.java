@@ -7,7 +7,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import app.classes.Global;
 import app.classes.Population;
@@ -120,63 +122,64 @@ public class JDBC {
     
 
     
-   // GET THE FIRST YEAR FOR GLOBAL POPULATION DATA
-public int getPopulationFirstYear() {
-    int year = -1; // Set initial
-    String query = """
-            SELECT year AS firstYear
-                FROM Population
-                ORDER BY year
-                LIMIT 1
-        """;
-    try (Connection connection = DriverManager.getConnection(DATABASE);
-         Statement statement = connection.createStatement()) {
+        // GET THE FIRST YEAR FOR GLOBAL POPULATION DATA
+        public int getPopulationFirstYear() {
+            int year = -1; // Set initial
+            String query = """
+                    SELECT year AS firstYear
+                        FROM Population
+                        ORDER BY year
+                        LIMIT 1
+                """;
+            try (Connection connection = DriverManager.getConnection(DATABASE);
+                Statement statement = connection.createStatement()) {
 
-        statement.setQueryTimeout(60);
+                statement.setQueryTimeout(60);
 
-        ResultSet resultSet = statement.executeQuery(query);
+                ResultSet resultSet = statement.executeQuery(query);
 
-        if (resultSet.next()) {
-            year = resultSet.getInt("firstYear");
-            System.out.println("First year found: " + year);
+                if (resultSet.next()) {
+                    year = resultSet.getInt("firstYear");
+                    System.out.println("First year found: " + year);
+                }
+
+            } catch (SQLException e) {
+                System.err.println("Error found: getPopulationFirstYear() " + e.getMessage());
+            }
+
+            return year;
         }
 
-    } catch (SQLException e) {
-        System.err.println("Error found: getPopulationFirstYear() " + e.getMessage());
-    }
 
-    return year;
-}
+            // GET THE LAST YEAR FOR GLOBAL POPULATION DATA
+        public int getPopulationLastYear() {
+            int year = -1;
+            String query = """
+            SELECT year AS lastYear
+            FROM Population
+            ORDER BY year DESC
+            LIMIT 1
+                    """;
+            
+            try (Connection connection = DriverManager.getConnection(DATABASE);
+                Statement statement = connection.createStatement()) {
 
+                statement.setQueryTimeout(60);
 
-    // GET THE LAST YEAR FOR GLOBAL POPULATION DATA
-public int getPopulationLastYear() {
-    int year = -1;
-    String query = """
-    SELECT year AS lastYear
-    FROM Population
-    ORDER BY year DESC
-    LIMIT 1
-            """;
-    
-    try (Connection connection = DriverManager.getConnection(DATABASE);
-         Statement statement = connection.createStatement()) {
+                ResultSet resultSet = statement.executeQuery(query);
 
-        statement.setQueryTimeout(60);
+                if (resultSet.next()) {
+                    year = resultSet.getInt("lastYear");  
+                }
 
-        ResultSet resultSet = statement.executeQuery(query);
+            } catch (SQLException e) {
+                System.err.println("Error found in getPopulationLastYear() " + e.getMessage());
+            }
 
-        if (resultSet.next()) {
-            year = resultSet.getInt("lastYear");  
+            return year;
         }
 
-    } catch (SQLException e) {
-        System.err.println("Error found in getPopulationLastYear() " + e.getMessage());
-    }
-
-    return year;
-}
-
+        //GET TEAM MEMBERS INFORMATION FROM DATABASE
         public List<String> getTeamMembers() {
             List<String> teamMembers = new ArrayList<>();
 
@@ -205,5 +208,36 @@ public int getPopulationLastYear() {
 
             return teamMembers;
         }
+
+        //GET PERSONAS INFORMATION FROM DATABASE
+        public Map<String, String> getPersonaDetails(int personaID) {
+            Map<String, String> personaDetails = new HashMap<>();
+    
+            String query = """
+                SELECT personaInfo, personaDetails
+                FROM Persona
+                WHERE personaID = ?
+                """;
+    
+            try (Connection connection = DriverManager.getConnection(DATABASE);
+                 PreparedStatement statement = connection.prepareStatement(query)) {
+    
+                statement.setInt(1, personaID);
+    
+                ResultSet resultSet = statement.executeQuery();
+    
+                while (resultSet.next()) {
+                    String info = resultSet.getString("personaInfo");
+                    String details = resultSet.getString("personaDetails");
+                    personaDetails.put(info, details);
+                }
+    
+            } catch (SQLException e) {
+                System.err.println("Error found in getPersonaDetails(): " + e.getMessage());
+            }
+    
+            return personaDetails;
+        }
+    
 
 }
