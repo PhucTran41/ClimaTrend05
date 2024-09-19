@@ -37,7 +37,7 @@ public class GlobalTracker implements Handler {
         html = html + "<img src='images/World_Tracker_Logo__1_-removebg-preview.png' alt='WorldChanges Logo'>";
         html = html + "</div>";
         html = html + "<div class='header-elements'>";
-        html = html + "<a href='/LandingPage'>Home</a>";
+        html = html + "<a href='/'>Home</a>";
         html = html + "<a href='/GlobalTracker'>Global Tracker</a>";
         html = html + "<a href='/CityTracker'>City Tracker</a>";
         html = html + "<a href='/TimeLineTracker'>Timeline Tracker</a>";
