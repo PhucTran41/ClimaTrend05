@@ -151,10 +151,12 @@ public int getPopulationFirstYear() {
 public int getPopulationLastYear() {
     int year = -1;
     String query = """
-            SELECT MAX(year) AS lastYear
-            FROM Population
-            
+    SELECT year AS lastYear
+    FROM Population
+    ORDER BY year DESC
+    LIMIT 1
             """;
+    
     try (Connection connection = DriverManager.getConnection(DATABASE);
          Statement statement = connection.createStatement()) {
 
