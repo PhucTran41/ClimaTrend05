@@ -2,13 +2,11 @@ package app.JDBC;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
 import app.classes.Global;
-import app.classes.Population;
 
 public class JDBC {
 
@@ -86,11 +84,17 @@ public class JDBC {
 
 
     // GET THE POPULATION FOR THE FIRST YEAR
-    public Population getPopulationFirstYear() {
-    Population populationData = new Population();
+    public Global getPopulationFirstYear() {
+        
+    Global populationData = new Global();
 
     try (Connection connection = DriverManager.getConnection(DATABASE);
-         PreparedStatement statement = connection.prepareStatement("""
+         
+        Statement statement = connection.createStatement();) {
+        
+        statement.setQueryTimeout(15);
+        
+        String query = """
             SELECT p.year, p.population
             FROM Population p
             WHERE p.year = (
@@ -98,11 +102,9 @@ public class JDBC {
                 FROM Population
             )
             AND p.countryID = 'WLD'
-            """)) {
+            """ ;
 
-        statement.setQueryTimeout(15);
-
-        ResultSet resultSet = statement.executeQuery();
+        ResultSet resultSet = statement.executeQuery(query);
 
         if (resultSet.next()) {
             populationData.setYear(resultSet.getInt("year"));

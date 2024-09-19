@@ -2,7 +2,6 @@ package app.page;
 
 import app.JDBC.JDBC;
 import app.classes.Global;
-import app.classes.Population;
 import io.javalin.http.Context;
 import io.javalin.http.Handler;
 
@@ -18,7 +17,7 @@ public class HomePage implements Handler {
            JDBC jdbc = new JDBC();
            Global firstYearTemp = jdbc.getFirstYearTemp();
            Global lastYearTemp = jdbc.getLastYearTemp();
-           Population firstYearPop = jdbc.getPopulationFirstYear();
+           Global firstYearPop = jdbc.getPopulationFirstYear();
            int lastYearPop = jdbc.getPopulationLastYear();
 
 
