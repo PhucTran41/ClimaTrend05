@@ -107,6 +107,15 @@ public class JDBC {
         if (resultSet.next()) {
             populationData.setYear(resultSet.getInt("year"));
             populationData.setPopulation(resultSet.getInt("population"));
+
+                        // Check if the population value is valid
+                        int population = resultSet.getInt("population");
+                        if (resultSet.wasNull()) {
+                            System.err.println("Population value is null");
+                        } else {
+                            populationData.setPopulation(population);
+                        }
+
         }
 
     } catch (SQLException e) {
@@ -149,6 +158,8 @@ public int getPopulationLastYear() {
 
     return lastYear;
 }
+
+
 
 
 
