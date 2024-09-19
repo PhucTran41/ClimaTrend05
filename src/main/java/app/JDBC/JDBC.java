@@ -2,11 +2,13 @@ package app.JDBC;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
 import app.classes.Global;
+import app.classes.Population;
 
 public class JDBC {
 
@@ -16,53 +18,53 @@ public class JDBC {
         System.out.println("Created JDBC Connection Object");
     }
 
-    // GET THE FIRST YEAR FOR GLOBAL TEMPERATURE DATA + GET THE TEMPERATURE FOR THAT YEAR
+    // GET THE FIRST YEAR FOR GLOBAL TEMPERATURE DATA + GET THE TEMPERATURE FOR THAT
+    // YEAR
 
     public Global getFirstYearTemp() {
         Global worldtemperature = new Global();
-    
+
         try (Connection connection = DriverManager.getConnection(DATABASE);
-             Statement statement = connection.createStatement();) {
-    
+                Statement statement = connection.createStatement();) {
+
             statement.setQueryTimeout(15);
-    
+
             // Correct query to fetch all required fields
             String query = """
                     SELECT t.year, ROUND(t.AverageTemperature, 2) AS AverageTemperature
                     FROM TempOfGlobal t
-                    WHERE t.year = (SELECT MIN(year) 
+                    WHERE t.year = (SELECT MIN(year)
                     FROM TempOfGlobal)
                     """;
             ResultSet resultSet = statement.executeQuery(query);
-    
+
             // Ensure the resultSet contains data
             if (resultSet.next()) {
                 worldtemperature.setYear(resultSet.getInt("year"));
                 worldtemperature.setAverageTemp(resultSet.getFloat("AverageTemperature"));
             }
-    
+
         } catch (SQLException e) {
             System.err.println("Error found :getFirstYearTemp() " + e.getMessage());
         }
-    
+
         return worldtemperature;
     }
-    
 
-       // GET THE LAST YEAR FOR GLOBAL TEMPERATURE DATA
-        public Global getLastYearTemp() {
-            Global worldtemperature = new Global();
+    // GET THE LAST YEAR FOR GLOBAL TEMPERATURE DATA
+    public Global getLastYearTemp() {
+        Global worldtemperature = new Global();
 
         try (Connection connection = DriverManager.getConnection(DATABASE);
-            Statement statement = connection.createStatement();) {
+                Statement statement = connection.createStatement();) {
 
-        statement.setQueryTimeout(15);
+            statement.setQueryTimeout(15);
 
-        // Query to fetch both year and average temperature for the last year
+            // Query to fetch both year and average temperature for the last year
             String query = """
                     SELECT t.year, ROUND(t.AverageTemperature, 2) AS AverageTemperature
                     FROM TempOfGlobal t
-                    WHERE t.year = (SELECT MAX(year) 
+                    WHERE t.year = (SELECT MAX(year)
                     FROM TempOfGlobal)
                     """;
             ResultSet resultSet = statement.executeQuery(query);
@@ -79,87 +81,96 @@ public class JDBC {
         return worldtemperature;
     }
 
-
-    // GET THE POPULATION FOR THE FIRST YEAR
-    public Global getPopulationFirstYear() {
-        
-    Global populationData = new Global();
-
-    try (Connection connection = DriverManager.getConnection(DATABASE);
-         
-        Statement statement = connection.createStatement();) {
-        
-        statement.setQueryTimeout(15);
-        
+    public Population getPopulation(String region, int year) {
+        Population population = new Population();
+    
         String query = """
-            SELECT p.year, p.population
-            FROM Population p
-            WHERE p.year = (
-                SELECT MIN(year)
+                SELECT *
                 FROM Population
-            )
-            AND p.countryID = 'WLD'
-            """ ;
+                WHERE countryID = ?
+                AND year = ?
+                """;
+    
+        try (Connection connection = DriverManager.getConnection(DATABASE);
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+    
+            // Correct the order of parameters
+            preparedStatement.setString(1, region); // Set the region first
+            preparedStatement.setInt(2, year);      // Set the year second
+    
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    population.setCountryID(resultSet.getString("countryID"));
+                    population.setYear(resultSet.getInt("year"));
+                    population.setPopulation(resultSet.getLong("population")); // Set the population value
+                    System.out.println("Population found: " + population.getPopulation());
+                } else {
+                    System.err.println("No data found for the given year and region");
+                }
+            }
+    
+        } catch (SQLException e) {
+            System.err.println("Error found in getPopulation method: " + e.getMessage());
+        }
+    
+        return population;
+    }
+    
+
+    
+   // GET THE FIRST YEAR FOR GLOBAL POPULATION DATA
+public int getPopulationFirstYear() {
+    int year = -1; // Set initial
+    String query = """
+            SELECT year AS firstYear
+                FROM Population
+                ORDER BY year
+                LIMIT 1
+        """;
+    try (Connection connection = DriverManager.getConnection(DATABASE);
+         Statement statement = connection.createStatement()) {
+
+        statement.setQueryTimeout(60);
 
         ResultSet resultSet = statement.executeQuery(query);
 
         if (resultSet.next()) {
-            populationData.setYear(resultSet.getInt("year"));
-            populationData.setPopulation(resultSet.getInt("population"));
-
-                        // Check if the population value is valid
-                        int population = resultSet.getInt("population");
-                        if (resultSet.wasNull()) {
-                            System.err.println("Population value is null");
-                        } else {
-                            populationData.setPopulation(population);
-                        }
-
+            year = resultSet.getInt("firstYear");
+            System.out.println("First year found: " + year);
         }
 
     } catch (SQLException e) {
         System.err.println("Error found: getPopulationFirstYear() " + e.getMessage());
     }
 
-    return populationData;
+    return year;
 }
 
-    
 
-
-// GET THE LAST YEAR FOR GLOBAL POPULATION DATA
+    // GET THE LAST YEAR FOR GLOBAL POPULATION DATA
 public int getPopulationLastYear() {
-
-    int lastYear = -1;  // Initialize with a default value
-
+    int year = -1;
+    String query = """
+            SELECT MAX(year) AS lastYear
+            FROM Population
+            
+            """;
     try (Connection connection = DriverManager.getConnection(DATABASE);
          Statement statement = connection.createStatement()) {
-        
-        statement.setQueryTimeout(15);
 
-        // Query to get the last year for population data
-        String query = """
-            SELECT p.year
-            FROM Population p
-            WHERE p.year = (SELECT MAX(year)
-            FROM Population)
-            """;
+        statement.setQueryTimeout(60);
 
         ResultSet resultSet = statement.executeQuery(query);
 
         if (resultSet.next()) {
-            lastYear = resultSet.getInt("year");
+            year = resultSet.getInt("lastYear");  
         }
 
     } catch (SQLException e) {
-        System.err.println("Error found in getPopulationLastYear(): " + e.getMessage());
+        System.err.println("Error found in getPopulationLastYear() " + e.getMessage());
     }
 
-    return lastYear;
+    return year;
 }
-
-
-
-
 
 }

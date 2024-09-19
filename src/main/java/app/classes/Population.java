@@ -3,13 +3,13 @@ package app.classes;
 public class Population{
 
     private String countryID;
-    private int population;
+    private long population;
     private int year;
     
     public Population() {
     
     }
-    public Population(int year, String countryID, int population) {
+    public Population(int year, String countryID, long population) {
         this.year = year;
         this.countryID = countryID;
         this.population = population;
@@ -25,7 +25,7 @@ public class Population{
         return population;
     }
 
-    public void setPopulation(int population) {
+    public void setPopulation(long population) {
         this.population = population;
     }
     public int getYear() {

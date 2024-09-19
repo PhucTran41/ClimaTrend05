@@ -2,6 +2,7 @@ package app.page;
 
 import app.JDBC.JDBC;
 import app.classes.Global;
+import app.classes.Population;
 import io.javalin.http.Context;
 import io.javalin.http.Handler;
 
@@ -17,9 +18,10 @@ public class HomePage implements Handler {
            JDBC jdbc = new JDBC();
            Global firstYearTemp = jdbc.getFirstYearTemp();
            Global lastYearTemp = jdbc.getLastYearTemp();
-           Global firstYearPop = jdbc.getPopulationFirstYear();
-           int lastYearPop = jdbc.getPopulationLastYear();
+           Population firstYearPopuWorld = jdbc.getPopulation("WLD", jdbc.getPopulationFirstYear());
+           Population lastYearPopuWorld = jdbc.getPopulation("WLD", jdbc.getPopulationLastYear());
 
+           
 
         String html = """
             
@@ -88,25 +90,27 @@ public class HomePage implements Handler {
                                 <div class="data-range">
                                     <div>
                                         <div class="data-year" id="popStartYear">FROM&nbsp;"""
-                                            + firstYearPop.getYear() + """
+                                            + firstYearPopuWorld.getYear() +  """
                                         </div>
 
                                         <br>
 
                                         <div class="data-value"><span id="popStartValue">"""
 
-                                            + firstYearPop.getPopulation() + """
+                                            + firstYearPopuWorld.getPopulation() + """
 
                                         </span> people</div>
                                     </div>
                                     <div>
                                         <div class="data-year" id="popEndYear">TO&nbsp;"""
-                                            + lastYearPop + """
+                                            + lastYearPopuWorld.getYear() + """
                                         </div>
 
                                         <br>
 
-                                        <div class="data-value"><span id="popEndValue">4,000,541</span> people</div>
+                                        <div class="data-value"><span id="popEndValue">"""
+                                            +  lastYearPopuWorld.getPopulation() + """
+                                        </span> people</div>
                                     </div>
                                 </div>
                             </div>
