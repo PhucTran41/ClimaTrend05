@@ -1,5 +1,7 @@
 package app.page;
 
+import java.util.List;
+
 import app.JDBC.JDBC;
 import app.classes.Global;
 import app.classes.Population;
@@ -20,7 +22,9 @@ public class HomePage implements Handler {
            Global lastYearTemp = jdbc.getLastYearTemp();
            Population firstYearPopuWorld = jdbc.getPopulation("WLD", jdbc.getPopulationFirstYear());
            Population lastYearPopuWorld = jdbc.getPopulation("WLD", jdbc.getPopulationLastYear());
-
+           
+           //Retrieve TEAM MEMBERS
+            List<String> teamMembers = jdbc.getTeamMembers();
            
 
         String html = """
@@ -185,26 +189,34 @@ public class HomePage implements Handler {
                 <!-- team section -->
                 <div class="teamBox">
                     <div class="row">
-                        <p class="Team5">Our Team</p>
+                        <p class="Team5">Meet the ClimaTrend Team!</p>
                         <div class="column">
                             <div class="card">
-                                <img src="memberJoanna.jpg" alt="Joanna" style="width:100%">
+                                <img src="memberPhuc.jpg" alt="Phuc" style="width:100%">
                                 <div class="teamBox-content">
-                                    <h2>Ting-Chu Yang</h2>
-                                    <p class="title">CEO &amp; Founder</p>
-                                    <p>Some text that describes me lorem ipsum ipsum lorem.</p>
-                                    <p>example@example.com</p>
+                                    <h2> """
+                                         + teamMembers.get(0) + 
+                                         """
+                                            </h2>
+                                    <p class="title">Member 1</p>
+                                    <h3>"""
+                                        + teamMembers.get(1) + """
+                                            </h3>
                                 </div>
                             </div>
                         </div>
                         <div class="column">
                             <div class="card">
-                                <img src="memberPhuc.jpg" alt="Phuc" style="width:100%">
+                                <img src="memberJoanna.jpg" alt="Joanna" style="width:100%">
                                 <div class="teamBox-content">
-                                    <h2>Phuc Tran</h2>
-                                    <p class="title">Database</p>
-                                    <p>Some text that describes me lorem ipsum ipsum lorem.</p>
-                                    <p>example@example.com</p>
+                                    <h2>"""
+                                        + teamMembers.get(2) + 
+                                        """
+                                            </h2>
+                                    <p class="title">Member 2</p>
+                                    <h3>"""
+                                        + teamMembers.get(3) + """
+                                            </h3>
                                 </div>
                             </div>
                         </div>
@@ -212,10 +224,14 @@ public class HomePage implements Handler {
                             <div class="card">
                                 <img src="memberKhoa.jpg" alt="Khoa" style="width:100%">
                                 <div class="teamBox-content">
-                                    <h2>Khoa Nguyen</h2>
-                                    <p class="title">Database</p>
-                                    <p>Some text that describes me lorem ipsum ipsum lorem.</p>
-                                    <p>example@example.com</p>
+                                    <h2>"""
+                                        + teamMembers.get(4) + 
+                                        """
+                                            </h2>
+                                    <p class="title">Member 3</p>
+                                    <h3>"""
+                                        + teamMembers.get(5) + """
+                                            </h3>
                                 </div>
                             </div>
                         </div>
@@ -223,47 +239,55 @@ public class HomePage implements Handler {
                             <div class="card">
                                 <img src="Ảnh/PhotoRoom_20240201_115321 3.jpg" alt="Tuan" style="width:100%">
                                 <div class="teamBox-content">
-                                    <h2>Tuan Nguyen</h2>
-                                    <p class="title">UI-UX</p>
-                                    <p>Some text that describes me lorem ipsum ipsum lorem.</p>
-                                    <p>example@example.com</p>
+                                    <h2>"""
+                                        + teamMembers.get(6) + 
+                                        """
+                                            </h2>
+                                    <p class="title">Member 4</p>
+                                    <h3>"""
+                                        + teamMembers.get(7) + """
+                                            </h3>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <h1>Personas</h1>
-    <div class="personas-container">
-        <div class="persona">
-            <img src="Per1.png" alt="Marie">
-            <h2>Marie — The Artist</h2>
-            <p><strong>Age:</strong> 26</p>
-            <p><strong>Location:</strong> London, UK</p>
-            <p><strong>Occupation:</strong> Artist/Art Buyer</p>
-            <p><strong>Income:</strong> £32,000</p>
-            <p><strong>Goal:</strong> Looking to sell her art easily online and gain exposure as an up and coming artist.</p>
-        </div>
-        <div class="persona">
-            <img src="Per2.png" alt="Alex">
-            <h2>Alex — The Tech Enthusiast</h2>
-            <p><strong>Age:</strong> 32</p>
-            <p><strong>Location:</strong> San Francisco, USA</p>
-            <p><strong>Occupation:</strong> Software Developer</p>
-            <p><strong>Income:</strong> $120,000</p>
-            <p><strong>Goal:</strong> Seeking innovative platforms to discover and invest in digital art and NFTs.</p>
-        </div>
-        <div class="persona">
-            <img src="Per3.png" alt="Sophie">
-            <h2>Sophie — The Art Collector</h2>
-            <p><strong>Age:</strong> 45</p>
-            <p><strong>Location:</strong> Paris, France</p>
-            <p><strong>Occupation:</strong> Gallery Owner</p>
-            <p><strong>Income:</strong> €90,000</p>
-            <p><strong>Goal:</strong> Wants to find emerging artists and unique pieces to feature in her gallery.</p>
-        </div>
-    </div>
-            </body>
-            </html>
+
+
+                <h1>CLimaTrend's User Personas</h1>
+
+                        <div class="personas-container">
+                            <div class="persona">
+                                <img src="Per1.png" alt="Marie">
+                                <h2>Marie — The Artist</h2>
+                                <p><strong>Age:</strong> 26</p>
+                                <p><strong>Location:</strong> London, UK</p>
+                                <p><strong>Occupation:</strong> Artist/Art Buyer</p>
+                                <p><strong>Income:</strong> £32,000</p>
+                                <p><strong>Goal:</strong> Looking to sell her art easily online and gain exposure as an up and coming artist.</p>
+                            </div>
+                            <div class="persona">
+                                <img src="Per2.png" alt="Alex">
+                                <h2>Alex — The Tech Enthusiast</h2>
+                                <p><strong>Age:</strong> 32</p>
+                                <p><strong>Location:</strong> San Francisco, USA</p>
+                                <p><strong>Occupation:</strong> Software Developer</p>
+                                <p><strong>Income:</strong> $120,000</p>
+                                <p><strong>Goal:</strong> Seeking innovative platforms to discover and invest in digital art and NFTs.</p>
+                            </div>
+                            <div class="persona">
+                                <img src="Per3.png" alt="Sophie">
+                                <h2>Sophie — The Art Collector</h2>
+                                <p><strong>Age:</strong> 45</p>
+                                <p><strong>Location:</strong> Paris, France</p>
+                                <p><strong>Occupation:</strong> Gallery Owner</p>
+                                <p><strong>Income:</strong> €90,000</p>
+                                <p><strong>Goal:</strong> Wants to find emerging artists and unique pieces to feature in her gallery.</p>
+                            </div>
+                        </div>
+                        
+                                </body>
+                                </html>
             
                 """;
 

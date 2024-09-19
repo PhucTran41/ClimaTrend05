@@ -177,4 +177,33 @@ public int getPopulationLastYear() {
     return year;
 }
 
+        public List<String> getTeamMembers() {
+            List<String> teamMembers = new ArrayList<>();
+
+            try (Connection connection = DriverManager.getConnection(DATABASE);
+                Statement statement = connection.createStatement()) {
+
+                String query = """
+                    SELECT NAME, studentID
+                    FROM TEAMMB
+                    """;
+
+                ResultSet resultSet = statement.executeQuery(query);
+
+                while (resultSet.next()) {
+                    String name = resultSet.getString("NAME");
+                    String studentID = resultSet.getString("studentID");
+                    
+                    // Add both name and studentID to the list
+                    teamMembers.add(name);
+                    teamMembers.add(studentID);
+                }
+
+            } catch (SQLException e) {
+                System.err.println("Error found in getTeamMembers(): " + e.getMessage());
+            }
+
+            return teamMembers;
+        }
+
 }
