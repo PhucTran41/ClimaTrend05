@@ -187,7 +187,7 @@ public class HomePage implements Handler {
                 <!-- team section -->
                 <div class="teamBox">
                     <div class="row">
-                        <p class="Team5">Our Team</p>
+                        <p class="Team5">Meet the ClimaTrend Team!</p>
                         <div class="column">
                             <div class="card">
                                 <img src="memberPhuc.jpg" alt="Phuc" style="width:100%">
@@ -250,40 +250,44 @@ public class HomePage implements Handler {
                         </div>
                     </div>
                 </div>
-                <h1>Personas</h1>
-    <div class="personas-container">
-        <div class="persona">
-            <img src="Per1.png" alt="Marie">
-            <h2>Marie — The Artist</h2>
-            <p><strong>Age:</strong> 26</p>
-            <p><strong>Location:</strong> London, UK</p>
-            <p><strong>Occupation:</strong> Artist/Art Buyer</p>
-            <p><strong>Income:</strong> £32,000</p>
-            <p><strong>Goal:</strong> Looking to sell her art easily online and gain exposure as an up and coming artist.</p>
-        </div>
-        <div class="persona">
-            <img src="Per2.png" alt="Alex">
-            <h2>Alex — The Tech Enthusiast</h2>
-            <p><strong>Age:</strong> 32</p>
-            <p><strong>Location:</strong> San Francisco, USA</p>
-            <p><strong>Occupation:</strong> Software Developer</p>
-            <p><strong>Income:</strong> $120,000</p>
-            <p><strong>Goal:</strong> Seeking innovative platforms to discover and invest in digital art and NFTs.</p>
-        </div>
-        <div class="persona">
-            <img src="Per3.png" alt="Sophie">
-            <h2>Sophie — The Art Collector</h2>
-            <p><strong>Age:</strong> 45</p>
-            <p><strong>Location:</strong> Paris, France</p>
-            <p><strong>Occupation:</strong> Gallery Owner</p>
-            <p><strong>Income:</strong> €90,000</p>
-            <p><strong>Goal:</strong> Wants to find emerging artists and unique pieces to feature in her gallery.</p>
-        </div>
-    </div>
-            </body>
-            </html>
-            
-                """;
+
+                <h1>ClimaTrend's User Personas</h1>
+                        <div class="personas-container">
+                            <div class="persona">
+                                <img src="Per1.png" alt="Persona1">
+                                <h2>Persona1Name</h2>
+                                <p><strong>Age:</strong> 26</p>
+                                <p><strong>Location:</strong> London, UK</p>
+                                <p><strong>Occupation:</strong> Artist/Art Buyer</p>
+                                <p><strong>Income:</strong> £32,000</p>
+                                <p><strong>Goal:</strong> Looking to sell her art easily online and gain exposure as an up and coming artist.</p>
+                            </div>
+
+                            <div class="persona">
+                                <img src="Per2.png" alt="Persona2">
+                                <h2>Persona2Name</h2>
+                                <p><strong>Age:</strong> 32</p>
+                                <p><strong>Location:</strong> San Francisco, USA</p>
+                                <p><strong>Occupation:</strong> Software Developer</p>
+                                <p><strong>Income:</strong> $120,000</p>
+                                <p><strong>Goal:</strong> Seeking innovative platforms to discover and invest in digital art and NFTs.</p>
+                            </div>
+
+                            <div class="persona">
+                                <img src="Per3.png" alt="Persona3">
+                                <h2>Persona3Name</h2>
+                                <p><strong>Age:</strong> 45</p>
+                                <p><strong>Location:</strong> Paris, France</p>
+                                <p><strong>Occupation:</strong> Gallery Owner</p>
+                                <p><strong>Income:</strong> €90,000</p>
+                                <p><strong>Goal:</strong> Wants to find emerging artists and unique pieces to feature in her gallery.</p>
+                            </div>
+
+                        </div>
+                                </body>
+                                </html>
+                                
+                                    """;
 
         context.html(html);
     }
