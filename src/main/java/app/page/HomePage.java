@@ -1,9 +1,12 @@
 package app.page;
 
+import java.util.List;
+
 import app.JDBC.JDBC;
 import app.classes.Global;
 import io.javalin.http.Context;
 import io.javalin.http.Handler;
+
 
 
 public class HomePage implements Handler {
@@ -19,6 +22,9 @@ public class HomePage implements Handler {
            Global lastYearTemp = jdbc.getLastYearTemp();
            Global firstYearPop = jdbc.getPopulationFirstYear();
            int lastYearPop = jdbc.getPopulationLastYear();
+
+           //Retrieve TEAM MEMBERS
+        List<String> teamMembers = jdbc.getTeamMembers();
 
 
         String html = """
@@ -184,23 +190,31 @@ public class HomePage implements Handler {
                         <p class="Team5">Our Team</p>
                         <div class="column">
                             <div class="card">
-                                <img src="memberJoanna.jpg" alt="Joanna" style="width:100%">
+                                <img src="memberPhuc.jpg" alt="Phuc" style="width:100%">
                                 <div class="teamBox-content">
-                                    <h2>Ting-Chu Yang</h2>
-                                    <p class="title">CEO &amp; Founder</p>
-                                    <p>Some text that describes me lorem ipsum ipsum lorem.</p>
-                                    <p>example@example.com</p>
+                                    <h2> """
+                                         + teamMembers.get(0) + 
+                                         """
+                                            </h2>
+                                    <p class="title">Member 1</p>
+                                    <h3>"""
+                                        + teamMembers.get(1) + """
+                                            </h3>
                                 </div>
                             </div>
                         </div>
                         <div class="column">
                             <div class="card">
-                                <img src="memberPhuc.jpg" alt="Phuc" style="width:100%">
+                                <img src="memberJoanna.jpg" alt="Joanna" style="width:100%">
                                 <div class="teamBox-content">
-                                    <h2>Phuc Tran</h2>
-                                    <p class="title">Database</p>
-                                    <p>Some text that describes me lorem ipsum ipsum lorem.</p>
-                                    <p>example@example.com</p>
+                                    <h2>"""
+                                        + teamMembers.get(2) + 
+                                        """
+                                            </h2>
+                                    <p class="title">Member 2</p>
+                                    <h3>"""
+                                        + teamMembers.get(3) + """
+                                            </h3>
                                 </div>
                             </div>
                         </div>
@@ -208,10 +222,14 @@ public class HomePage implements Handler {
                             <div class="card">
                                 <img src="memberKhoa.jpg" alt="Khoa" style="width:100%">
                                 <div class="teamBox-content">
-                                    <h2>Khoa Nguyen</h2>
-                                    <p class="title">Database</p>
-                                    <p>Some text that describes me lorem ipsum ipsum lorem.</p>
-                                    <p>example@example.com</p>
+                                    <h2>"""
+                                        + teamMembers.get(4) + 
+                                        """
+                                            </h2>
+                                    <p class="title">Member 3</p>
+                                    <h3>"""
+                                        + teamMembers.get(5) + """
+                                            </h3>
                                 </div>
                             </div>
                         </div>
@@ -219,10 +237,14 @@ public class HomePage implements Handler {
                             <div class="card">
                                 <img src="Ảnh/PhotoRoom_20240201_115321 3.jpg" alt="Tuan" style="width:100%">
                                 <div class="teamBox-content">
-                                    <h2>Tuan Nguyen</h2>
-                                    <p class="title">UI-UX</p>
-                                    <p>Some text that describes me lorem ipsum ipsum lorem.</p>
-                                    <p>example@example.com</p>
+                                    <h2>"""
+                                        + teamMembers.get(6) + 
+                                        """
+                                            </h2>
+                                    <p class="title">Member 4</p>
+                                    <h3>"""
+                                        + teamMembers.get(7) + """
+                                            </h3>
                                 </div>
                             </div>
                         </div>
