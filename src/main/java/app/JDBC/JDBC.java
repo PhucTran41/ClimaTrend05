@@ -80,9 +80,6 @@ public class JDBC {
     }
 
 
-    // GET THE FIRST YEAR FOR GLOBAL POPULATION DATA
-
-
     // GET THE POPULATION FOR THE FIRST YEAR
     public Global getPopulationFirstYear() {
         
