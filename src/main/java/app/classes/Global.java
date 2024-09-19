@@ -6,7 +6,7 @@ public class Global {
     private float averageTemp;
     private float MinimumTemp;
     private float MaximumTemp;
-    private long population;
+    private int population;
     private int initialYear;
     private int startYear;
     private int endYear;
@@ -14,7 +14,7 @@ public class Global {
     public Global() {
     }
 
-    public Global(int year, long population, float averageTemp) {
+    public Global(int year, int population, float averageTemp) {
         this.year = year;
         this.population = population;
         this.averageTemp = averageTemp;
@@ -35,7 +35,7 @@ public class Global {
     public long getPopulation() {
         return population;
     }
-    public void setPopulation(long population) {
+    public void setPopulation(int population) {
         this.population = population;
     }
     public int getInitialYear() {

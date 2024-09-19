@@ -13,10 +13,13 @@ public class HomePage implements Handler {
     @Override
     public void handle(Context context) throws Exception {
 
-           // Step 1: Fetch the first year temperature data using JDBC
+           //Fetch the data using JDBC
            JDBC jdbc = new JDBC();
            Global firstYearTemp = jdbc.getFirstYearTemp();
            Global lastYearTemp = jdbc.getLastYearTemp();
+           Global firstYearPop = jdbc.getPopulationFirstYear();
+           int lastYearPop = jdbc.getPopulationLastYear();
+
 
         String html = """
             
@@ -76,50 +79,78 @@ public class HomePage implements Handler {
                     </section>
                 
                 
-                <!-- available data section -->
-                <section id="available-data" class="data-section">
-                    <h2>Our Available Data</h2>
-                    <div class="data-container">
-                        <div class="data-column">
-                            <div class="data-title">Population</div>
-                            <div class="data-range">
-                                <div>
-                                    <div class="data-year" id="popStartYear">1960</div>
-                                    <div class="data-value"><span id="popStartValue">1,900,000</span> people</div>
-                                </div>
-                                <div>
-                                    <div class="data-year" id="popEndYear">2013</div>
-                                    <div class="data-value"><span id="popEndValue">4,000,541</span> people</div>
+                    <!-- available data section -->
+                    <section id="available-data" class="data-section">
+                        <h2>Our Available Data</h2>
+                        <div class="data-container">
+                            <div class="data-column">
+                                <div class="data-title">Population</div>
+                                <div class="data-range">
+                                    <div>
+                                        <div class="data-year" id="popStartYear">FROM&nbsp;"""
+                                            + firstYearPop.getYear() + """
+                                        </div>
+
+                                        <br>
+
+                                        <div class="data-value"><span id="popStartValue">"""
+
+                                            + firstYearPop.getPopulation() + """
+
+                                        </span> people</div>
+                                    </div>
+                                    <div>
+                                        <div class="data-year" id="popEndYear">TO&nbsp;"""
+                                            + lastYearPop + """
+                                        </div>
+
+                                        <br>
+
+                                        <div class="data-value"><span id="popEndValue">4,000,541</span> people</div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="data-column">
-                            <div class="data-title">Temperature</div>
-                            <div class="temperature-data">
-                                <div class="temperature-range">
-                                    <div class="temperature-item">
-                                    
+                    
+                            <div class="data-column">
+                                <div class="data-title">Temperature</div>
+                                <div class="temperature-data">
+                                    <div class="temperature-range">
+                                        <div class="temperature-item">
+                                            <div class="data-year" id="tempStartYear">FROM&nbsp;"""
 
-                                        <div class="data-year" id="tempStartYear">"""
-                                        + firstYearTemp.getYear() +"""
-                                              </div>
+                                                + firstYearTemp.getYear() + """
 
-                                        <div class="data-value"><span id="tempStartValue">34</span>c</div>
-                                    </div>
-                                    <div class="temperature-item">
-
-
-                                        <div class="data-year" id="tempEndYear"> """
-                                            + lastYearTemp.getYear()+ """
                                             </div>
 
-                                        <div class="data-value"><span id="tempEndValue">35.2</span>c</div>
+                                            <br>
+
+                                            <div class="data-value"><span id="tempStartValue">"""
+
+                                                + firstYearTemp.getAverageTemp() + """
+
+                                                    </span>&deg;C</div>
+                                        </div>
+                                        <div class="temperature-item">
+                                            <div class="data-year" id="tempEndYear">TO&nbsp;"""
+
+                                                + lastYearTemp.getYear() + """
+
+                                            </div>
+
+                                            <br>
+
+                                            <div class="data-value"><span id="tempEndValue">"""
+
+                                                + lastYearTemp.getAverageTemp() + """
+
+                                                    </span>&deg;C</div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </section>
+                    </section>
+                    
 
                 <!-- How to use  -->
                 <section class="how-to-use">
