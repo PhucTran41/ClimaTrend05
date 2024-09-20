@@ -138,7 +138,7 @@ public class JDBCforGlobalTracker {
         
     }
 
-    //retrieve datas from back end and get it to the table
+    //GEt global datas from the country 
     public ArrayList<Global> getGlobalDatafromCountry(String [] countries, String OutputType, String startYear, String endYear) {
         ArrayList<Global> globalData = new ArrayList<>();
         
@@ -148,6 +148,7 @@ public class JDBCforGlobalTracker {
             JOIN Population p ON p.year = tg.Year
             """;
 
+        //FIXME!!!!!!!!!!!!!!!!!!!
 
         //ORDER BY p.year DESC;
         //
@@ -183,7 +184,7 @@ public class JDBCforGlobalTracker {
 
 
             
-    //Get data from word
+    //Get global data from WORD
     public ArrayList<Global> getGlobalDatafromWord(String output, String orderby, String startYear, String endYear) {
         ArrayList<Global> globalData = new ArrayList<>();
         
@@ -192,7 +193,7 @@ public class JDBCforGlobalTracker {
             FROM TempOfGLobal tg
             JOIN Population p ON p.year = tg.Year
             """;
-
+        //FIXME!!!!!!!!!
 
         //ORDER BY p.year DESC;
         //
