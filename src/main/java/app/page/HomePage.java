@@ -1,12 +1,14 @@
 package app.page;
 
 import java.util.List;
+import java.util.Map;
 
 import app.JDBC.JDBC;
 import app.classes.Global;
 import app.classes.Population;
 import io.javalin.http.Context;
 import io.javalin.http.Handler;
+
 
 
 public class HomePage implements Handler {
@@ -25,6 +27,15 @@ public class HomePage implements Handler {
            
            //Retrieve TEAM MEMBERS
             List<String> teamMembers = jdbc.getTeamMembers();
+
+            // Retrieve Persona Details for Persona ID 1
+            Map<String, String> personaDetails1 = jdbc.getPersonaDetails(1); // PersonaID = 1
+        
+            // Retrieve Persona Details for Persona ID 2
+            Map<String, String> personaDetails2 = jdbc.getPersonaDetails(2); // PersonaID = 2
+
+             // Retrieve Persona Details for Persona ID 3
+             Map<String, String> personaDetails3 = jdbc.getPersonaDetails(3); // PersonaID = 2
            
 
         String html = """
@@ -237,7 +248,7 @@ public class HomePage implements Handler {
                         </div>
                         <div class="column">
                             <div class="card">
-                                <img src="Ảnh/PhotoRoom_20240201_115321 3.jpg" alt="Tuan" style="width:100%">
+                                <img src="memberTuan.jpg" alt="Tuan" style="width:100%">
                                 <div class="teamBox-content">
                                     <h2>"""
                                         + teamMembers.get(6) + 
@@ -254,38 +265,268 @@ public class HomePage implements Handler {
                 </div>
 
 
-                <h1>CLimaTrend's User Personas</h1>
+                <h1>ClimaTrend's User Personas</h1>
 
                         <div class="personas-container">
                             <div class="persona">
                                 <img src="Per1.png" alt="Marie">
-                                <h2>Marie — The Artist</h2>
-                                <p><strong>Age:</strong> 26</p>
-                                <p><strong>Location:</strong> London, UK</p>
-                                <p><strong>Occupation:</strong> Artist/Art Buyer</p>
-                                <p><strong>Income:</strong> £32,000</p>
-                                <p><strong>Goal:</strong> Looking to sell her art easily online and gain exposure as an up and coming artist.</p>
+
+                                <h2>""" 
+                                    + personaDetails1.get("personaName") + 
+                                    """
+                                         </h2>
+
+                                <br>
+
+                                <p> <strong>Age:</strong> """ 
+                                    + personaDetails1.get("personaAge") + 
+                                    """
+                                     </p>
+
+                                <br>
+
+                                <p><strong>Background:</strong> """ 
+                                    + personaDetails1.get("personaBack") + 
+                                    """
+                                    </p>
+
+                                <br>
+
+                                <p><strong>Needs:</strong></p>
+                                <li>""" 
+                                    + personaDetails1.get("personaNeeds1") + 
+                                    """
+                                        </li>
+
+                                        <li>""" 
+                                            + personaDetails1.get("personaNeeds2") + 
+                                            """
+                                                </li>
+
+                                <br>
+
+                                <p><strong>Goals:</strong></p>
+                                    <li>""" 
+                                        + personaDetails1.get("personaGoals1") + 
+                                        """
+                                            </li>
+
+                                            <li>""" 
+                                                + personaDetails1.get("personaGoals2") + 
+                                                """
+                                                    </li>
+
+                                <br>
+
+                                <p><strong>Pain Points:</strong></p>
+                                    <li>""" 
+                                            + personaDetails1.get("personaPain1") + 
+                                            """
+                                                </li>
+                
+                                                <li>""" 
+                                                    
+                                                    + personaDetails1.get("personaPain2") + 
+                                                """
+                                                    </li>
+
+                                <br>
+
+                                <p><strong>Exeperiences:</strong></p>
+                                    <li>""" 
+                                            + personaDetails1.get("personaExp1") + 
+                                            """
+                                                </li>
+                
+                                                <li>""" 
+                                                    
+                                                    + personaDetails1.get("personaExp2") + 
+                                                """
+                                                    </li>
+
+                                <br>
+                                  
+                                <p><strong>User's Quote:</strong> """ 
+                                    + personaDetails1.get("personaQuote") + 
+                                    """
+                                        </p>
+
                             </div>
+
                             <div class="persona">
+
                                 <img src="Per2.png" alt="Alex">
-                                <h2>Alex — The Tech Enthusiast</h2>
-                                <p><strong>Age:</strong> 32</p>
-                                <p><strong>Location:</strong> San Francisco, USA</p>
-                                <p><strong>Occupation:</strong> Software Developer</p>
-                                <p><strong>Income:</strong> $120,000</p>
-                                <p><strong>Goal:</strong> Seeking innovative platforms to discover and invest in digital art and NFTs.</p>
+ 
+                                <h2>""" 
+                                    + personaDetails2.get("personaName") + 
+                                    """
+                                         </h2>
+
+                                <br>
+
+                                <p> <strong>Age:</strong> """ 
+                                    + personaDetails2.get("personaAge") + 
+                                    """
+                                     </p>
+
+                                <br>
+
+                                <p><strong>Background:</strong> """ 
+                                    + personaDetails2.get("personaBack") + 
+                                    """
+                                    </p>
+
+                                <br>
+
+                                <p><strong>Needs:</strong></p>
+                                <li>""" 
+                                    + personaDetails2.get("personaNeeds1") + 
+                                    """
+                                        </li>
+
+                                        <li>""" 
+                                            + personaDetails2.get("personaNeeds2") + 
+                                            """
+                                                </li>
+
+                                <br>
+
+                                <p><strong>Goals:</strong></p>
+                                    <li>""" 
+                                        + personaDetails2.get("personaGoals1") + 
+                                        """
+                                            </li>
+
+                                            <li>""" 
+                                                + personaDetails2.get("personaGoals2") + 
+                                                """
+                                                    </li>
+
+                                <br>
+
+                                <p><strong>Pain Points:</strong></p>
+                                    <li>""" 
+                                            + personaDetails2.get("personaPain1") + 
+                                            """
+                                                </li>
+                
+                                                <li>""" 
+                                                    
+                                                    + personaDetails2.get("personaPain2") + 
+                                                """
+                                                    </li>
+
+                                <br>
+
+                                <p><strong>Exeperiences:</strong></p>
+                                    <li>""" 
+                                            + personaDetails2.get("personaExp1") + 
+                                            """
+                                                </li>
+                
+                                                <li>""" 
+                                                    
+                                                    + personaDetails2.get("personaExp2") + 
+                                                """
+                                                    </li>
+
+                                <br>
+                                  
+                                <p><strong>User's Quote:</strong> """ 
+                                    + personaDetails2.get("personaQuote") + 
+                                    """
+                                        </p>
+
                             </div>
+
+
                             <div class="persona">
-                                <img src="Per3.png" alt="Sophie">
-                                <h2>Sophie — The Art Collector</h2>
-                                <p><strong>Age:</strong> 45</p>
-                                <p><strong>Location:</strong> Paris, France</p>
-                                <p><strong>Occupation:</strong> Gallery Owner</p>
-                                <p><strong>Income:</strong> €90,000</p>
-                                <p><strong>Goal:</strong> Wants to find emerging artists and unique pieces to feature in her gallery.</p>
+                                <img src="Per3.png" alt="Persona3">
+
+
+                                <h2>""" 
+                                    + personaDetails3.get("personaName") + 
+                                    """
+                                         </h2>
+
+                                <br>
+
+                                <p> <strong>Age:</strong> """ 
+                                    + personaDetails3.get("personaAge") + 
+                                    """
+                                     </p>
+
+                                <br>
+
+                                <p><strong>Background:</strong> """ 
+                                    + personaDetails3.get("personaBack") + 
+                                    """
+                                    </p>
+
+                                <br>
+
+                                <p><strong>Needs:</strong></p>
+                                <li>""" 
+                                    + personaDetails3.get("personaNeeds1") + 
+                                    """
+                                        </li>
+
+                                        <li>""" 
+                                            + personaDetails3.get("personaNeeds2") + 
+                                            """
+                                                </li>
+
+                                <br>
+
+                                <p><strong>Goals:</strong></p>
+                                    <li>""" 
+                                        + personaDetails3.get("personaGoals1") + 
+                                        """
+                                            </li>
+
+                                            <li>""" 
+                                                + personaDetails3.get("personaGoals2") + 
+                                                """
+                                                    </li>
+
+                                <br>
+
+                                <p><strong>Pain Points:</strong></p>
+                                    <li>""" 
+                                            + personaDetails3.get("personaPain1") + 
+                                            """
+                                                </li>
+                
+                                                <li>""" 
+                                                    
+                                                    + personaDetails3.get("personaPain2") + 
+                                                """
+                                                    </li>
+
+                                <br>
+
+                                <p><strong>Exeperiences:</strong></p>
+                                    <li>""" 
+                                            + personaDetails3.get("personaExp1") + 
+                                            """
+                                                </li>
+                
+                                                <li>""" 
+                                                    
+                                                    + personaDetails3.get("personaExp2") + 
+                                                """
+                                                    </li>
+
+                                <br>
+                                  
+                                <p><strong>User's Quote:</strong> """ 
+                                    + personaDetails3.get("personaQuote") + 
+                                    """
+                                        </p>
+
                             </div>
                         </div>
-                        
+
                                 </body>
                                 </html>
             
