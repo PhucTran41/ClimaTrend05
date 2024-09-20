@@ -248,7 +248,7 @@ public class HomePage implements Handler {
                         </div>
                         <div class="column">
                             <div class="card">
-                                <img src="Ảnh/PhotoRoom_20240201_115321 3.jpg" alt="Tuan" style="width:100%">
+                                <img src="memberTuan.jpg" alt="Tuan" style="width:100%">
                                 <div class="teamBox-content">
                                     <h2>"""
                                         + teamMembers.get(6) + 

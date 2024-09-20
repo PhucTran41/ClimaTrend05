@@ -40,7 +40,7 @@ public class GlobalTracker implements Handler {
         html = html + "<a href='/'>Home</a>";
         html = html + "<a href='/GlobalTracker'>Global Tracker</a>";
         html = html + "<a href='/CityTracker'>City Tracker</a>";
-        html = html + "<a href='/TimeLineTracker'>Timeline Tracker</a>";
+        html = html + "<a href='/TimelineTracker'>Timeline Tracker</a>";
         html = html + "<a href='/PeriodTracker'>Periods Tracker</a>";
         html = html + "</div>";
         html = html + "</div>";
