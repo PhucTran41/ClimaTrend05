@@ -161,7 +161,7 @@ public class GlobalTracker implements Handler {
                 }
 
                 html = html + "</select>";
-                //
+                
            
                 html = html + "</div>"; //closing the select-wrapper div
                 html = html + "</div>"; //closing search-section div     

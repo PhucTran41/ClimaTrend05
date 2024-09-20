@@ -19,14 +19,6 @@ html {
     align-items: center;
 }
 
-#multiple-selecter{
-    background-color: #f2f2f2;
-    width: 240px;
-    height: 100px;
-    margin-top: -250px;
-    margin-left: 300px;
-}
-
 
 
 
@@ -34,9 +26,9 @@ html {
     
     position: fixed; 
     top: 0;         
-    left: 0;         /* Aligns it to the left edge */
-    width: 100%;     /* Makes it take up the full width of the screen */
-    z-index: 1000;   /* Ensures the navbar stays on top of other elements */
+    left: 0;         
+    width: 100%;    
+    z-index: 1000;   
     height: 100px;
     display: flex;
     justify-content: space-between;
@@ -44,7 +36,6 @@ html {
     padding: 0rem calc((100vw -1300px)/2);
     background-color: white;
     border-bottom: 1px solid black;
-
 
 }
 
@@ -71,14 +62,14 @@ width: 60%;
 
 
 .header.shrink {
-height: 60px; /* Chiều cao của thanh điều hướng khi cuộn xuống */
-padding: 0 1rem; /* Padding nhỏ hơn khi cuộn xuống */
-transform: translateY(-40px); /* Di chuyển thanh điều hướng lên một chút để tạo cảm giác nhỏ lại */
+height: 60px;
+padding: 0 1rem;
+transform: translateY(-40px);
 }
 
 body.scrolled .header {
-height: 60px; /* Chiều cao của thanh điều hướng khi cuộn xuống */
-padding: 0 1rem; /* Padding nhỏ hơn khi cuộn xuống */
+height: 60px;
+padding: 0 1rem;
 }
 .header-elements a{
 /*navigation elements-size*/
@@ -94,45 +85,80 @@ text-decoration: underline;
 }
 
 .shadow {
-    width: 510px;
+    width: calc(100% - 25%);
     height: 183px;
-    position: absolute;
     top: 120px;
     left: 50%;
     transform: translateX(-49%);
+    position: absolute;
     background: black;
     border-radius: 21px;
 }
 
 
 .search-panel {
-    width: 500px;
+    width: calc(100% - 25%);
     height: 175px;
-    position: absolute;
     top: 114px;
     left: 50%;
     transform: translateX(-50%);
+    position: absolute;
     background: #C8E9C6;
     border-radius: 21px;
     display: flex;
     flex-direction: row;
-    justify-content: center;
-    align-items: center;
+    justify-content: space-evenly;
 }
 
 
+
+
+.search-section {
+    transform: translateY(10px);
+   }
 .search-title {
     color: black;
     font-size: 32px;
     font-weight: 700;
     margin-bottom: 10px;
     text-align:center;
+    /* margin-top: -89px; */
 }
+/* .search-title-startYear{
+    color: black;
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    text-align:center;
+    margin-top: 50px;
+}
+.select-multiple-startyear{
+    width: 250px;
+    height: 90px;
+    margin-top: -30px;
+    font-size: 18px;
+} */
 
 .select-wrapper {
     position: relative;
 }
-.select-boxforcity{
+
+/* .select-boxforcountry{
+    width: 200px;
+    height: 31px;
+    background: #D9D9D9;
+    border-radius: 8px;
+    border: 1px solid black;
+    font-size: 22px;
+    padding: 0 10px;
+    appearance: none;
+    cursor: pointer;
+    display: flex;
+    flex-direction: row;
+} */
+
+
+.select-boxforcity.select-type{
     width: 213px;
     height: 31px;
     background: #D9D9D9;
@@ -145,6 +171,12 @@ text-decoration: underline;
     display: flex;
     flex-direction: row;
 }
+.select-type{
+    background-color: white;
+    width: 80px;
+    height: 35px;
+
+}
 
 input[type="checkbox"]{
     margin-right: 10px;
@@ -153,8 +185,8 @@ input[type="checkbox"]{
 }
 
 
-.select-boxforglobal{
-    width: 255px;
+.select-boxfordisplay, .select-type{
+    width: 235px;
     height: 31px;
     background: #D9D9D9;
     border-radius: 8px;
@@ -168,12 +200,15 @@ input[type="checkbox"]{
 
 
 .select-box {
-    width: 250px;
-    height: 31px;
-    background: #D9D9D9;
+    background-color: white;
+    width: 150px;
+}
+.select-multiple{
+    width: 220px;
+    height: 100px;
+    font-size: 18px;
     border-radius: 8px;
     border: 1px solid black;
-    font-size: 22px;
     padding: 0 10px;
     appearance: none;
     cursor: pointer;
@@ -229,10 +264,6 @@ input[type="checkbox"]{
     
 }
 
-
-
-
-
 .search-button {
     width: 194px;
     height: 48px;
@@ -284,6 +315,38 @@ tr:nth-child(even){
     position: absolute;
     left: 0;
     border: 1px #D8D8D8 solid;
+}
+
+
+.search-section:nth-child(1) {
+    left: 45px;
+    top: 37px;
+}
+
+.search-section:nth-child(2) {
+    left: 306px;
+    top: 37px;
+}
+
+.search-section:nth-child(3) {
+    left: 586px;
+    top: 37px;
+}
+
+.search-section:nth-child(4) {
+    left: 805px;
+    top: 38px;
+}
+
+.search-section:nth-child(5) {
+    left: 10005px;
+    top: 38px;
+}
+
+
+
+.search-section:nth-child(2) .select-box {
+    width: 223px;
 }
 
 .row-border:nth-child(8) {
