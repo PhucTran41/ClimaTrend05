@@ -64,8 +64,14 @@ public class GlobalTracker implements Handler {
         String OutputType = context.formParam("OutputType");
         List<String> selectedCountriesList = context.formParams("countries");
         String[] selectedCountries = selectedCountriesList != null ? selectedCountriesList.toArray(new String[0])  : null;
-        String startYear = context.formParam("startyear");
-        String endYear = context.formParam("endyear");
+        String startyear = context.formParam("startyear");
+        String endyear = context.formParam("endyear");
+
+        System.out.println("selectBoxfordisplay: " + selectBoxfordisplay);
+        System.out.println("output: " + output);
+        System.out.println("orderby: " + orderby);
+        System.out.println("startYear: " + startyear);
+        System.out.println("endYear: " + endyear);
 
         // Search Section - Display Region Dropdown
         html = html + "<div class='search-section'>";
@@ -76,8 +82,8 @@ public class GlobalTracker implements Handler {
         
         html = html + "<select name='select-boxfordisplay' class='select-boxfordisplay' onchange='this.form.submit()'>"; 
         html = html + "<option value='' " + (selectBoxfordisplay == null ? "selected" : "") + ">--Select--</option>";
-        html = html + "<option value='Word' " + ("Word".equals(selectBoxfordisplay) ? "selected" : "")
-                + ">Word</option>";
+        html = html + "<option value='World' " + ("World".equals(selectBoxfordisplay) ? "selected" : "")
+                + ">World</option>";
         html = html + "<option value='Country' " + ("Country".equals(selectBoxfordisplay) ? "selected" : "")
                 + ">Country</option>";
         html = html + "</select>";
@@ -87,15 +93,18 @@ public class GlobalTracker implements Handler {
         html = html + "</div>"; // Closing .select-wrapper
         html = html + "</div>";
 
+  
+
+        
         if (selectBoxfordisplay != null) {
             // Conditionally rendering Start Year or Country dropdowns based on selection
-            if ("Word".equals(selectBoxfordisplay)) {
+            if ("World".equals(selectBoxfordisplay)) {
                 // If "Global" is selected, display Order and Sorting dropdown
                 // Order
                 html = html + "<div class='search-section'>";
                 html = html + "<div class='search-title'>Order</div>";
                 html = html + "<div class='select-wrapper'>";
-                html = html + "<select class='select-boxfordisplay' id ='orderby'>";
+                html = html + "<select class='select-boxfordisplay' id ='orderby' name ='orderby'>";
                 html = html + "<option value='' " + (orderby == null ? "selected" : "") + ">--Select--</option>";
                 html = html + "<option value= 'Ascending'" + ("Ascending".equals(orderby) ? "selected":"") +">Ascending </option>";
                 html = html + "<option value= 'Descending'" + ("Descending".equals(orderby) ? "selected":"") +">Descending </option>";
@@ -109,7 +118,7 @@ public class GlobalTracker implements Handler {
                 html = html + "<div class='search-section'>";
                 html = html + "<div class='search-title'>Output</div>";
                 html = html + "<div class='select-wrapper'>";
-                html = html + "<select class='select-boxfordisplay' id= 'output'><option>Select</option>";
+                html = html + "<select class='select-boxfordisplay' id= 'output' name = 'output' ><option>Select</option>";
                 html = html + "<option value='' " + (output == null ? "selected" : "") + ">--Select--</option>";
                 html = html + "<option value = ' Year' " + ("Year".equals(output) ? "selected" : "") 
                     + ">Year</option>";
@@ -176,7 +185,7 @@ public class GlobalTracker implements Handler {
             html = html + "<div class='search-section'>";
             html = html + "<div class='search-title'>End Year</div>";
             html = html + "<div class='select-wrapper'>";
-            html += "<input type='number' id='endYear' name='endYear' class='select-type' min='" + firstyear.getYear() + "' max='" + lastyear.getYear() + "'/>";
+            html += "<input type='number' id='endyear' name='endyear' class='select-type' min='" + firstyear.getYear() + "' max='" + lastyear.getYear() + "'/>";
             html = html + "</div>";
             html = html + "</div>";
 
@@ -202,9 +211,10 @@ public class GlobalTracker implements Handler {
             html = html + "<tbody>";
  
 
-        if (output != null && orderby != null && startYear != null && endYear != null){
+        if (output != null && !output.isEmpty() && orderby != null && !orderby.isEmpty() && 
+        startyear != null && !startyear.isEmpty() && endyear != null && !endyear.isEmpty()){
         
-            List<Global> results = jdbc2.getGlobalDatafromWord(output, orderby, startYear, endYear);
+            List<Global> results = jdbc2.getGlobalDatafromWord(output, orderby, startyear, endyear);
 
             int rowNumber = 1;
             for (Global data : results) {
@@ -219,11 +229,11 @@ public class GlobalTracker implements Handler {
            
 
         
-
+         
         }
         else if ("Country".equals(selectBoxfordisplay)){
 
-        List<Global> result = jdbc2.getGlobalDatafromWord(output, orderby, startYear, endYear);
+        List<Global> result = jdbc2.getGlobalDatafromWord(output, orderby, startyear, endyear);
 
         html = html + "<div class='results-container'><div class='results-inner'>";
         html = html + "<table>";
@@ -258,6 +268,7 @@ public class GlobalTracker implements Handler {
         html = html + "</table>";
 
     }
+
 
         html = html + "</div></div>";
      } // Closing .results-container

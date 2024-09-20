@@ -190,6 +190,10 @@ public class JDBCforGlobalTracker {
             JOIN Population p ON p.year = tg.Year
             """;
 
+
+        //ORDER BY p.year DESC;
+        //
+
         
         
         try (Connection connection = DriverManager.getConnection(DATABASE);
