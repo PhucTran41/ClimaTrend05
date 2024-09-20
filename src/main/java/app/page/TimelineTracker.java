@@ -1,4 +1,5 @@
 package app.page;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,49 +13,47 @@ public class TimelineTracker implements Handler {
 
     public static final String URL = "/TimelineTracker";
 
-
     @Override
     public void handle(Context context) throws Exception {
         String html = "<html>";
-        
-        //head
+
+        // head
         html += "<head>";
         html += "<meta charset='UTF-8'>";
         html += "<meta name='viewport' content='width=device-width, initial-scale=1.0'>";
         html += "<title>ClimateTrend Dashboard</title>";
         html += "<link rel='stylesheet' href='level3A(landingPage).css'>";
         html += "</head>";
-        
-        //body
+
+        // body
         html += "<body>";
         html += "<div class='container'>";
-        
-        //header 
+
+        // header
         html += "<div class='header'>";
         html += "<div class='logo'>";
         html += "<img src='images/ClimaTrendLogo.png' alt='ClimaTrend Logo'>";
-        html += "</div>"; 
-        
-        //navigation
+        html += "</div>";
+
+        // navigation
         html += "<div class='header-elements'>";
         html += "<a href='/LandingPage'>Home</a>";
         html += "<a href='/GlobalTracker'>Global Tracker</a>";
         html += "<a href='/CityTracker'>City Tracker</a>";
         html += "<a href='/TimeLineTracker'>Timeline Tracker</a>";
         html += "<a href='/PeriodTracker'>Periods Tracker</a>";
-        html += "</div>"; 
-        html += "</div>"; 
-        
+        html += "</div>";
+        html += "</div>";
+
         html += "<div class='shadow'></div>";
-        
 
         // Search panel
         html += "<div class='search-panel'>";
 
         JDBC jdbc = new JDBC();
         JDBCforGlobalTracker jdbc2 = new JDBCforGlobalTracker();
-          Global firstyear = jdbc.getFirstYearTemp();
-         Global lastyear = jdbc.getLastYearTemp();
+        Global firstyear = jdbc.getFirstYearTemp();
+        Global lastyear = jdbc.getLastYearTemp();
 
         String selectBox = context.formParam("selectBox");
         List<String> selectedYears = context.formParams("startYear");
@@ -65,7 +64,7 @@ public class TimelineTracker implements Handler {
         html += "<div class='search-title'>Display Region</div>";
         html += "<div class='select-wrapper'>";
 
-        //display form
+        // display form
         html += "<form method=" + "post" + " action=" + "/TimelineTracker" + ">";
         html += "<select name='selectBox' class='select-box' onchange='this.form.submit()'>";
 
@@ -76,38 +75,46 @@ public class TimelineTracker implements Handler {
         html += "<option value='City'" + ("City".equals(selectBox) ? "selected" : "") + ">City</option>";
         html += "</select>";
         html += "<div class='select-arrow'></div>";
-        html += "</div>"; 
-        html += "</div>"; 
         html += "</div>";
-        
-        if(selectBox != null){
-            if ("Global".equals(selectBox)) {
-                
-            }
-            
+        html += "</div>";
+        html += "</div>";
 
-            //start year
-            html += "<label for=\"startyear\">Start Year(s):</label>";
-        html += "<select id=\"startyear\" name=\"startyear\" multiple class='form-multiselect' style='width: 300px; height: 200px; font-size: 16px;'>";
-        for (int year = 1750; year <= 2012; year++) {
-            html += "<option value=\"" + year + "\""
-                    + (selectedYears != null && selectedYears.contains(String.valueOf(year)) ? " selected" : "")
-                    + ">" + year + "</option>";
-        }
-           
-           
+        if (selectBox != null) {
+            if ("Global".equals(selectBox)) {
+
+            }
+
+            //startYear
+            html = html + "<div class='search-section'>";
+            html = html + "<div class='search-title'>Start Year</div>";
+            html = html + "<div class='select-wrapper'>";
+            html += "<select multiple id='multiple-selecter' name='startyear' class='form-select'>";
+            
+            for (int i = firstyear.getYear(); i <= lastyear.getYear(); i++) {
+                html += "<option value=\"" + i + "\""
+                        + (selectedYears != null && selectedYears.contains(String.valueOf(i)) ? " selected" : "")
+                        + ">" + i + "</option>";
+            }
+
             html += "</select>";
 
             html += "</div>";
             html += "</div>";
-            
+
+            //period
+            html += "<div class='search-section'>";
+            html += "<div class='search-title'> Periods</div>";
+            html += "<div class='select-wrapper'>";
+            html += "<input type = 'text' id = 'period' name = 'period' placeholder='Enter'>";
+                
+
+            html += "</div>";
+            html += "</div>";
+
         }
 
-
-
-        //search button
+        // search button
         html += "<button class='search-button'>Search</button>";
-        
 
         // Results
         html += "<div class='results-container'>";
@@ -124,7 +131,7 @@ public class TimelineTracker implements Handler {
         html += "<th>CHANGE</th>";
         html += "</tr>";
         html += "</thead>";
-        
+
         html += "<tbody>";
         html += "<tr>";
         html += "<td>1</td>";
@@ -139,12 +146,12 @@ public class TimelineTracker implements Handler {
         html += "</table>";
         html += "</div>";
         html += "</div>";
-        
-        html += "</div>"; 
+
+        html += "</div>";
         html += "</body>";
         html += "</html>";
-        
-        //closing form
+
+        // closing form
         html += "</form>";
 
         // Output HTML
