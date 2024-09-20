@@ -37,10 +37,10 @@ public class TimelineTracker implements Handler {
 
         // navigation
         html += "<div class='header-elements'>";
-        html += "<a href='/LandingPage'>Home</a>";
+        html += "<a href='/'>Home</a>";
         html += "<a href='/GlobalTracker'>Global Tracker</a>";
         html += "<a href='/CityTracker'>City Tracker</a>";
-        html += "<a href='/TimeLineTracker'>Timeline Tracker</a>";
+        html += "<a href='/TimelineTracker'>Timeline Tracker</a>";
         html += "<a href='/PeriodTracker'>Periods Tracker</a>";
         html += "</div>";
         html += "</div>";
