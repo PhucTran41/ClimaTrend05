@@ -48,6 +48,7 @@ public class GlobalTracker implements Handler {
         html = html + "<div class='shadow'></div>";
 
         // Search Panel
+        html = html + "<form method='post' action='/GlobalTracker'>";
         html = html + "<div class='search-panel'>";
 
         // JDBC connection setup (if needed)
@@ -63,7 +64,8 @@ public class GlobalTracker implements Handler {
         String OutputType = context.formParam("OutputType");
         List<String> selectedCountriesList = context.formParams("countries");
         String[] selectedCountries = selectedCountriesList != null ? selectedCountriesList.toArray(new String[0])  : null;
-
+        String startYear = context.formParam("startyear");
+        String endYear = context.formParam("endyear");
 
         // Search Section - Display Region Dropdown
         html = html + "<div class='search-section'>";
@@ -71,11 +73,11 @@ public class GlobalTracker implements Handler {
         html = html + "<div class='select-wrapper'>";
 
         // Displaying the form with the dropdown
-        html = html + "<form method='post' action='/GlobalTracker'>";
+        
         html = html + "<select name='select-boxfordisplay' class='select-boxfordisplay' onchange='this.form.submit()'>"; 
         html = html + "<option value='' " + (selectBoxfordisplay == null ? "selected" : "") + ">--Select--</option>";
-        html = html + "<option value='Global' " + ("Global".equals(selectBoxfordisplay) ? "selected" : "")
-                + ">Global</option>";
+        html = html + "<option value='Word' " + ("Word".equals(selectBoxfordisplay) ? "selected" : "")
+                + ">Word</option>";
         html = html + "<option value='Country' " + ("Country".equals(selectBoxfordisplay) ? "selected" : "")
                 + ">Country</option>";
         html = html + "</select>";
@@ -87,9 +89,8 @@ public class GlobalTracker implements Handler {
 
         if (selectBoxfordisplay != null) {
             // Conditionally rendering Start Year or Country dropdowns based on selection
-            if ("Global".equals(selectBoxfordisplay)) {
+            if ("Word".equals(selectBoxfordisplay)) {
                 // If "Global" is selected, display Order and Sorting dropdown
-
                 // Order
                 html = html + "<div class='search-section'>";
                 html = html + "<div class='search-title'>Order</div>";
@@ -119,6 +120,8 @@ public class GlobalTracker implements Handler {
                 html = html + "</select>";
                 html = html + "<div class='select-arrow'></div>";
                 html = html + "</div></div>";
+                
+               
 
             } else if ("Country".equals(selectBoxfordisplay)) {
                 // If "Country" is selected, display Country dropdown
@@ -173,19 +176,55 @@ public class GlobalTracker implements Handler {
             html = html + "<div class='search-section'>";
             html = html + "<div class='search-title'>End Year</div>";
             html = html + "<div class='select-wrapper'>";
-            html += "<input type='number' id='startyear' name='startyear' class='select-type' min='" + firstyear.getYear() + "' max='" + lastyear.getYear() + "'/>";
+            html += "<input type='number' id='endYear' name='endYear' class='select-type' min='" + firstyear.getYear() + "' max='" + lastyear.getYear() + "'/>";
             html = html + "</div>";
             html = html + "</div>";
 
+           
             // Closing .search-section
             html = html + "</div>"; // Closing .search-panel
-        
+            
 
             // Search Button
-            html = html + "   <button type='submit' class='search-button'>Search</button>";
-    
+            html = html + "<button type='submit' class='search-button'>Search</button>";
 
-        // Results Container
+            html = html + "</form>";
+    
+            html = html + "<div class='results-container'><div class='results-inner'>";
+            html = html + "<table>";
+            html = html + "<thead>";
+            html = html + "<tr>";
+            html = html + "<th>YEAR</th>";
+            html = html + "<th>AVERAGE TEMPERATURE</th>";
+            html = html + "<th>POPULATION</th>";
+            html = html + "</tr>";
+            html = html + "</thead>";
+            html = html + "<tbody>";
+ 
+
+        if (output != null && orderby != null && startYear != null && endYear != null){
+        
+            List<Global> results = jdbc2.getGlobalDatafromWord(output, orderby, startYear, endYear);
+
+            int rowNumber = 1;
+            for (Global data : results) {
+                html = html + "<tr>";
+                html = html + "<td>" + data.getYear() + "</td>";
+                html = html + "<td>" + data.getAverageTemp() + "</td>";
+                html = html + "<td>" + data.getPopulation() + "</td>";
+                html = html + "</tr>";
+                rowNumber++;
+            }
+
+           
+
+        
+
+        }
+        else if ("Country".equals(selectBoxfordisplay)){
+
+        List<Global> result = jdbc2.getGlobalDatafromWord(output, orderby, startYear, endYear);
+
         html = html + "<div class='results-container'><div class='results-inner'>";
         html = html + "<table>";
         html = html + "<thead><tr>";
@@ -198,19 +237,42 @@ public class GlobalTracker implements Handler {
         html = html + "<th>CHANGE</th>";
         html = html + "</tr></thead>";
 
-        //display results in table
         html = html + "<tbody>";
+        int rowNumber = 1;
+        for (Global data : result) {
+            html = html + "<tr>";
+            html = html + "<td>" + rowNumber + "</td>";
+            html = html + "<td>" + data.getName() + "</td>";
+            html = html + "<td>" + data.getYear() + "</td>";
+            html = html + "<td>" + data.getPeriod() + "</td>";
+            html = html + "<td>" + data.getFirstYearTemperature() + "</td>";
+            html = html + "<td>" + data.getLastYearTemperature() + "</td>";
+            html = html + "<td>" + data.getChange() + "</td>";
+            html = html + "</tr>";
+            rowNumber++;
+        }
+
+        //display results in table
+
         html = html + "</tbody>";
         html = html + "</table>";
-        html = html + "</div></div>"; // Closing .results-container
+
+    }
+
+        html = html + "</div></div>";
+     } // Closing .results-container
+
         html = html + "</div>"; // Closing .container
         html = html + "</body>";
         html = html + "</html>";
-
-        }
-        html = html + "</form>";
-        // Send the generated HTML to the client
+       
         context.html(html);
-    }
+        }
+
+        
+    
+        // Send the generated HTML to the client
+        
+    
 }
 
