@@ -22,6 +22,8 @@ public class HomePage implements Handler {
            JDBC jdbc = new JDBC();
            Global firstYearTemp = jdbc.getFirstYearTemp();
            Global lastYearTemp = jdbc.getLastYearTemp();
+           Global totalYearsPopulation = jdbc.getTotalYearsInPopulation(); // Now returns Global
+           Global totalYearsTemperature = jdbc.getTotalYearsInTemperature(); // Now returns Global
            Population firstYearPopuWorld = jdbc.getPopulation("WLD", jdbc.getPopulationFirstYear());
            Population lastYearPopuWorld = jdbc.getPopulation("WLD", jdbc.getPopulationLastYear());
            
@@ -98,11 +100,20 @@ public class HomePage implements Handler {
                 
                     <!-- available data section -->
                     <section id="available-data" class="data-section">
-                        <h2>Our Available Data</h2>
+                        <h2>ClimaTrend's Available Data</h2>
                         <div class="data-container">
                             <div class="data-column">
                                 <div class="data-title">Population</div>
+                                
+                                <div class="data-value">Total Years Available: </span>"""
+                                    +  totalYearsPopulation.getYear()  +  """
+                                        </span> Years </div>
+
+                                <br>
+                                <br>
+                          
                                 <div class="data-range">
+
                                     <div>
                                         <div class="data-year" id="popStartYear">FROM&nbsp;"""
                                             + firstYearPopuWorld.getYear() +  """
@@ -132,6 +143,14 @@ public class HomePage implements Handler {
                     
                             <div class="data-column">
                                 <div class="data-title">Temperature</div>
+
+                                <div class="data-value">Total Years Available: </span>"""
+                                    + totalYearsTemperature.getYear() +  """
+                                        </span> Years </div>
+
+                                <br>
+                                <br>
+
                                 <div class="temperature-data">
                                     <div class="temperature-range">
                                         <div class="temperature-item">
@@ -145,9 +164,9 @@ public class HomePage implements Handler {
 
                                             <div class="data-value"><span id="tempStartValue">"""
 
-                                                + firstYearTemp.getAverageTemp() + """
+                                                + firstYearTemp.getAverageTemp() + "&deg;C" + """
 
-                                                    </span>&deg;C</div>
+                                                    </div>
                                         </div>
                                         <div class="temperature-item">
                                             <div class="data-year" id="tempEndYear">TO&nbsp;"""
@@ -160,9 +179,9 @@ public class HomePage implements Handler {
 
                                             <div class="data-value"><span id="tempEndValue">"""
 
-                                                + lastYearTemp.getAverageTemp() + """
+                                                + lastYearTemp.getAverageTemp() + "&deg;C" +"""
 
-                                                    </span>&deg;C</div>
+                                                    </div>
                                         </div>
                                     </div>
                                 </div>

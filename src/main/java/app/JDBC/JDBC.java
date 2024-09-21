@@ -85,6 +85,35 @@ public class JDBC {
         return worldtemperature;
     }
 
+        //GET TOTAL AVAILABLE YEARS FOR GLOBAL TEMPERATURE DATA
+        public Global getTotalYearsInTemperature() {
+            Global totalYears = new Global();
+                
+            String query = """
+                    SELECT (MAX(year) - MIN(year)) AS total_years
+                    FROM TempOfGlobal
+                    """;
+            
+            try (Connection connection = DriverManager.getConnection(DATABASE);
+                Statement statement = connection.createStatement()) {
+            
+                ResultSet resultSet = statement.executeQuery(query);
+            
+                if (resultSet.next()) {
+                    totalYears.setYear(resultSet.getInt("total_years"));
+                }
+            
+            } catch (SQLException e) {
+                System.err.println("Error in getTotalYearsInPopulation(): " + e.getMessage());
+            }
+            
+            return totalYears;
+    }
+
+
+
+    // GET AMOUNT OF PEOPLE FOR POPULATION DATA
+
     public Population getPopulation(String region, int year) {
         Population population = new Population();
     
@@ -178,6 +207,33 @@ public class JDBC {
 
             return year;
         }
+        
+        //GET TOTAL AVAILABLE YEARS FOR GLOBAL POP DATA
+        public Global getTotalYearsInPopulation() {
+            Global totalYears = new Global();
+            
+            String query = """
+                    SELECT (MAX(year) - MIN(year)) AS total_years
+                    FROM Population
+                    """;
+        
+            try (Connection connection = DriverManager.getConnection(DATABASE);
+                 Statement statement = connection.createStatement()) {
+        
+                ResultSet resultSet = statement.executeQuery(query);
+        
+                if (resultSet.next()) {
+                    totalYears.setYear(resultSet.getInt("total_years"));
+                }
+        
+            } catch (SQLException e) {
+                System.err.println("Error in getTotalYearsInPopulation(): " + e.getMessage());
+            }
+        
+            return totalYears;
+        }
+        
+
 
         //GET TEAM MEMBERS INFORMATION FROM DATABASE
         public List<String> getTeamMembers() {
