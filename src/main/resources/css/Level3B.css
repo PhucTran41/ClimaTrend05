@@ -83,7 +83,7 @@ body.scrolled .header {
 
 
 .shadow {
-    width: calc(100% - 3%);
+    width: calc(100% - 15%);
     height: 183px;
     top: 120px;
     left: 50%;
@@ -94,7 +94,7 @@ body.scrolled .header {
 }
 
 .search-panel {
-    width: calc(100% - 2%);
+    width: calc(100% - 15%);
     height: 175px;
     top: 114px;
     left: 50%;
@@ -106,10 +106,15 @@ body.scrolled .header {
     flex-direction: row;
     justify-content: space-evenly;
     
+    
 }
-
+#countries{
+    background-color: #f2f2f2;
+    width: 240px;
+    height: 100px;
+}
 .search-section {
- transform: translateY(10px);
+ transform: translateY(44px);
 }
 
 .search-title {
@@ -119,8 +124,16 @@ body.scrolled .header {
     margin-bottom: 10px;
     text-align:center;
 }
+
+
+#comparedRange{
+    width: 150px;
+    
+}
+
 .select-wrapper {
     position: relative;
+    text-align: center;
 }
 .select-boxforcountry{
     width: 200px;
@@ -136,36 +149,13 @@ body.scrolled .header {
     flex-direction: row;
 }
 
-input[type="checkbox"]{
-    margin-right: 10px;
-    width: 20px;
-    height: 20px;
-}
-.select-boxfordisplayfor-compareRnage{
-    width: 250px;
-    height: 31px;
-    background: #D9D9D9;
-    border-radius: 8px;
-    border: 1px solid black;
-    font-size: 22px;
-    padding: 0 10px;
-    appearance: none;
-    cursor: pointer;
-}
-.select-boxfordisplayregion{
-    width: 250px;
-    height: 31px;
-    background: #D9D9D9;
-    border-radius: 8px;
-    border: 1px solid black;
-    font-size: 22px;
-    padding: 0 10px;
-    appearance: none;
-    cursor: pointer;
+input.select-boxfordisplay{
+    background-color: white;
+    width: 200px;
 }
 
-.select-boxfordisplay{
-     width: 180px;
+.select-boxfordisplay, .select-type{
+    width: 235px;
     height: 31px;
     background: #D9D9D9;
     border-radius: 8px;
@@ -175,6 +165,11 @@ input[type="checkbox"]{
     appearance: none;
     cursor: pointer;
 
+}
+
+.select-type{
+    background-color: white;
+    width: 150px;
 }
 
 .select-box {
@@ -206,16 +201,13 @@ input[type="checkbox"]{
     top: 50%;
     right: 10px;
     transform: translateY(-50%);
-    
     width: 0;
     height: 0;
     border-left: 5px solid transparent;
     border-right: 5px solid transparent;
     border-top: 5px solid black;
     pointer-events: none;
-    /* margin-left: px; */
 }
-
 
 .results-container {
     width: calc(100% - 34px);
@@ -238,20 +230,10 @@ input[type="checkbox"]{
     overflow-y: scroll;
     
 }
-.select-boxforcity{
-    width: 213px;
-    height: 31px;
-    background: #D9D9D9;
-    border-radius: 8px;
-    border: 1px solid black;
-    font-size: 22px;
-    padding: 0 10px;
-    appearance: none;
-    cursor: pointer;
-    display: flex;
-    flex-direction: row;
-    gap: 10px;
-}
+
+
+
+
 
 .search-section:nth-child(1) {
     left: 45px;
@@ -273,6 +255,15 @@ input[type="checkbox"]{
     top: 38px;
 }
 
+.search-section:nth-child(5) {
+    left: 10005px;
+    top: 38px;
+}
+
+.search-section:nth-child(6) {
+    left: 1205px;
+    top: 38px;
+}
 
 
 .search-section:nth-child(2) .select-box {
@@ -294,15 +285,26 @@ input[type="checkbox"]{
     font-size: 32px;
     border: none;
     cursor: pointer;
+    
 }
 
+datalist{
+    display: none;
+    background-color: white;
+}
 
+.select-wrapper #cities{
+    background-color: white;
+}
 
 table {
     width: 100%;
     border-collapse: collapse;  
 
 }
+
+
+
 th,
 td {
     padding: 10px;
@@ -321,10 +323,13 @@ th {
 tr:last-child td {
     border-bottom: none;
 }
+
+
+
 tr:nth-child(even){
     background-color: #e4e4e4; 
+    
 }
-
 .row-border {
     width: 1332px;
     height: 0;
@@ -355,4 +360,4 @@ tr:nth-child(even){
 
 .row-border:nth-child(13) {
     top: 528px;
-}   
+}

@@ -161,7 +161,7 @@ public class GlobalTracker implements Handler {
                 }
 
                 html = html + "</select>";
-                
+                //
            
                 html = html + "</div>"; //closing the select-wrapper div
                 html = html + "</div>"; //closing search-section div     
@@ -297,6 +297,7 @@ public class GlobalTracker implements Handler {
         context.html(html);
         }
 
+        
 
         // Send the generated HTML to the client
         

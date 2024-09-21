@@ -24,40 +24,56 @@ public class JDBCforGlobalTracker {
     public ArrayList<String> getCityNameFromCountry() {
         ArrayList<String> cityName = new ArrayList<String>();
 
+        String query = """
+            SELECT DISTINCT c.cityName FROM CITY c
+            JOIN Country ct 
+            ON c.countryID = ct.countryID
+        """;
+
         try (Connection connection = DriverManager.getConnection(DATABASE);
-                Statement statement = connection.createStatement();) {
-            statement.setQueryTimeout(15);
+                Statement statement = connection.createStatement()) {
 
-            String query = "";
-            statement.executeQuery(query);
-            ResultSet resultSet = statement.getResultSet();
-            while (resultSet.next()) {
-                String name = resultSet.getString("cityName");
-                cityName.add(name);
-            }
+                statement.setQueryTimeout(15);
 
+              
+                try (ResultSet resultSet = statement.executeQuery(query)) {
+                    while (resultSet.next()){
+                    String name = resultSet.getString("cityName");
+                    cityName.add(name);
+                    }
+                }
+            
         } catch (SQLException e) {
             System.err.println("Error executing from getCityNameFromCountry method " + e.getMessage());
         }
 
         return cityName;
+        
     }
 
     // get state name from country
     public ArrayList<String> getStateNameFromCountry() {
         ArrayList<String> stateName = new ArrayList<String>();
+        String query = """
+                SELECT DISTINCT s.stateName FROM State s
+                JOIN Country c
+                ON s.countryID = c.countryID
+                ORDER BY stateName
 
+                """;
+        
+    
         try (Connection connection = DriverManager.getConnection(DATABASE);
                 Statement statement = connection.createStatement();) {
-            statement.setQueryTimeout(15);
-            String query = "";
-            statement.executeQuery(query);
-            ResultSet resultSet = statement.getResultSet();
 
-            while (resultSet.next()) {
+            statement.setQueryTimeout(15);
+            
+            try (ResultSet resultSet = statement.executeQuery(query)) {
+                while (resultSet.next()) {
                 String name = resultSet.getString("stateName");
                 stateName.add(name);
             }
+        }
 
         } catch (SQLException e) {
             System.err.println("Error executing from getStateNameFromCountry method " + e.getMessage());
@@ -152,8 +168,6 @@ public class JDBCforGlobalTracker {
 
         //ORDER BY p.year DESC;
         //
-
-        
         
         try (Connection connection = DriverManager.getConnection(DATABASE);
              Statement statement = connection.createStatement()) {
