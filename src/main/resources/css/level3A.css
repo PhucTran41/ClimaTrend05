@@ -47,16 +47,16 @@ padding: 2rem;
 
 
 .logo{
-list-style: none;
-margin-right: auto;
-cursor:pointer;
+    list-style: none;
+    margin-right: auto;
+    cursor:pointer;
+    padding-left: 10px;
 }
+
 .logo img {
-display: block;
-margin-left: auto;
-margin-right: auto;
-margin-top: 50px;
-width: 60%;
+    display: inline-block;
+    width: 300px;
+    height: auto;
 }
 
 
@@ -124,38 +124,11 @@ text-decoration: underline;
     text-align:center;
     /* margin-top: -89px; */
 }
-/* .search-title-startYear{
-    color: black;
-    font-size: 32px;
-    font-weight: 700;
-    margin-bottom: 10px;
-    text-align:center;
-    margin-top: 50px;
-}
-.select-multiple-startyear{
-    width: 250px;
-    height: 90px;
-    margin-top: -30px;
-    font-size: 18px;
-} */
+
 
 .select-wrapper {
     position: relative;
 }
-
-/* .select-boxforcountry{
-    width: 200px;
-    height: 31px;
-    background: #D9D9D9;
-    border-radius: 8px;
-    border: 1px solid black;
-    font-size: 22px;
-    padding: 0 10px;
-    appearance: none;
-    cursor: pointer;
-    display: flex;
-    flex-direction: row;
-} */
 
 
 .select-boxforcity.select-type{
@@ -188,7 +161,7 @@ input[type="checkbox"]{
 .select-boxfordisplay, .select-type{
     width: 235px;
     height: 31px;
-    background: #D9D9D9;
+    background: white;
     border-radius: 8px;
     border: 1px solid black;
     font-size: 22px;

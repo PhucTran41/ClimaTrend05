@@ -5,7 +5,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import app.JDBC.JDBC;
-import app.JDBC.JDBCforGlobalTracker;
 import app.JDBC.JDBCforTimelineTracker;
 import app.classes.Global;
 import io.javalin.http.Context;
@@ -24,7 +23,7 @@ public class TimelineTracker implements Handler {
         html += "<meta charset='UTF-8'>";
         html += "<meta name='viewport' content='width=device-width, initial-scale=1.0'>";
         html += "<title>ClimateTrend Dashboard</title>";
-        html += "<link rel='stylesheet' href='level3A(landingPage).css'>";
+        html += "<link rel='stylesheet' href='level3A.css'>";
         html += "</head>";
 
         // body
@@ -34,7 +33,7 @@ public class TimelineTracker implements Handler {
         // header
         html += "<div class='header'>";
         html += "<div class='logo'>";
-        html += "<img src='images/ClimaTrendLogo.png' alt='ClimaTrend Logo'>";
+        html += "<img src='ClimaTrendLogo.png' alt='ClimaTrend Logo'>";
         html += "</div>";
 
         // navigation

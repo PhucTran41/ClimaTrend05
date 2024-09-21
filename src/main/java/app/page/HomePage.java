@@ -57,7 +57,7 @@ public class HomePage implements Handler {
                         <img src="ClimaTrendLogo.png" alt="ClimaTrendLogo"> 
                     </div>    
                     <div class="nav-elements">
-                        <a href="/">Home Page</a>
+                        <a href="/">Home</a>
                         <a href="/GlobalTracker">Global Tracker</a>
                         <a href="/CityTracker">City Tracker</a>
                         <a href="/TimelineTracker">Timeline Tracker</a>
