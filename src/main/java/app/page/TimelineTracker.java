@@ -1,13 +1,15 @@
 package app.page;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+import java.util.Collections;
+import java.util.Comparator;
 
-import app.JDBC.JDBC;
-import app.JDBC.JDBCforGlobalTracker;
 import app.JDBC.JDBCforTimelineTracker;
 import app.classes.Global;
+import app.classes.Country;
+import app.classes.State;
+import app.classes.City;
 import io.javalin.http.Context;
 import io.javalin.http.Handler;
 
@@ -18,210 +20,367 @@ public class TimelineTracker implements Handler {
     @Override
     public void handle(Context context) throws Exception {
         String html = "<html>";
+        html += generateHead();
+        html += generateBodyStart();
+        html += generateHeader();
+        html += generateSearchPanel(context);
+        html += generateResults(context);
+        html += generateBodyEnd();
 
-        // head
-        html += "<head>";
-        html += "<meta charset='UTF-8'>";
-        html += "<meta name='viewport' content='width=device-width, initial-scale=1.0'>";
-        html += "<title>ClimateTrend Dashboard</title>";
-        html += "<link rel='stylesheet' href='level3A(landingPage).css'>";
-        html += "</head>";
-
-        // body
-        html += "<body>";
-        html += "<div class='container'>";
-
-        // header
-        html += "<div class='header'>";
-        html += "<div class='logo'>";
-        html += "<img src='images/ClimaTrendLogo.png' alt='ClimaTrend Logo'>";
-        html += "</div>";
-
-        // navigation
-        html += "<div class='header-elements'>";
-        html += "<a href='/'>Home</a>";
-        html += "<a href='/GlobalTracker'>Global Tracker</a>";
-        html += "<a href='/CityTracker'>City Tracker</a>";
-        html += "<a href='/TimelineTracker'>Timeline Tracker</a>";
-        html += "<a href='/PeriodTracker'>Periods Tracker</a>";
-        html += "</div>";
-        html += "</div>";
-
-        html += "<div class='shadow'></div>";
-
-        // Search panel
-        html = html + "<form method='post' action='/TimelineTracker'>";
-        html += "<div class='search-panel'>";
-
-
-        JDBC jdbc = new JDBC();
-        JDBCforTimelineTracker jdbc2 = new JDBCforTimelineTracker();
-        Global firstyear = jdbc.getFirstYearTemp();
-        Global lastyear = jdbc.getLastYearTemp();
-        
-        String selectBox = context.formParam("selectBox");
-        // List<String> selectedYears = context.formParams("startYear");
-        List<String> selectedCountriesList = context.formParams("countries");
-        String[] selectedCountries = selectedCountriesList != null ? selectedCountriesList.toArray(new String[0])  : null;
-        ArrayList<String> countryname = jdbc2.getCountryName();
-        ArrayList<String> cityName = jdbc2.getCityName();
-        ArrayList<String> stateName = jdbc2.getStateName();
-
-
-        // Display region
-
-        html += "<div class='search-section'>";
-        html += "<div class='search-title'>Display Region</div>";
-        html += "<div class='select-wrapper'>";
-        
-
-        // display form
-        html += "<select name='selectBox' class='select-boxfordisplay' onchange='this.form.submit()'>";
-        html += "<option value='' " + (selectBox == null ? "selected" : "") + ">--Select--</option>";
-        html +="<option value='Word' " + ("Global".equals(selectBox) ? "selected" : "")
-                + ">Global</option>";
-        html +="<option value='Country' " + ("Country".equals(selectBox) ? "selected" : "")
-                + ">Country</option>";
-        html += "<option value='State' " + ("State".equals(selectBox) ? "selected" : "")
-                + ">State</option>";
-        html += "<option value='City' " + ("City".equals(selectBox) ? "selected" : "")
-                + ">City</option>";
-        html = html + "</select>";
-        html += "<div class='select-arrow'></div>";
-        html += "</div>";
-        html += "</div>";
-
-        
-        
-
-        if (selectBox != null) {
-            if ("Global".equals(selectBox)) {
-                
-            }
-            else if (selectBox != null && "Country".equals(selectBox)){
-
-                html = html + "<div class='search-section'>";
-                html = html + "<div class='search-title'>Country</div>";
-                html = html + "<div class='select-wrapper'>";
-                html = html + "<select multiple id = 'multiple-selects' class='select-multiple'>";
-                for (String cname : countryname) {
-                    html += "<option value='" + cname + "' "
-                            + (selectedCountries != null && Arrays.asList(selectedCountries).contains(cname) ? "selected"
-                                    : "")
-                            + ">" + cname + "</option>";
-                }
-                html += "</select>";
-                html += "</div>";
-                html += "</div>";
-            }
-            else if (selectBox != null && "State".equals(selectBox)){
-                html = html + "<div class='search-section'>";
-                html = html + "<div class='search-title'>State</div>";
-                html = html + "<div class='select-wrapper'>";
-                html = html + "<select multiple id = 'multiple-selects' class='select-multiple'>";
-                for (String sname : stateName) {
-                    html += "<option value='" + sname + "' "
-                            + (selectedCountries != null && Arrays.asList(selectedCountries).contains(sname) ? "selected"
-                                    : "")
-                            + ">" + sname + "</option>";
-                }
-                html += "</select>";
-                html += "</div>";
-                html += "</div>";
-            }
-            else if(selectBox != null && "City".equals(selectBox)){
-                html = html + "<div class='search-section'>";
-                html = html + "<div class='search-title'>City</div>";
-                html = html + "<div class='select-wrapper'>";
-                html = html + "<select multiple id = 'multiple-selects' class='select-multiple'>";
-                for (String cname : cityName) {
-                    html += "<option value='" + cname + "' "
-                            + (selectedCountries != null && Arrays.asList(selectedCountries).contains(cname) ? "selected"
-                                    : "")
-                            + ">" + cname + "</option>";
-                }
-                html += "</select>";
-                html += "</div>";
-                html += "</div>";
-
-            }
-            List<String> selectedYearst = context.formParams("startyear");
-            //  startYear
-             html = html + "<div class='search-section'>";
-             html = html + "<div class='search-title'>Start Year</div>";
-             html = html + "<div class='select-wrapper'>";
-             html += "<form>";
-             html += "<select class='select-multiple'multiple>";
-             for (int year = 1750; year <= 2012; year++) {
-                html += "<option value=\"" + year + "\""
-                        + (selectedYearst != null && selectedYearst.contains(String.valueOf(year)) ? " selected" : "")
-                        + ">" + year + "</option>";
-            }
-            html += "</select>";
-             html = html + "</div>";
-             html = html + "</div>";
-
-
-            //period
-            html += "<div class='search-section'>";
-            html += "<div class='search-title'> Periods</div>";
-            html += "<div class='select-wrapper'>";
-            html += "<input type='number' id='multiple' name='period' class='select-type' min='1' max='99'/>";
-            html += "</div>";
-            html += "</div>";
-
-            html += "</div>";
-        }
-
-
-         
-
-
-         
-        // search button
-        html += "<button class='search-button'>Search</button>";
-        // closing form
-        html += "</form>";
-        // Results
-        html += "<div class='results-container'>";
-        html += "<div class='results-inner'>";
-        html += "<table>";
-        html += "<thead>";
-        html += "<tr>";
-        html += "<th>NO</th>";
-        html += "<th>NAME</th>";
-        html += "<th>YEAR</th>";
-        html += "<th>PERIOD</th>";
-        html += "<th>FIRST YEAR <br/> TEMPERATURE</th>";
-        html += "<th>LAST YEAR <br/> TEMPERATURE</th>";
-        html += "<th>CHANGE</th>";
-        html += "</tr>";
-        html += "</thead>";
-
-        // html += "<tbody>";
-        // html += "<tr>";
-        // html += "<td>1</td>";
-        // html += "<td>city name</td>";
-        // html += "<td>null</td>";
-        // html += "<td>null</td>";
-        // html += "<td>null</td>";
-        // html += "<td>null</td>";
-        // html += "<td>null</td>";
-        // html += "</tr>";
-        // html += "</tbody>";
-        html += "</table>";
-        html += "</div>";
-        
-
-        html += "</div>";
-        html += "</body>";
-        html += "</html>";
-
-        // closing form
-        html += "</form>";
-
-        // Output HTML
         context.html(html);
     }
 
+    private String generateHead() {
+        return "<head>" +
+               "<meta charset='UTF-8'>" +
+               "<meta name='viewport' content='width=device-width, initial-scale=1.0'>" +
+               "<title>ClimateTrend Dashboard</title>" +
+               "<link rel='stylesheet' href='level3A(landingPage).css'>" +
+               "</head>";
+    }
+
+    private String generateBodyStart() {
+        return "<body><div class='container'>";
+    }
+
+    private String generateHeader() {
+        return "<div class='header'>" +
+               "<div class='logo'>" +
+               "<img src='ClimaTrendLogo.png' alt='ClimaTrendLogo'>" +
+               "</div>" +
+               "<div class='header-elements'>" +
+               "<a href='/'>Home Page</a>" +
+               "<a href='/GlobalTracker'>Global Tracker</a>" +
+               "<a href='/CityTracker'>City Tracker</a>" +
+               "<a href='/TimelineTracker'>Timeline Tracker</a>" +
+               "<a href='/PeriodTracker'>Periods Tracker</a>" +
+               "</div>" +
+               "</div>" +
+               "<div class='shadow'></div>";
+    }
+
+    private String generateSearchPanel(Context context) {
+        JDBCforTimelineTracker jdbc = new JDBCforTimelineTracker();
+        String selectBox = context.formParam("selectBox");
+        List<String> selectedRegions = context.formParams("selectedreion");
+        List<String> selectedYears = context.formParams("selectstartyear");
+        String period = context.formParam("period");
+
+        String html = "<form method='post' action='/TimelineTracker'>" +
+                      "<div class='search-panel'>";
+
+        html += generateDisplayRegion(selectBox);
+
+        if (selectBox != null && !selectBox.isEmpty()) {
+            html += generateRegionSelection(selectBox, selectedRegions, jdbc);
+            html += generateYearSelection(selectedYears);
+            html += generatePeriodSelection(period);
+            html += "<button class='search-button'>Search</button>";
+        }
+
+        html += "</div></form>";
+
+        return html;
+    }
+
+
+    private String generateDisplayRegion(String selectBox) {
+        String html = "<div class='search-section'>" +
+                      "<div class='search-title'>Display Region</div>" +
+                      "<div class='select-wrapper'>" +
+                      "<select name='selectBox' class='select-boxfordisplay' onchange='this.form.submit()'>" +
+                      "<option value='' " + (selectBox == null ? "selected" : "") + ">--Select--</option>" +
+                      "<option value='Global' " + ("Global".equals(selectBox) ? "selected" : "") + ">Global</option>" +
+                      "<option value='Country' " + ("Country".equals(selectBox) ? "selected" : "") + ">Country</option>" +
+                      "<option value='State' " + ("State".equals(selectBox) ? "selected" : "") + ">State</option>" +
+                      "<option value='City' " + ("City".equals(selectBox) ? "selected" : "") + ">City</option>" +
+                      "</select>" +
+                      "<div class='select-arrow'></div>" +
+                      "</div>" +
+                      "</div>";
+        return html;
+    }
+
+    private String generateRegionSelection(String selectBox, List<String> selectedRegions, JDBCforTimelineTracker jdbc) {
+        if (selectBox != null && !"Global".equals(selectBox)) {
+            String html = "<div class='search-section'>" +
+                          "<div name='selectedreion' class='search-title'>" + selectBox + "</div>" +
+                          "<div class='select-wrapper'>" +
+                          "<select multiple id='multiple-selects' name='selectedreion' class='select-multiple'>";
+
+            ArrayList<String> names;
+            switch (selectBox) {
+                case "Country":
+                    names = jdbc.getCountryName();
+                    break;
+                case "State":
+                    names = jdbc.getStateName();
+                    break;
+                case "City":
+                    names = jdbc.getCityName();
+                    break;
+                default:
+                    names = new ArrayList<>();
+            }
+
+            for (String name : names) {
+                html += "<option value='" + name + "' " +
+                        (selectedRegions != null && selectedRegions.contains(name) ? "selected" : "") +
+                        ">" + name + "</option>";
+            }
+
+            html += "</select>" +
+                    "</div>" +
+                    "</div>";
+            return html;
+        }
+        return "";
+    }
+
+    private String generateYearSelection(List<String> selectedYears) {
+        String html = "<div class='search-section'>" +
+                      "<div name='selectstartyear' class='search-title'>Start Year</div>" +
+                      "<div class='select-wrapper'>" +
+                      "<select name='selectstartyear' class='select-multiple' multiple>";
+
+        for (int year = 1750; year <= 2012; year++) {
+            html += "<option value=\"" + year + "\"" +
+                    (selectedYears != null && selectedYears.contains(String.valueOf(year)) ? " selected" : "") +
+                    ">" + year + "</option>";
+        }
+
+        html += "</select>" +
+                "</div>" +
+                "</div>";
+        return html;
+    }
+
+    private String generatePeriodSelection(String period) {
+        return "<div class='search-section'>" +
+               "<div name='period' class='search-title'> Periods</div>" +
+               "<div class='select-wrapper'>" +
+               "<input type='number' id='multiple' name='period' class='select-type' min='1' max='99'" +
+               (period != null ? " value='" + period + "'" : "") +
+               "/>" +
+               "</div>" +
+               "</div>";
+    }
+
+    private String generateResults(Context context) {
+        
+        String selectBox = context.formParam("selectBox");
+        List<String> selectedYears = context.formParams("selectstartyear");
+        String period = context.formParam("period");
+        List<String> selectedRegions = context.formParams("selectedreion");
+        if (selectBox == null || selectBox.isEmpty()) {
+            return "";
+        }
+        if (selectBox != null && selectedYears != null && !selectedYears.isEmpty() && period != null && !period.isEmpty()) {
+            int periodValue = Integer.parseInt(period);
+            JDBCforTimelineTracker jdbc = new JDBCforTimelineTracker();
+
+            switch (selectBox) {
+                case "Global":
+                    return generateGlobalResults(selectedYears, periodValue, jdbc);
+                case "Country":
+                    return generateCountryResults(selectedYears, periodValue, selectedRegions, jdbc);
+                case "State":
+                    return generateStateResults(selectedYears, periodValue, selectedRegions, jdbc);
+                case "City":
+                    return generateCityResults(selectedYears, periodValue, selectedRegions, jdbc);
+                default:
+                    return "";
+            }
+        }
+        return "";
+    }
+
+    private String generateGlobalResults(List<String> selectedYears, int periodValue, JDBCforTimelineTracker jdbc) {
+        ArrayList<Global> globalDataList = new ArrayList<>();
+        
+
+        for (String yearStr : selectedYears) {
+            int startYear = Integer.parseInt(yearStr);
+            Global globalData = jdbc.getGlobalavgtemp(startYear, startYear + periodValue);
+            globalData.setInitialYear(startYear);
+            globalDataList.add(globalData);
+        }
+
+        if (!globalDataList.isEmpty()) {
+            return generateResultTable(globalDataList, periodValue, (data1, data2) -> Float.compare(data1.getAverageTemp(), data2.getAverageTemp()),
+                (data, rank) -> {
+                    String row = "<tr>";
+                    row += "<td>" + rank + "</td>";
+                    row += "<td>Global</td>";
+                    row += "<td>" + data.getInitialYear() + "</td>";
+                    row += "<td>" + periodValue + " years</td>";
+                    row += "<td>" + data.getStartYear() + "</td>";
+                    row += "<td>" + data.getEndYear() + "</td>";
+                    
+                    if (data.getAverageTemp() == 0) {
+                        row += "<td>N/A</td>";
+                    } else {
+                        row += String.format("<td>%.3f", data.getAverageTemp()) + "&deg;C</td>";
+                    }
+                    
+                    row += "</tr>";
+                    return row;
+                });
+        } else {
+            return "<p>No data found for the chosen years.</p>";
+        }
+    }
+
+    private String generateCountryResults(List<String> selectedYears, int periodValue, List<String> selectedRegions, JDBCforTimelineTracker jdbc) {
+        ArrayList<Country> countryDataList = new ArrayList<>();
+
+        for (String country : selectedRegions) {
+            for (String yearStr : selectedYears) {
+                int startYear = Integer.parseInt(yearStr);
+                Country countryData = jdbc.getCountryAvgTemp(country, startYear, startYear + periodValue);
+                countryData.setInitialYear(startYear);
+                countryDataList.add(countryData);
+            }
+        }
+
+        if (!countryDataList.isEmpty()) {
+            return generateResultTable(countryDataList, periodValue, (data1, data2) -> Float.compare(data1.getAverageTemp(), data2.getAverageTemp()),
+                (data, rank) -> {
+                    String row = "<tr>";
+                    row += "<td>" + rank + "</td>";
+                    row += "<td>" + data.getCountryName() + "</td>";
+                    row += "<td>" + data.getInitialYear() + "</td>";
+                    row += "<td>" + periodValue + " years</td>";
+                    row += "<td>" + data.getStartYear() + "</td>";
+                    row += "<td>" + data.getEndYear() + "</td>";
+                    
+                    if (data.getAverageTemp() == 0) {
+                        row += "<td>N/A</td>";
+                    } else {
+                        row += String.format("<td>%.3f", data.getAverageTemp()) + "&deg;C</td>";
+                    }
+                    
+                    row += "</tr>";
+                    return row;
+                });
+        } else {
+            return "<p>No data found for the chosen countries and years.</p>";
+        }
+    }
+
+    private String generateStateResults(List<String> selectedYears, int periodValue, List<String> selectedRegions, JDBCforTimelineTracker jdbc) {
+        ArrayList<State> stateDataList = new ArrayList<>();
+
+        for (String state : selectedRegions) {
+            for (String yearStr : selectedYears) {
+                int startYear = Integer.parseInt(yearStr);
+                State stateData = jdbc.getStateAvgTemp(state, startYear, startYear + periodValue);
+                stateData.setInitialYear(startYear);
+                stateDataList.add(stateData);
+            }
+        }
+
+        if (!stateDataList.isEmpty()) {
+            return generateResultTable(stateDataList, periodValue, (data1, data2) -> Float.compare(data1.getAverageTemp(), data2.getAverageTemp()),
+                (data, rank) -> {
+                    String row = "<tr>";
+                    row += "<td>" + rank + "</td>";
+                    row += "<td>" + data.getName() + "</td>";
+                    row += "<td>" + data.getInitialYear() + "</td>";
+                    row += "<td>" + periodValue + " years</td>";
+                    row += "<td>" + data.getStartYear() + "</td>";
+                    row += "<td>" + data.getEndYear() + "</td>";
+                    
+                    if (data.getAverageTemp() == 0) {
+                        row += "<td>N/A</td>";
+                    } else {
+                        row += String.format("<td>%.3f", data.getAverageTemp()) + "&deg;C</td>";
+                    }
+                    
+                    row += "</tr>";
+                    return row;
+                });
+        } else {
+            return "<p>No data found for the chosen states and years.</p>";
+        }
+    }
+
+    private String generateCityResults(List<String> selectedYears, int periodValue, List<String> selectedRegions, JDBCforTimelineTracker jdbc) {
+        ArrayList<City> cityDataList = new ArrayList<>();
+
+        for (String city : selectedRegions) {
+            for (String yearStr : selectedYears) {
+                int startYear = Integer.parseInt(yearStr);
+                City cityData = jdbc.getCityAvgTemp(city, startYear, startYear + periodValue);
+                cityData.setInitialYear(startYear);
+                cityDataList.add(cityData);
+            }
+        }
+
+        if (!cityDataList.isEmpty()) {
+            return generateResultTable(cityDataList, periodValue, (data1, data2) -> Float.compare(data1.getAverageTemp(), data2.getAverageTemp()),
+                (data, rank) -> {
+                    String row = "<tr>";
+                    row += "<td>" + rank + "</td>";
+                    row += "<td>" + data.getName() + "</td>";
+                    row += "<td>" + data.getInitialYear() + "</td>";
+                    row += "<td>" + periodValue + " years</td>";
+                    row += "<td>" + data.getStartYear() + "</td>";
+                    row += "<td>" + data.getEndYear() + "</td>";
+                    
+                    if (data.getAverageTemp() == 0) {
+                        row += "<td>N/A</td>";
+                    } else {
+                        row += String.format("<td>%.3f", data.getAverageTemp()) + "&deg;C</td>";
+                    }
+                    
+                    row += "</tr>";
+                    return row;
+                });
+        } else {
+            return "<p>No data found for the chosen cities and years.</p>";
+        }
+    }
+
+    private <T> String generateResultTable(List<T> dataList, int periodValue, Comparator<T> comparator, ResultRowGenerator<T> rowGenerator) {
+        Collections.sort(dataList, comparator);
+        
+        String html = "<div class='results-container'>" +
+                      "<div class='results-inner'>" +
+                      "<table>" +
+                      "<thead>" +
+                      "<tr>" +
+                      "<th>NO</th>" +
+                      "<th>NAME</th>" +
+                      "<th>YEAR</th>" +
+                      "<th>PERIOD</th>" +
+                      "<th>FIRST YEAR <br/> TEMPERATURE</th>" +
+                      "<th>LAST YEAR <br/> TEMPERATURE</th>" +
+                      "<th>CHANGE</th>" +
+                      "</tr>" +
+                      "</thead>" +
+                      "<tbody>";
+
+        int rank = 1;
+        for (T data : dataList) {
+            html += rowGenerator.generateRow(data, rank);
+            rank++;
+        }
+
+        html += "</tbody>" +
+                "</table>" +
+                "</div>" +
+                "</div>";
+
+        return html;
+    }
+
+    private String generateBodyEnd() {
+        return "</div></body></html>";
+    }
+
+    private interface ResultRowGenerator<T> {
+        String generateRow(T data, int rank);
+    }
+    
 }

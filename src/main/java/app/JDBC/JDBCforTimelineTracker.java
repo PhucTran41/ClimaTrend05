@@ -8,8 +8,10 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.sql.PreparedStatement;
 
-
+import app.classes.City;
+import app.classes.Country;
 import app.classes.Global;
+import app.classes.State;
 import kotlin.Result;
 
 public class JDBCforTimelineTracker {
@@ -158,6 +160,152 @@ public class JDBCforTimelineTracker {
     
             return worldtemperature;
         }
+
+        public ArrayList<Global> getGlobalData(String startyear, String period){
+            ArrayList<Global> globalData = new ArrayList<>();
+
+
+            return globalData;
+        }
+
+
+        public Global getGlobalavgtemp (int startyear, int endyear){
+            Global global = new Global();
+
+            String query = """
+                   WITH TempData AS (
+                    SELECT AverageTemperature
+                    FROM TempOfGlobal
+                    WHERE year BETWEEN ? AND ?
+                )
+                SELECT AVG(AverageTemperature) AS AverageTemperature
+                FROM TempData;
+
+                    """;
+
+            try (Connection connection = DriverManager.getConnection(DATABASE);
+                 PreparedStatement statement = connection.prepareStatement(query)) {
+
+                    statement.setInt(1, startyear);
+                    statement.setInt(2, endyear);
+
+
+
+
+                // Execute the query and process the results
+                try (ResultSet resultSet = statement.executeQuery()) {
+                    if (resultSet.next()) {
+                        global.setAverageTemp(resultSet.getFloat("AverageTemperature"));
+                    }
+                }
+
+            } catch (SQLException e) {
+                System.err.println("Error executing  in getGlobalavgtemp method " + e.getMessage());
+            }
+
+
+            return global;
+        }
+
+       public Country getCountryAvgTemp(String countryname, int startYear, int endYear) {
+        Country country = new Country();
+        String query = """
+               WITH TemperatureData AS (
+                SELECT averagetemperature, year
+                FROM TempOfCountry
+                WHERE year BETWEEN ? AND ? 
+                AND AverageTemperature IS NOT NULL 
+                AND countryID = ?
+            )
+            SELECT AVG(averagetemperature) AS avg,
+                MIN(year) AS min,
+                MAX(year) AS max
+            FROM TemperatureData;
+
+                               """;
+        try (Connection connection = DriverManager.getConnection(DATABASE);
+                PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setInt(1, startYear);
+            statement.setInt(2, endYear);
+            statement.setString(3, countryname);
+            ResultSet result = statement.executeQuery();
+            if (result.next()) {
+                country.setStartYear((result.getInt("min"))); // Use setStartyear instead of getStartyear
+                country.setEndYear(result.getInt("max")); // Use setEndyear instead of getEndyear
+                country.setAverageTemp(result.getFloat("avg")); // Use setAvgtemp instead of getAvgtemp
+                country.setCountryName(countryname);
+            }
+        } catch (SQLException e) {
+            System.err.println("Error found: getCountryAvgTemp() " + e.getMessage());
+        }
+        return country;
+    }
+
+    public State getStateAvgTemp(String state, int startYear, int endYear){
+        State states = new State();
+        String query = """
+                WITH TemperatureData AS (
+                SELECT averagetemperature, year
+                FROM TempOfState
+                WHERE year BETWEEN ? AND ? 
+                AND AverageTemperature IS NOT NULL 
+                AND StateID = ?
+            )
+            SELECT AVG(averagetemperature) AS avg,
+                MIN(year) AS min,
+                MAX(year) AS max
+            FROM TemperatureData;
+                     """;
+        try (Connection connection = DriverManager.getConnection(DATABASE);
+                PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setInt(1, startYear);
+            statement.setInt(2, endYear);
+            statement.setString(3, state);
+            ResultSet result = statement.executeQuery();
+            if (result.next()) {
+                states.setStartYear((result.getInt("min"))); // Use setStartyear instead of getStartyear
+                states.setEndYear(result.getInt("max")); // Use setEndyear instead of getEndyear
+                states.setAverageTemp(result.getFloat("avg")); // Use setAvgtemp instead of getAvgtemp
+                states.setName(state);
+            }
+        } catch (SQLException e) {
+            System.err.println("Error found: getStateAvgTemp() " + e.getMessage());
+        }
+        return states;
+    }
+    public City getCityAvgTemp(String cityname, int startYear, int endYear) {
+        City city = new City();
+        String query = """
+
+                WITH TemperatureData AS (
+                SELECT averagetemperature, year
+                FROM TempOfCity
+                WHERE year BETWEEN ? AND ? 
+                AND AverageTemperature IS NOT NULL 
+                AND CityID = ?
+            )
+            SELECT AVG(averagetemperature) AS avg,
+                MIN(year) AS min,
+                MAX(year) AS max
+            FROM TemperatureData;
+                                               """;
+        try (Connection connection = DriverManager.getConnection(DATABASE);
+                PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setInt(1, startYear);
+            statement.setInt(2, endYear);
+            statement.setString(3, cityname);
+            ResultSet result = statement.executeQuery();
+            if (result.next()) {
+                city.setStartYear((result.getInt("min"))); // Use setStartyear instead of getStartyear
+                city.setEndYear(result.getInt("max")); // Use setEndyear instead of getEndyear
+                city.setAverageTemp(result.getFloat("avg")); // Use setAvgtemp instead of getAvgtemp
+                city.setName(cityname);
+            }
+        } catch (SQLException e) {
+            System.err.println("Error found: getCountryAvgTemp() " + e.getMessage());
+        }
+        return city;
+    }
 
 }
 
