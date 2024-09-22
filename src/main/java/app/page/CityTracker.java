@@ -4,8 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import app.JDBC.JDBC;
+import app.JDBC.JDBCforCityTracker;
 import app.JDBC.JDBCforGlobalTracker;
 import app.JDBC.JDBCforPeriodTracker;
+import app.classes.City;
+import app.classes.State;
 import app.classes.Global;
 import io.javalin.http.Context;
 import io.javalin.http.Handler;
@@ -58,9 +61,8 @@ public class CityTracker implements Handler {
 
 
         // JDBC connection                      //THIS LINE CREATE CONNECTION TO GET METHOD FROM DIFFERENT CLASS
-        JDBC jdbc = new JDBC();
-        JDBCforGlobalTracker jdbc2 = new JDBCforGlobalTracker();
-        JDBCforPeriodTracker jdbcPT = new JDBCforPeriodTracker();
+        JDBCforCityTracker jdbc2 = new JDBCforCityTracker();
+
 
        
 
@@ -75,22 +77,17 @@ public class CityTracker implements Handler {
         
 
 
-        ArrayList<String> countryname = jdbc2.getCountryName();
+        ArrayList<String> countryname = jdbc2.getCountryNames();
         List<String> selectedCountriesList = context.formParams("countries");
+        String selectOnecountry = context.formParam("countries");
         String[] selectedCountries = selectedCountriesList != null ? selectedCountriesList.toArray(new String[0])  : null;
 
 
-
-
-  
-
-        
-
         /* oh u guys can put this in or not because these lines are used for displaying results to the terminal whenever users interact with the filer, try! */
-        System.out.println("selectBoxfordisplay: " + selectBoxfordisplay);
+        System.out.println("select regoin: " + selectBoxfordisplay);
         System.out.println("statistic:" + statistic);
         System.out.println("output Type:" + outputType);
-        System.out.println("select country:" + outputType);
+        System.out.println("select type:" + outputType);
 
 
          // If "Country" is selected, display Country dropdown
@@ -135,8 +132,8 @@ public class CityTracker implements Handler {
 
 
             // Start Year
-            Global firstyear = jdbc.getFirstYearTemp();
-            Global lastyear = jdbc.getLastYearTemp();
+            Global firstyear = jdbc2.getFirstYearTemp();
+            Global lastyear = jdbc2.getLastYearTemp();
             html = html + "<div class='search-section'>";
             html = html + "<div class='search-title'>Start Year</div>";
             html = html + "<div class='select-wrapper'>";
@@ -199,9 +196,9 @@ public class CityTracker implements Handler {
 
             html = html + "</form>";
     
-        if ( ("City".equals(selectBoxfordisplay) || "State".equals(selectBoxfordisplay)) && selectedCountries != null && selectedCountries.length > 0 && statistic != null && !statistic.isEmpty() 
+        if ( (("City".equals(selectBoxfordisplay) || "State".equals(selectBoxfordisplay)))&& selectedCountries != null && selectedCountries.length > 0 && statistic != null && !statistic.isEmpty() 
         && outputType != null && !outputType.isEmpty() && endyear != null && !endyear.isEmpty() && startyear != null && !startyear.isEmpty()) {
-
+            System.out.println("Displaying the results...");
             html = html + "<div class='results-container'>"; //open the result-container
             html = html + "<div class='results-inner'>"; //open the results-inner
 
@@ -209,55 +206,75 @@ public class CityTracker implements Handler {
             html = html + "<thead>";
             html = html + "<tr>";
             html = html + "<th>RANK</th>";
-            html = html + "<th>" +selectBoxfordisplay.toUpperCase() +"</th>";
+            html = html + "<th>" + "NAME" +"</th>";
             html = html + "<th>START YEAR</th>";
             html = html + "<th>END YEAR</th>";
-            html = html + "<th>"+ startyear + statistic + "</th>";
-            html = html + "<th>"+ endyear + statistic + "</th>";
+            html = html + "<th>" + statistic + " in " + startyear + "</th>";
+            html = html + "<th>" + statistic + " in " + endyear + "</th>";
             html = html + "<th> CHANGE </th>";
             html = html + "<th> AVERAGE CHANGE </th>";
             html = html + "</tr>";
             html = html + "</thead>";
             html = html + "<tbody>"; //open the table body 
 
-        if ("City".equals(selectBoxfordisplay)){
-            //FIXME: this is not supposed to get the data from GlobalTracker
-            List<Global> result = jdbc2.getGlobalDatafromCountry(selectedCountries, endyear, startyear, outputType);
+            if ("City".equals(selectBoxfordisplay)) {
+                System.out.println("City is selected");
+                int startYear = Integer.parseInt(startyear);
+                int endYear = Integer.parseInt(endyear);
+            
+                List<City> result = jdbc2.getCityDatafromCountry(selectOnecountry, endYear, startYear, outputType);
+            
+                int rowNumber = 1;
+                for (City data : result) {
+                    html = html + "<tr>";
+                    html = html + "<td>" + rowNumber + "</td>";
+                    html = html + "<td>" + data.getName() + "</td>";
+                    html = html + "<td>" + data.getFirstyear() + "</td>";
+                    html = html + "<td>" + data.getEndYear() + "</td>";
+                    if ("Minimum Temperature".equals(statistic)) {
+                        html += "<td>" + String.format("%.2f", data.getFirstYearTemp()) + "</td>";
+                        html += "<td>" + String.format("%.2f", data.getLastYtemp()) + "</td>";
+                    } else if ("Maximum Temperature".equals(statistic)) {
+                        html += "<td>" + String.format("%.2f", data.getFirstYearTemp()) + "</td>";
+                        html += "<td>" + String.format("%.2f", data.getLastYtemp()) + "</td>";
+                    } else if ("Average Temperature".equals(statistic)) {
+                        html += "<td>" + String.format("%.2f", data.getAverageTemp()) + "</td>";
+                        html += "<td>" + String.format("%.2f", data.getAverageTemp()) + "</td>";
+                    }
+                    html = html + "<td>" + data.getChanges() + "</td>";
+                    html = html + "<td>" + String.format("%.2f", data.getAverageChange()) + "</td>";
+                    html = html + "</tr>";
+                    rowNumber++;
+                }
+                html += "</tbody>" ;
+        }   else if ("State".equals(selectBoxfordisplay)){
+            System.out.println("State is selected");
+
+
+
+            int startYear = Integer.parseInt(startyear);
+            int endYear = Integer.parseInt(endyear);
+
+            List<State> resultforstate = jdbc2.getStateDatafromCountry(selectOnecountry, endYear, startYear, outputType);
 
             int rowNumber = 1;
-            for (Global data : result) {
+            for (State data : resultforstate) {
+                System.out.println("printing out the table...");
+
                 html = html + "<tr>";
                 html = html + "<td>" + rowNumber + "</td>";
                 html = html + "<td>" + data.getName() + "</td>";
-                html = html + "<td>" + data.getYear() + "</td>";
-                html = html + "<td>" + data.getPeriod() + "</td>";
-                html = html + "<td>" + data.getFirstYearTemperature() + "</td>";
-                html = html + "<td>" + data.getLastYearTemperature() + "</td>";
-                html = html + "<td>" + data.getChange() + "</td>";
-                html = html + "<td>" + data.getChange() + "</td>";
-                html = html + "</tr>";
-                rowNumber++;
-            }
-
-            html = html + "</tbody>"; //close the table body when if World is selected
-
-        }   else if ("State".equals(selectBoxfordisplay)){
-
-
-            //FIXME: this is not supposed to get the data from GlobalTracker
-            List<Global> result = jdbc2.getGlobalDatafromCountry(selectedCountries, endyear, startyear, outputType);
-
-            int rowNumber = 1;
-            for (Global data : result) {
-                html = html + "<tr>";
-                html = html + "<td>" + data.getName() + "</td>";
-                html = html + "<td>" + data.getYear() + "</td>";
-                html = html + "<td>" + data.getPeriod() + "</td>";
-                html = html + "<td>" + data.getFirstYearTemperature() + "</td>";
-                html = html + "<td>" + data.getLastYearTemperature() + "</td>";
-                html = html + "<td>" + data.getChange() + "</td>";
-                html = html + "<td>" + data.getChange() + "</td>";
-                html = html + "<td>" + data.getChange() + "</td>";
+                html = html + "<td>" + data.getFirstyear() + "</td>";
+                html = html + "<td>" + data.getEndYear() + "</td>";
+                if("Minimum Temperature".equals(statistic)){
+                    html += "<td>" + data.getFirstYearTemp() + "</td>";
+                } else if("Maximum Temperature".equals(statistic)){
+                    html += "<td>" + data.getLastYtemp() + "</td>";
+                } else if("Average Temperature".equals(statistic)){
+                    html += "<td>" + data.getAverageTemp() + "</td>";
+                }
+                html = html + "<td>" + data.getAverageChange() + "</td>";
+                html = html + "<td>" + data.getChanges() + "</td>";
                 html = html + "</tr>";
                 rowNumber++;
             }

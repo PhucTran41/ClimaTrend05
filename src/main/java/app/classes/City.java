@@ -8,7 +8,7 @@ public class City {
     private float firstYearTemp;
     private float lastYtemp;
     private float Changes;
-    private float ChangeByPercentage;
+    private float changeByPercentage;
     private float AverageChange;
     private String latitude;
     private String longitude;
@@ -55,13 +55,13 @@ public class City {
         return Changes;
     }
     public void setChanges(float changes) {
-        Changes = changes;
+        this.Changes = changes;
     }
-    public float getChangeByPercentage() {
-        return ChangeByPercentage;
+    public float getchangeByPercentage() {
+        return changeByPercentage;
     }
-    public void setChangeByPercentage(float changeByPercentage) {
-        ChangeByPercentage = changeByPercentage;
+    public void setchangeByPercentage(float changeByPercentage) {
+        this.changeByPercentage = changeByPercentage;
     }
     public float getAverageChange() {
         return AverageChange;

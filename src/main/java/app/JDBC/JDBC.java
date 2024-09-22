@@ -111,14 +111,12 @@ public class JDBC {
     }
 
 
-
     // GET AMOUNT OF PEOPLE FOR POPULATION DATA
-
     public Population getPopulation(String region, int year) {
         Population population = new Population();
     
         String query = """
-                SELECT *
+                SELECT * 
                 FROM Population
                 WHERE countryID = ?
                 AND year = ?
@@ -148,7 +146,7 @@ public class JDBC {
     
         return population;
     }
-    
+
 
     
         // GET THE FIRST YEAR FOR GLOBAL POPULATION DATA
@@ -180,7 +178,7 @@ public class JDBC {
         }
 
 
-            // GET THE LAST YEAR FOR GLOBAL POPULATION DATA
+        // GET THE LAST YEAR FOR GLOBAL POPULATION DATA
         public int getPopulationLastYear() {
             int year = -1;
             String query = """

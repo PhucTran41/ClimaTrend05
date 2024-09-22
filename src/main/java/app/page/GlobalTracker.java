@@ -50,7 +50,7 @@ public class GlobalTracker implements Handler {
 
 
         //IMPORTANT PART BE CAREFUL ! 
-        /* u guys must carefully open the div and close the div properly */
+        /* Must carefully open the div and close the div properly */
 
         // Search Panel
         html = html + "<form method='post' action='/GlobalTracker'>"; //Put the form before the search-panel
