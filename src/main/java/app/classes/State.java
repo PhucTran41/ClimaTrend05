@@ -8,13 +8,27 @@ public class State {
     private float firstYearTemp;
     private float lastYtemp;
     private float Changes;
+    private String latitude;
+    private String longitude;
     private float ChangeByPercentage;
     private float AverageChange;
-    
     private int startYear;
     private int endYear;
     private int initialYear;
     private float AverageTemp;
+
+    public String getLatitude() {
+        return latitude;
+    }
+    public void setLatitude(String latitude) {
+        this.latitude = latitude;
+    }
+    public String getLongitude() {
+        return longitude;
+    }
+    public void setLongitude(String longitude) {
+        this.longitude = longitude;
+    }
 
     public State(){
 
