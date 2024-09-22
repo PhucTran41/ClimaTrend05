@@ -6,6 +6,7 @@ import java.util.List;
 
 import app.JDBC.JDBC;
 import app.JDBC.JDBCforGlobalTracker;
+import app.classes.Country;
 import app.classes.Global;
 import io.javalin.http.Context;
 import io.javalin.http.Handler;
@@ -117,7 +118,7 @@ public class GlobalTracker implements Handler {
                 html = html + "<div class='search-title'>Order</div>";
                 html = html + "<div class='select-wrapper'>";
                 html = html + "<select class='select-boxfordisplay' id ='orderby' name ='orderby'>";
-                html = html + "<option value='' " + (orderby == null ? "selected" : "") + ">--Select--</option>";
+                html = html + "<option value='' " + (orderby == null ? "selected" : "") + ">Select</option>";
                 html = html + "<option value= 'Ascending'" + ("Ascending".equals(orderby) ? "selected":"") +">Ascending </option>";
                 html = html + "<option value= 'Descending'" + ("Descending".equals(orderby) ? "selected":"") +">Descending </option>";
                 html = html + "</select>";
@@ -131,12 +132,12 @@ public class GlobalTracker implements Handler {
                 html = html + "<div class='search-title'>Output</div>";
                 html = html + "<div class='select-wrapper'>";
                 html = html + "<select class='select-boxfordisplay' id= 'output' name = 'output' >";
-                html = html + "<option value='' " + (output == null ? "selected" : "") + ">--Select--</option>";
-                html = html + "<option value = ' Year' " + ("Year".equals(output) ? "selected" : "") 
+                html = html + "<option value='' " + (output == null ? "selected" : "") + ">Select</option>";
+                html = html + "<option value = 'Year' " + ("Year".equals(output) ? "selected" : "") 
                     + ">Year</option>";
                 html = html + "<option value = 'Population' " + ("Population".equals(output) ? "selected" : "") 
                     + ">Population</option>";
-                html = html + "<option value =' Average Temperature' " + ("Average Temperature".equals(output) ? "selected" : "") 
+                html = html + "<option value ='Average Temperature' " + ("Average Temperature".equals(output) ? "selected" : "") 
                     + ">Average Temperature</option>";
                 html = html + "</select>";
                 html = html + "<div class='select-arrow'></div>";
@@ -172,7 +173,7 @@ public class GlobalTracker implements Handler {
                 html = html + "<div class='select-wrapper'>";
 
                 html = html + "<select class='select-boxfordisplay' id ='OutputType' name = 'OutputType'>";
-                html = html + "<option value='' " + (OutputType == null ? "selected" : "") + ">--Select--</option>";
+                html = html + "<option value='' " + (OutputType == null ? "selected" : "") + ">Select</option>";
                 html = html + "<option value= 'Raw Value'" + ("Raw Value".equals(OutputType) ? "selected":"") +">Raw Value </option>";
                 html = html + "<option value= 'Proportion'" + ("Proportion".equals(OutputType) ? "selected":"") +">Proportion </option>";
                 html = html + "</select>";
@@ -187,7 +188,7 @@ public class GlobalTracker implements Handler {
             html = html + "<div class='search-section'>";
             html = html + "<div class='search-title'>Start Year</div>";
             html = html + "<div class='select-wrapper'>";
-            html += "<input type='number' id='startyear' name='startyear' class='select-type' min='" + firstyear.getYear() + "' max='" + lastyear.getYear() + "'/>";
+            html += "<input type='number' id='startyear' name='startyear' class='select-type' value= '"+startyear+"' min='" + firstyear.getYear() + "' max='" + lastyear.getYear() + "'/>";
             html = html + "</div>";
             html = html + "</div>";
 
@@ -195,7 +196,7 @@ public class GlobalTracker implements Handler {
             html = html + "<div class='search-section'>";
             html = html + "<div class='search-title'>End Year</div>";
             html = html + "<div class='select-wrapper'>";
-            html += "<input type='number' id='endyear' name='endyear' class='select-type' min='" + firstyear.getYear() + "' max='" + lastyear.getYear() + "'/>";
+            html += "<input type='number' id='endyear' name='endyear' class='select-type' value= '"+endyear+"' min='" + firstyear.getYear() + "' max='" + lastyear.getYear() + "'/>";
             html = html + "</div>";//closing the select-wrapper div
             html = html + "</div>";// closing search-section div    
 
@@ -208,10 +209,6 @@ public class GlobalTracker implements Handler {
             html = html + "<button type='submit' class='search-button'>Search</button>";
 
             html = html + "</form>";
-    
-            
-
- 
 
         if ("World".equals(selectBoxfordisplay) && output != null && !output.isEmpty() && orderby != null && !orderby.isEmpty() && 
         startyear != null && !startyear.isEmpty() && endyear != null && !endyear.isEmpty()){
@@ -233,8 +230,8 @@ public class GlobalTracker implements Handler {
             for (Global data : results) {
                 html = html + "<tr>";
                 html = html + "<td>" + data.getYear() + "</td>";
-                html = html + "<td>" + data.getAverageTemp() + "</td>";
-                html = html + "<td>" + data.getPopulation() + "</td>";
+                html = html + "<td>" + data.getAverageTemp() + " °C </td>";
+                html = html + "<td>" + String.format("%,d", data.getPopulation()) + "</td>";
                 html = html + "</tr>";
                 rowNumber++;
             }
@@ -252,29 +249,35 @@ public class GlobalTracker implements Handler {
         html = html + "<div class='results-inner'>";
         html = html + "<table>"; //open the table if country was selected
         html = html + "<thead><tr>";
-        html = html + "<th>NO</th>";
         html = html + "<th>NAME</th>";
-        html = html + "<th>YEAR</th>";
-        html = html + "<th>PERIOD</th>";
-        html = html + "<th>FIRST YEAR <br/> TEMPERATURE</th>";
-        html = html + "<th>LAST YEAR <br/> TEMPERATURE</th>";
+        html = html + "<th>START YEAR</th>";
+        html = html + "<th>END YEAR</th>";
+        html = html + "<th>" +startyear +"<br/> TEMPERATURE</th>";
+        html = html + "<th>" +endyear +"<br/> TEMPERATURE</th>";
         html = html + "<th>CHANGE</th>";
         html = html + "</tr>";
         html = html + "</thead>";
 
         html = html + "<tbody>"; //open the table body if country was selected
-        List<Global> result = jdbc2.getGlobalDatafromCountry(selectedCountries, OutputType, startyear, endyear);
+        List<Country> result = jdbc2.getGlobalDatafromCountry(selectedCountries, OutputType, startyear, endyear);
 
         int rowNumber = 1;
-        for (Global data : result) {
+        for (Country data : result) {
             html = html + "<tr>";
-            html = html + "<td>" + rowNumber + "</td>";
-            html = html + "<td>" + data.getName() + "</td>";
-            html = html + "<td>" + data.getYear() + "</td>";
-            html = html + "<td>" + data.getPeriod() + "</td>";
-            html = html + "<td>" + data.getFirstYearTemperature() + "</td>";
-            html = html + "<td>" + data.getLastYearTemperature() + "</td>";
-            html = html + "<td>" + data.getChange() + "</td>";
+            html = html + "<td>" + data.getCountryName() + "</td>";
+            html = html + "<td>" + data.getStartYear() + "</td>";
+            html = html + "<td>" + data.getEndYear() + "</td>";
+            html = html + "<td>" + data.getStartYearTemperature() + "</td>";
+            html = html + "<td>" + data.getEndYearTemperature() + "</td>";
+
+            if ("Proportion".equals(OutputType)) {
+
+                html = html + "<td>" + String.format("%.2f%%", data.getChange()) + "</td>";
+            } else {
+
+                html = html + "<td>" + String.format("%.2f", data.getChange()) + "</td>";
+            }
+            
             html = html + "</tr>";
             rowNumber++;
         }

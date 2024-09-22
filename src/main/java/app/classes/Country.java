@@ -11,6 +11,9 @@ public class Country {
     private int endYear;
     private float AveragePopulation;
     private int initialYear;
+    private float startYearTemperature;
+    private float endYearTemperature;
+    private float change;
 
     public Country(){
         
@@ -78,12 +81,35 @@ public class Country {
         this.startYear = startYear;
     }
 
+    public float getStartYearTemperature() {
+        return startYearTemperature;
+    }
+
+    public void setStartYearTemperature(float startYearTemperature) {
+        this.startYearTemperature = startYearTemperature;
+    }
+
+    public float getEndYearTemperature() {
+        return endYearTemperature;
+    }
+
+    public void setEndYearTemperature(float endYearTemperature) {
+        this.endYearTemperature = endYearTemperature;
+    }
+
     public int getEndYear() {
         return endYear;
     }
 
     public void setEndYear(int endYear) {
         this.endYear = endYear;
+    }
+    public float getChange() {
+        return change;
+    }
+
+    public void setChange(float change) {
+        this.change = change;
     }
 
     public float getAveragePopulation() {
