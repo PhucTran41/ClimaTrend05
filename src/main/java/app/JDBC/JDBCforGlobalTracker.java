@@ -170,7 +170,7 @@ public class JDBCforGlobalTracker {
         
     }
 
-    //GEt global datas from the country 
+    //GET global datas from the country 
     public ArrayList<Global> getGlobalDatafromCountry(String [] countries, String OutputType, String startYear, String endYear) {
         ArrayList<Global> globalData = new ArrayList<>();
         

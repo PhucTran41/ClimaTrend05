@@ -36,8 +36,8 @@ public class HomePage implements Handler {
             // Retrieve Persona Details for Persona ID 2
             Map<String, String> personaDetails2 = jdbc.getPersonaDetails(2); // PersonaID = 2
 
-             // Retrieve Persona Details for Persona ID 3
-             Map<String, String> personaDetails3 = jdbc.getPersonaDetails(3); // PersonaID = 2
+            // Retrieve Persona Details for Persona ID 3
+            Map<String, String> personaDetails3 = jdbc.getPersonaDetails(3); // PersonaID = 2
            
 
         String html = """
@@ -52,9 +52,6 @@ public class HomePage implements Handler {
             </head>
             <body>
                 <!-- navigation bar -->
-<<<<<<< HEAD
-                // Replace the navigation bar in HomePage
-=======
                 <nav> 
                     <div class="logo">
                         <img src="ClimaTrendLogo.png" alt="ClimaTrendLogo"> 
@@ -67,7 +64,6 @@ public class HomePage implements Handler {
                         <a href="/PeriodTracker">Periods Tracker</a>
                     </div>
                 </nav>
->>>>>>> fc64d5057b6e43a305d2fe2b75b5e45f53515df9
             
                         <nav>
                             <div class='logo'>
