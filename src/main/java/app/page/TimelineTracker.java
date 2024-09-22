@@ -1,15 +1,15 @@
 package app.page;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.List;
 
 import app.JDBC.JDBCforTimelineTracker;
-import app.classes.Global;
-import app.classes.Country;
-import app.classes.State;
 import app.classes.City;
+import app.classes.Country;
+import app.classes.Global;
+import app.classes.State;
 import io.javalin.http.Context;
 import io.javalin.http.Handler;
 
