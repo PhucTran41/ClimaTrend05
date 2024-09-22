@@ -9,7 +9,7 @@ public class Global {
     private float averageTemp;
     private float minimumTemp;
     private float maximumTemp;
-    private int population;
+    private long population;
     private int initialYear;
     private int startYear;
     private int endYear;
@@ -110,11 +110,11 @@ public class Global {
     }
 
     // Getter and Setter for population
-    public int getPopulation() {
+    public long getPopulation() {
         return population;
     }
 
-    public void setPopulation(int population) {
+    public void setPopulation(long population) {
         this.population = population;
     }
 
@@ -122,7 +122,7 @@ public class Global {
     //Getter and Setter for getting period
 
     public int getPeriod() {
-        return population;
+        return period;
     }
 
     public int setPeriod(int period){

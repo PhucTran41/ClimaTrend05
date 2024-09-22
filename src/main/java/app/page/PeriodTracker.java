@@ -59,8 +59,8 @@ public class PeriodTracker implements Handler {
 
 
         // JDBC connection                      //THIS LINE CREATE CONNECTION TO GET METHOD FROM DIFFERENT CLASS
+
         JDBC jdbc = new JDBC();
-        JDBCforGlobalTracker jdbc2 = new JDBCforGlobalTracker();
         JDBCforPeriodTracker jdbcPT = new JDBCforPeriodTracker();
 
        
@@ -76,15 +76,15 @@ public class PeriodTracker implements Handler {
         
 
 
-        ArrayList<String> countryname = jdbc2.getCountryName();
+        ArrayList<String> countryname = jdbcPT.getCountryName();
         List<String> selectedCountriesList = context.formParams("countries");
         String[] selectedCountries = selectedCountriesList != null ? selectedCountriesList.toArray(new String[0])  : null;
 
-        ArrayList<String> cityName = jdbc2.getCityNameFromCountry();
+        ArrayList<String> cityName = jdbcPT.getCityName();
         List<String> selectedCitiesList = context.formParams("cities");
         String[] selectedCities = selectedCitiesList != null ? selectedCitiesList.toArray(new String[0])  : null;
 
-        ArrayList<String> stateName = jdbc2.getStateNameFromCountry();
+        ArrayList<String> stateName = jdbcPT.getStateName();
         List<String> selectedStateList = context.formParams("states");
         String[] selectedStates = selectedStateList != null ? selectedStateList.toArray(new String[0])  : null;
 
@@ -97,6 +97,12 @@ public class PeriodTracker implements Handler {
         /* oh u guys can put this in or not because these lines are used for displaying results to the terminal whenever users interact with the filer, try! */
         System.out.println("selectBoxfordisplay: " + selectBoxfordisplay);
         System.out.println("selectCity" + Arrays.toString(selectedCities));
+        System.out.println("selectCountry" + Arrays.toString(selectedCountries));
+        System.out.println("selectState" + Arrays.toString(selectedStates));
+        System.out.println("term: " + term);
+        System.out.println("startyear: " + startyear);
+        System.out.println("yearLength: " + yearLength);
+        System.out.println("comparedRange: " + comparedRange);
 
 
 
@@ -201,8 +207,8 @@ public class PeriodTracker implements Handler {
             }
 
             // Start Year
-            Global firstyear = jdbc.getFirstYearTemp();
-            Global lastyear = jdbc.getLastYearTemp();
+            Global firstyear = jdbcPT.getFirstYearTemp();
+            Global lastyear = jdbcPT.getLastYearTemp();
             html = html + "<div class='search-section'>";
             html = html + "<div class='search-title'>Start Year</div>";
             html = html + "<div class='select-wrapper'>";
@@ -225,9 +231,7 @@ public class PeriodTracker implements Handler {
             html += "<input type='number' id='comparedRange' name='comparedRange' class='select-type' min='" + firstyear.getYear() + "' max='" + lastyear.getYear() + "'/>";
             html = html + "</div>";//closing the select-wrapper div
             html = html + "</div>";// closing search-section div    
-            
-        
-            
+                        
            
             html = html + "</div>"; // Closing .search-panel
             
@@ -260,83 +264,50 @@ public class PeriodTracker implements Handler {
             html = html + "</thead>";
             html = html + "<tbody>"; //open the table body 
 
-        if ("City".equals(selectBoxfordisplay) && selectedCities != null && selectedCities.length > 0 && yearLength != null && !yearLength.isEmpty() && 
-        startyear != null && !startyear.isEmpty() && comparedRange != null && !comparedRange.isEmpty()){
-
-            //FIXME: this is not supposed to get the data from GlobalTracker
-            List<Global> result = jdbc2.getGlobalDatafromCountry(selectedCountries, yearLength, startyear, comparedRange);
-
-            int rowNumber = 1;
-            for (Global data : result) {
-                html = html + "<tr>";
-                html = html + "<td>" + data.getName() + "</td>";
-                html = html + "<td>" + data.getYear() + "</td>";
-                html = html + "<td>" + data.getPeriod() + "</td>";
-                html = html + "<td>" + data.getFirstYearTemperature() + "</td>";
-                html = html + "<td>" + data.getLastYearTemperature() + "</td>";
-                html = html + "<td>" + data.getChange() + "</td>";
-                html = html + "</tr>";
-                rowNumber++;
+            if (("City".equals(selectBoxfordisplay) && selectedCities != null && selectedCities.length > 0) ||
+            ("Country".equals(selectBoxfordisplay) && selectedCountries != null && selectedCountries.length > 0) ||
+            ("State".equals(selectBoxfordisplay) && selectedStates != null && selectedStates.length > 0)) {
+        
+            String similarityCriteria = context.formParam("similarityCriteria");
+            int similarPeriodsCount = Integer.parseInt(context.formParam("similarPeriodsCount"));
+        
+            ArrayList<Global> similarPeriods = jdbcPT.findSimilarPeriods(selectBoxfordisplay, 
+                "City".equals(selectBoxfordisplay) ? selectedCities : 
+                "Country".equals(selectBoxfordisplay) ? selectedCountries : selectedStates, 
+                startyear, yearLength, comparedRange, similarityCriteria, similarPeriodsCount);
+        
+            html = html + "<h2>Similar Periods</h2>";
+            html = html + "<table>";
+            html = html + "<thead>";
+            html = html + "<tr>";
+            html = html + "<th>" + selectBoxfordisplay.toUpperCase() + "</th>";
+            html = html + "<th>START YEAR</th>";
+            html = html + "<th>END YEAR</th>";
+            html = html + "<th>AVERAGE TEMPERATURE</th>";
+            if ("Country".equals(selectBoxfordisplay) && ("population".equals(similarityCriteria) || "both".equals(similarityCriteria))) {
+                html = html + "<th>POPULATION</th>";
             }
-
-            html = html + "</tbody>"; //close the table body when if World is selected
-
-         
+            html = html + "</tr>";
+            html = html + "</thead>";
+            html = html + "<tbody>";
+        
+            for (Global period : similarPeriods) {
+                html = html + "<tr>";
+                html = html + "<td>" + period.getName() + "</td>";
+                html = html + "<td>" + period.getYear() + "</td>";
+                html = html + "<td>" + period.getPeriod() + "</td>";
+                html = html + "<td>" + period.getFirstYearTemperature() + "</td>";
+                if ("Country".equals(selectBoxfordisplay) && ("population".equals(similarityCriteria) || "both".equals(similarityCriteria))) {
+                    html = html + "<td>" + period.getPopulation() + "</td>";
+                }
+                html = html + "</tr>";
+            }
         }
-
-        else if ("Country".equals(selectBoxfordisplay) && selectedCountries != null && selectedCountries.length > 0 && term != null && !term.isEmpty() && 
-        startyear != null && !startyear.isEmpty() && comparedRange != null && !comparedRange.isEmpty() && yearLength != null && !yearLength.isEmpty()){
-
-
-            //FIXME: this is not supposed to get the data from GlobalTracker
-            List<Global> result = jdbc2.getGlobalDatafromCountry(selectedCountries, yearLength, startyear, comparedRange);
-
-            int rowNumber = 1;
-            for (Global data : result) {
-                html = html + "<tr>";
-                html = html + "<td>" + data.getName() + "</td>";
-                html = html + "<td>" + data.getYear() + "</td>";
-                html = html + "<td>" + data.getPeriod() + "</td>";
-                html = html + "<td>" + data.getFirstYearTemperature() + "</td>";
-                html = html + "<td>" + data.getLastYearTemperature() + "</td>";
-                html = html + "<td>" + data.getChange() + "</td>";
-                html = html + "</tr>";
-                rowNumber++;
-            }
-
         
-        html = html + "</tbody>"; //close the table body if country was selected
-
-    }
-        else if ("State".equals(selectBoxfordisplay) && selectedCountries != null && selectedCountries.length > 0 && startyear != null && !startyear.isEmpty() && comparedRange != null && !comparedRange.isEmpty() && yearLength != null && !yearLength.isEmpty()){
-
-
-            //FIXME: this is not supposed to get the data from GlobalTracker
-            List<Global> result = jdbc2.getGlobalDatafromCountry(selectedCountries, yearLength, startyear, comparedRange);
-
-            int rowNumber = 1;
-            for (Global data : result) {
-                html = html + "<tr>";
-                html = html + "<td>" + data.getName() + "</td>";
-                html = html + "<td>" + data.getYear() + "</td>";
-                html = html + "<td>" + data.getPeriod() + "</td>";
-                html = html + "<td>" + data.getFirstYearTemperature() + "</td>";
-                html = html + "<td>" + data.getLastYearTemperature() + "</td>";
-                html = html + "<td>" + data.getChange() + "</td>";
-                html = html + "</tr>";
-                rowNumber++;
-            }
-
-        
-        html = html + "</tbody>"; //close the table body if country was selected
-
-    }
-}
-                    //table display 
-                    //open the table if World is selected
-
-
-        html = html + "</table>"; //close the table 
+            html = html + "</tbody>";
+            html = html + "</table>";
+        }
+    
         html = html + "</div>";//close the results-inner
         html = html + "</div>";//close the results-container
     }
@@ -349,6 +320,7 @@ public class PeriodTracker implements Handler {
         }   
 
     }
+
 
 
 
