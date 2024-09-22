@@ -35,7 +35,7 @@ public class TimelineTracker implements Handler {
                "<meta charset='UTF-8'>" +
                "<meta name='viewport' content='width=device-width, initial-scale=1.0'>" +
                "<title>ClimateTrend Dashboard</title>" +
-               "<link rel='stylesheet' href='level3A(landingPage).css'>" +
+               "<link rel='stylesheet' href='level3A.css'>" +
                "</head>";
     }
 
@@ -197,12 +197,13 @@ public class TimelineTracker implements Handler {
 
     private String generateGlobalResults(List<String> selectedYears, int periodValue, JDBCforTimelineTracker jdbc) {
         ArrayList<Global> globalDataList = new ArrayList<>();
-        
 
         for (String yearStr : selectedYears) {
             int startYear = Integer.parseInt(yearStr);
-            Global globalData = jdbc.getGlobalavgtemp(startYear, startYear + periodValue);
+            int endYear = startYear + periodValue - 1;
+            Global globalData = jdbc.getGlobalavgtemp(startYear, endYear);
             globalData.setInitialYear(startYear);
+            globalData.setPeriod(periodValue);
             globalDataList.add(globalData);
         }
 
@@ -233,33 +234,30 @@ public class TimelineTracker implements Handler {
 
     private String generateCountryResults(List<String> selectedYears, int periodValue, List<String> selectedRegions, JDBCforTimelineTracker jdbc) {
         ArrayList<Country> countryDataList = new ArrayList<>();
-
         for (String country : selectedRegions) {
             for (String yearStr : selectedYears) {
                 int startYear = Integer.parseInt(yearStr);
-                Country countryData = jdbc.getCountryAvgTemp(country, startYear, startYear + periodValue);
+                int endYear = startYear + periodValue - 1;
+                Country countryData = jdbc.getCountryAvgTemp(country, startYear, endYear);
                 countryData.setInitialYear(startYear);
                 countryDataList.add(countryData);
             }
         }
-
         if (!countryDataList.isEmpty()) {
-            return generateResultTable(countryDataList, periodValue, (data1, data2) -> Float.compare(data1.getAverageTemp(), data2.getAverageTemp()),
+            return generateResultTable(countryDataList, periodValue, (data1, data2) -> Float.compare(data2.getAverageTemp(), data1.getAverageTemp()),
                 (data, rank) -> {
                     String row = "<tr>";
                     row += "<td>" + rank + "</td>";
                     row += "<td>" + data.getCountryName() + "</td>";
                     row += "<td>" + data.getInitialYear() + "</td>";
                     row += "<td>" + periodValue + " years</td>";
-                    row += "<td>" + data.getStartYear() + "</td>";
-                    row += "<td>" + data.getEndYear() + "</td>";
-                    
+                    row += data.getStartYear() == 0 ? "<td>N/A</td>" : "<td>" + data.getStartYear() + "</td>";
+                    row += data.getEndYear() == 0 ? "<td>N/A</td>" : "<td>" + data.getEndYear() + "</td>";
                     if (data.getAverageTemp() == 0) {
                         row += "<td>N/A</td>";
                     } else {
                         row += String.format("<td>%.3f", data.getAverageTemp()) + "&deg;C</td>";
                     }
-                    
                     row += "</tr>";
                     return row;
                 });
@@ -288,8 +286,8 @@ public class TimelineTracker implements Handler {
                     row += "<td>" + data.getName() + "</td>";
                     row += "<td>" + data.getInitialYear() + "</td>";
                     row += "<td>" + periodValue + " years</td>";
-                    row += "<td>" + data.getStartYear() + "</td>";
-                    row += "<td>" + data.getEndYear() + "</td>";
+                    row += data.getStartYear() == 0 ? "<td>N/A</td>" : "<td>" + data.getStartYear() + "</td>";
+                    row += data.getEndYear() == 0 ? "<td>N/A</td>" : "<td>" + data.getEndYear() + "</td>";
                     
                     if (data.getAverageTemp() == 0) {
                         row += "<td>N/A</td>";
@@ -325,8 +323,8 @@ public class TimelineTracker implements Handler {
                     row += "<td>" + data.getName() + "</td>";
                     row += "<td>" + data.getInitialYear() + "</td>";
                     row += "<td>" + periodValue + " years</td>";
-                    row += "<td>" + data.getStartYear() + "</td>";
-                    row += "<td>" + data.getEndYear() + "</td>";
+                    row += data.getStartYear() == 0 ? "<td>N/A</td>" : "<td>" + data.getStartYear() + "</td>";
+                    row += data.getEndYear() == 0 ? "<td>N/A</td>" : "<td>" + data.getEndYear() + "</td>";
                     
                     if (data.getAverageTemp() == 0) {
                         row += "<td>N/A</td>";

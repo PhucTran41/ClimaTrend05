@@ -35,11 +35,7 @@ public class PeriodTracker implements Handler {
         // Header & Navigation
         html = html + "<div class='header'>";
         html = html + "<div class='logo'>";
-<<<<<<< HEAD
         html = html + "<img src='ClimaTrendLogo.png' alt='ClimaTrendLogo'>";
-=======
-        html = html + "<img src='ClimaTrendLogo.png' alt='WorldChanges Logo'>";
->>>>>>> fc64d5057b6e43a305d2fe2b75b5e45f53515df9
         html = html + "</div>";
         html = html + "<div class='header-elements'>";
         html = html + "<a href='/'>Home</a>";

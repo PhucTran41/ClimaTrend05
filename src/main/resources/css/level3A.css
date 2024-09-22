@@ -50,15 +50,6 @@ padding: 2rem;
     list-style: none;
     margin-right: auto;
     cursor:pointer;
-<<<<<<< HEAD:src/main/resources/css/level3A(landingPage).css
-    }
-    .logo img {
-    display: block;
-    margin-left: 19.2%;
-    margin-right: auto;
-    margin-top: -0.5%;
-    width: 59%;
-=======
     padding-left: 10px;
 }
 
@@ -67,10 +58,9 @@ padding: 2rem;
     width: 300px;
     height: auto;
 }
->>>>>>> fc64d5057b6e43a305d2fe2b75b5e45f53515df9:src/main/resources/css/level3A.css
 
 
-    }
+    
 
 
 .header.shrink {
