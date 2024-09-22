@@ -47,18 +47,19 @@ padding: 2rem;
 
 
 .logo{
-list-style: none;
-margin-right: auto;
-cursor:pointer;
-}
-.logo img {
-display: block;
-margin-left: auto;
-margin-right: auto;
-margin-top: 8px;
-width: 60%;
-}
+    list-style: none;
+    margin-right: auto;
+    cursor:pointer;
+    }
+    .logo img {
+    display: block;
+    margin-left: 19.2%;
+    margin-right: auto;
+    margin-top: -0.5%;
+    width: 59%;
 
+
+    }
 
 
 .header.shrink {

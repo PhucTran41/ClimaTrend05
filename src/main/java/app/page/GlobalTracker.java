@@ -34,7 +34,7 @@ public class GlobalTracker implements Handler {
         // Header & Navigation
         html = html + "<div class='header'>";
         html = html + "<div class='logo'>";
-        html = html + "<img src='images/World_Tracker_Logo__1_-removebg-preview.png' alt='WorldChanges Logo'>";
+        html = html + "<img src='ClimaTrendLogo.png' alt='ClimaTrendLogo'>";
         html = html + "</div>";
         html = html + "<div class='header-elements'>";
         html = html + "<a href='/'>Home</a>";
@@ -130,7 +130,7 @@ public class GlobalTracker implements Handler {
                 html = html + "<div class='search-section'>";
                 html = html + "<div class='search-title'>Output</div>";
                 html = html + "<div class='select-wrapper'>";
-                html = html + "<select class='select-boxfordisplay' id= 'output' name = 'output' ><option>Select</option>";
+                html = html + "<select class='select-boxfordisplay' id= 'output' name = 'output' >";
                 html = html + "<option value='' " + (output == null ? "selected" : "") + ">--Select--</option>";
                 html = html + "<option value = ' Year' " + ("Year".equals(output) ? "selected" : "") 
                     + ">Year</option>";

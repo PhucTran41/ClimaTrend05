@@ -30,6 +30,8 @@ public class JDBCforGlobalTracker {
             ON c.countryID = ct.countryID
         """;
 
+        ////FIX THE QUERY
+
         try (Connection connection = DriverManager.getConnection(DATABASE);
                 Statement statement = connection.createStatement()) {
 
@@ -61,6 +63,7 @@ public class JDBCforGlobalTracker {
                 ORDER BY stateName
 
                 """;
+                ////FIX THE QUERY
         
     
         try (Connection connection = DriverManager.getConnection(DATABASE);
@@ -87,7 +90,14 @@ public class JDBCforGlobalTracker {
     public Global getFirstYear() {
         Global global = new Global();
 
-        String query = "";
+        String query = """
+                SELECT year 
+                FROM TempOfGlobal 
+                ORDER BY year 
+                LIMIT 1;
+
+
+                """;;
 
     try (Connection connection = DriverManager.getConnection(DATABASE);
          PreparedStatement preparedStatement = connection.prepareStatement(query)) {
@@ -109,7 +119,13 @@ public class JDBCforGlobalTracker {
     public Global getLastYear() {
             Global global = new Global();
     
-            String query = "";
+            String query = """
+                    SELECT year 
+                    FROM TempOfGlobal 
+                    ORDER BY year DESC 
+                    LIMIT 1;
+
+                    """;;
 
     try (Connection connection = DriverManager.getConnection(DATABASE);
          PreparedStatement preparedStatement = connection.prepareStatement(query)) {
@@ -167,7 +183,7 @@ public class JDBCforGlobalTracker {
         //FIXME!!!!!!!!!!!!!!!!!!!
 
         //ORDER BY p.year DESC;
-        //
+        //‹
         
         try (Connection connection = DriverManager.getConnection(DATABASE);
              Statement statement = connection.createStatement()) {

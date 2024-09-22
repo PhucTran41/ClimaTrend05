@@ -5,22 +5,53 @@
     font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif
 }
 
-nav{
-    position: sticky;
-    border-bottom: #2c3e50;
-    top: 0;
-    height:  100px;
+nav {
+    position: fixed; 
+    top: 0;         
+    left: 0;         
+    width: 100%;     
+    z-index: 1000;   
+    height: 100px;
     display: flex;
     justify-content: space-between;
-    align-items:  center;
+    align-items: center;
     padding: 0rem calc((100vw -1300px)/2);
-    width: 100%;
-    margin:  auto;
-    border-radius: 0 0 25px 25px;
     background-color: white;
-    z-index: 1000; 
-
+    border-bottom: 1px solid black;
 }
+
+.nav-elements {  
+    display: flex;
+    gap: 2rem;
+    padding: 2rem;
+}
+
+.logo {
+    list-style: none;
+    margin-right: auto;
+    cursor: pointer;
+}
+
+.logo img {
+    display: block;
+    margin-left: 0;
+    margin-right: auto;
+    margin-top: -0.5%;
+    width: 60%;
+}
+
+.nav-elements a {
+    text-decoration: none;
+    color: black;
+    padding: 0 1.5rem;
+    font-weight: bold; 
+    font-size: 1.2rem;
+}
+
+.nav-elements a:hover {
+    text-decoration: underline;
+}
+
 .heading-title{
     font-size: 50px;
     margin-top: 100px;
@@ -31,12 +62,7 @@ html {
 #available-data {
     scroll-margin-top: 300px;
 }
-.logo {
-    margin-left: auto;
-    margin-right: auto;
-    margin-bottom: 30px;
-    margin-top: -20px; /* Add negative margin to move it higher */
-}
+
 
 &:hover, & focus{
     fill:bisque
@@ -46,11 +72,6 @@ html {
 .description{
     font-size: 30px;
 }
-nav {
-    margin: 0;
-    padding: 0;
-}
-
 
 
 
@@ -94,22 +115,9 @@ body::after {
     height: 100px; 
 }
 
-nav.shrink {
-    height: 60px; 
-    padding: 0 1rem; 
-    transform: translateY(-40px);
-}
-
 body.scrolled nav {
     height: 60px;
     padding: 0 1rem; 
-}
-
-
-.nav-elements{
-    display: flex;
-    gap: 2rem;
-    padding: 2rem;
 }
 
 heading-title{
@@ -117,26 +125,6 @@ heading-title{
     
 }
 
-
-.logo img {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 50px;
-    width: 60%;
-}
-nav a{
-    /*navigation elements-size*/
-    text-decoration: none;
-    color: black;
-    padding: 0 1.5rem;
-    font-weight: bold; 
-    font-size: 1.2rem;
-}
-
-nav a:hover {
-    text-decoration: underline;
-}
 .hero {
     background: white;
     display: grid;

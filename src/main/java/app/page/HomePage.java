@@ -52,19 +52,22 @@ public class HomePage implements Handler {
             </head>
             <body>
                 <!-- navigation bar -->
-                <nav> 
-                    <div class="logo">
-                        <img src="ClimaTrendLogo.png" alt="ClimaTrendLogo"> 
-                    </div>    
-                    <div class="nav-elements">
-                        <a href="/">Home Page</a>
-                        <a href="/GlobalTracker">Global Tracker</a>
-                        <a href="/CityTracker">City Tracker</a>
-                        <a href="/TimelineTracker">Timeline Tracker</a>
-                        <a href="/PeriodTracker">Periods Tracker</a>
-                    </div>
-                </nav>
+                // Replace the navigation bar in HomePage
             
+                        <nav>
+                            <div class='logo'>
+                                <img src='ClimaTrendLogo.png' alt='ClimaTrendLogo'>
+                            </div>
+                            <div class='nav-elements'>
+                                <a href='/'>Home</a>
+                                <a href='/GlobalTracker'>Global Tracker</a>
+                                <a href='/CityTracker'>City Tracker</a>
+                                <a href='/TimelineTracker'>Timeline Tracker</a>
+                                <a href='/PeriodTracker'>Periods Tracker</a>
+                            </div>
+                        </nav>
+                  
+
                 <!-- hero section -->
                 <section class="hero">
                     <div class="hero-container"></div>

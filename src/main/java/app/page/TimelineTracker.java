@@ -49,7 +49,7 @@ public class TimelineTracker implements Handler {
                "<img src='ClimaTrendLogo.png' alt='ClimaTrendLogo'>" +
                "</div>" +
                "<div class='header-elements'>" +
-               "<a href='/'>Home Page</a>" +
+               "<a href='/'>Home</a>" +
                "<a href='/GlobalTracker'>Global Tracker</a>" +
                "<a href='/CityTracker'>City Tracker</a>" +
                "<a href='/TimelineTracker'>Timeline Tracker</a>" +

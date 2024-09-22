@@ -47,16 +47,16 @@ html {
     list-style: none;
     margin-right: auto;
     cursor:pointer;
-}
-
-.logo img {
+    }
+    .logo img {
     display: block;
-    margin-left: auto;
+    margin-left: 19.2%;
     margin-right: auto;
-    margin-top: 50px;
-    width: 60%;
-}
+    margin-top: -0.5%;
+    width: 59%;
 
+
+    }
 .header.shrink {
     height: 60px; /* Chiều cao của thanh điều hướng khi cuộn xuống */
     padding: 0 1rem; /* Padding nhỏ hơn khi cuộn xuống */
