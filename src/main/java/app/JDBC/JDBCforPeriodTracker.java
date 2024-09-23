@@ -9,13 +9,14 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import app.classes.City;
+import app.classes.Country;
 import app.classes.Global;
 import app.classes.Population;
 import app.classes.State;
 
 public class JDBCforPeriodTracker {
 
-    public static final String DATABASE = "jdbc:sqlite:database/Movies.db";
+    public static final String DATABASE = "jdbc:sqlite:OfficialDatabase.db";
 
     public JDBCforPeriodTracker() {
         System.out.println("Created JDBC Connection Object");
@@ -46,7 +47,7 @@ public class JDBCforPeriodTracker {
             }
 
         } catch (SQLException e) {
-            System.err.println("Error found :getFirstYearTemp() " + e.getMessage());
+            System.err.println("Error found :getFirstYearTemp() in period tracker jdbc  " + e.getMessage());
         }
 
         return worldtemperature;
@@ -75,7 +76,7 @@ public class JDBCforPeriodTracker {
             }
 
         } catch (SQLException e) {
-            System.err.println("Error found :getLastYearTemp() " + e.getMessage());
+            System.err.println("Error found :getLastYearTemp() in period tracker jdbc " + e.getMessage());
         }
 
         return worldtemperature;
@@ -103,7 +104,7 @@ public class JDBCforPeriodTracker {
             }
 
         } catch (SQLException e) {
-            System.err.println("Error executing from getCountryName method" + e.getMessage());
+            System.err.println("Error executing from getCountryName method in period tracker jdbc " + e.getMessage());
         }
         return countryName;
 
@@ -131,7 +132,7 @@ public class JDBCforPeriodTracker {
             }
 
         } catch (SQLException e) {
-            System.err.println("Error executing from getCityName method" + e.getMessage());
+            System.err.println("Error executing from getCityName method  in period tracker jdbc " + e.getMessage());
         }
         return cityName;
 
@@ -158,7 +159,7 @@ public class JDBCforPeriodTracker {
             }
 
         } catch (SQLException e) {
-            System.err.println("Error executing from getStateName method" + e.getMessage());
+            System.err.println("Error executing from getStateName method  in period tracker jdbc " + e.getMessage());
         }
         return stateName;
     }
@@ -237,7 +238,7 @@ public class JDBCforPeriodTracker {
                 }
             }
         } catch (SQLException e) {
-            System.err.println("Error executing getPeriodData: " + e.getMessage());
+            System.err.println("Error executing getPeriodData:  in period tracker jdbc " + e.getMessage());
         }
         return periodData;
     }
@@ -312,7 +313,7 @@ public class JDBCforPeriodTracker {
                 }
             }
         } catch (SQLException e) {
-            System.err.println("Error executing findSimilarPeriods: " + e.getMessage());
+            System.err.println("Error executing findSimilarPeriods: in period tracker jdbc  " + e.getMessage());
         }
 
         // sort periods by similarity
@@ -375,7 +376,7 @@ public class JDBCforPeriodTracker {
                 states.setName(state);
             }
         } catch (SQLException e) {
-            System.err.println("Error found: getStateAvgTemp() " + e.getMessage());
+            System.err.println("Error found: getStateAvgTemp()  in period tracker jdbc " + e.getMessage());
         }
         return states;
     }
@@ -410,10 +411,85 @@ public class JDBCforPeriodTracker {
                 city.setName(cityname);
             }
         } catch (SQLException e) {
-            System.err.println("Error found: getCountryAvgTemp() " + e.getMessage());
+            System.err.println("Error found: getCountryAvgTemp()  in period tracker jdbc " + e.getMessage());
         }
         return city;
 
+    }
+
+    public City getAvgCityTemp(String cityname, int startYear, int endYear) {
+        City city = new City();
+        String query = """
+
+           
+                                               """;
+        try (Connection connection = DriverManager.getConnection(DATABASE);
+                PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setInt(1, startYear);
+            statement.setInt(2, endYear);
+            statement.setString(3, cityname);
+            ResultSet result = statement.executeQuery();
+            if (result.next()) {
+                city.setStartYear((result.getInt("min"))); // Use setStartyear instead of getStartyear
+                city.setEndYear(result.getInt("max"));
+                city.setAverageChange(result.getFloat("avg")); // Use setAvgtemp instead of getAvgtemp
+            }
+        } catch (SQLException e) {
+            System.err.println("Error found: getCityAvgTemp()  in period tracker jdbc " + e.getMessage());
+        }
+        return city;
+    }
+
+    public State getAvgStateTemp(String statename, int startyear, int endyear){
+        State state = new State();
+
+        String query = """
+                
+                """;
+
+        try (Connection connection = DriverManager.getConnection(DATABASE);
+                PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setInt(1, startyear);
+            statement.setInt(2, endyear);
+            statement.setString(3, statename);
+            ResultSet result = statement.executeQuery();
+            if (result.next()) {
+                state.setStartYear(result.getInt("min"));
+                state.setEndYear(result.getInt("max"));
+                state.setAverageTemp(result.getFloat("avg"));
+            }
+        } catch (SQLException e) {
+            System.err.println("Error found: getAvgStateTemp()  in period tracker jdbc " + e.getMessage());
+        }
+
+        return state;
+            
+    }
+
+    public Country getAvgCountryTemp(String countryname, int startyear, int endyear){
+        Country country = new Country();
+
+        String query = """
+                
+                """;
+
+        try (Connection connection = DriverManager.getConnection(DATABASE);
+                PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setInt(1, startyear);
+            statement.setInt(2, endyear);
+            statement.setString(3, countryname);
+            ResultSet result = statement.executeQuery();
+            if (result.next()) {
+                country.setStartYear(result.getInt("min"));
+                country.setEndYear(result.getInt("max"));
+                country.setAverageTemp(result.getFloat("avg"));
+            }
+        } catch (SQLException e) {
+            System.err.println("Error found: getAvgCountryTemp() in period tracker jdbc " + e.getMessage());
+        }
+
+        return country;
+            
     }
 
 }

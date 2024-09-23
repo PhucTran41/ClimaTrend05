@@ -30,7 +30,7 @@ public class PeriodTracker implements Handler {
 
         // Body
         html = html + "<body>";
-        html = html + "<div class='container'>"; //open the container
+        html = html + "<div class='container'>"; // open the container
 
         // Header & Navigation
         html = html + "<div class='header'>";
@@ -48,53 +48,45 @@ public class PeriodTracker implements Handler {
 
         html = html + "<div class='shadow'></div>";
 
-
-        //IMPORTANT PART BE CAREFUL ! 
+        // IMPORTANT PART BE CAREFUL !
         /* u guys must carefully open the div and close the div properly */
 
         // Search Panel
-        html = html + "<form method='post' action='/PeriodTracker'>"; //Put the form before the search-panel
+        html = html + "<form method='post' action='/PeriodTracker'>"; // Put the form before the search-panel
         html = html + "<div class='search-panel'>";
 
-
-
-        // JDBC connection                      //THIS LINE CREATE CONNECTION TO GET METHOD FROM DIFFERENT CLASS
+        // JDBC connection //THIS LINE CREATE CONNECTION TO GET METHOD FROM DIFFERENT
+        // CLASS
 
         JDBC jdbc = new JDBC();
         JDBCforPeriodTracker jdbcPT = new JDBCforPeriodTracker();
 
-       
+        // Get selected value from the form //THIS TAKE DATAS FROM THE FILTER
+        // //IMPORTANT
 
-        // Get selected value from the form                 //THIS TAKE DATAS FROM THE FILTER   //IMPORTANT
-
-        
         String selectBoxfordisplay = context.formParam("select-boxfordisplay");
         String term = context.formParam("Term");
         String startyear = context.formParam("startyear");
         String yearLength = context.formParam("yearLength");
         String comparedRange = context.formParam("comparedRange");
-        
-
 
         ArrayList<String> countryname = jdbcPT.getCountryName();
         List<String> selectedCountriesList = context.formParams("countries");
-        String[] selectedCountries = selectedCountriesList != null ? selectedCountriesList.toArray(new String[0])  : null;
+        String[] selectedCountries = selectedCountriesList != null ? selectedCountriesList.toArray(new String[0])
+                : null;
 
         ArrayList<String> cityName = jdbcPT.getCityName();
         List<String> selectedCitiesList = context.formParams("cities");
-        String[] selectedCities = selectedCitiesList != null ? selectedCitiesList.toArray(new String[0])  : null;
+        String[] selectedCities = selectedCitiesList != null ? selectedCitiesList.toArray(new String[0]) : null;
 
         ArrayList<String> stateName = jdbcPT.getStateName();
         List<String> selectedStateList = context.formParams("states");
-        String[] selectedStates = selectedStateList != null ? selectedStateList.toArray(new String[0])  : null;
+        String[] selectedStates = selectedStateList != null ? selectedStateList.toArray(new String[0]) : null;
 
-
-
-  
-
-        
-
-        /* oh u guys can put this in or not because these lines are used for displaying results to the terminal whenever users interact with the filer, try! */
+        /*
+         * oh u guys can put this in or not because these lines are used for displaying
+         * results to the terminal whenever users interact with the filer, try!
+         */
         System.out.println("selectBoxfordisplay: " + selectBoxfordisplay);
         System.out.println("selectCity" + Arrays.toString(selectedCities));
         System.out.println("selectCountry" + Arrays.toString(selectedCountries));
@@ -104,54 +96,47 @@ public class PeriodTracker implements Handler {
         System.out.println("yearLength: " + yearLength);
         System.out.println("comparedRange: " + comparedRange);
 
-
-
-
         // Search Section - Display Region Dropdown
         html = html + "<div class='search-section'>";
         html = html + "<div class='search-title'>Display Region</div>";
         html = html + "<div class='select-wrapper'>";
 
         // Displaying the form with the dropdown
-        
-        html = html + "<select name='select-boxfordisplay' class='select-boxfordisplay' onchange='this.form.submit()'>"; 
+
+        html = html + "<select name='select-boxfordisplay' class='select-boxfordisplay' onchange='this.form.submit()'>";
         html = html + "<option value='' " + (selectBoxfordisplay == null ? "selected" : "") + ">--Select--</option>";
-        html = html + "<option value='City' " + ("City".equals(selectBoxfordisplay) ? "selected" : "")
-                + ">City</option>";
-        html = html + "<option value='State' " + ("State".equals(selectBoxfordisplay) ? "selected" : "")
-                + ">State</option>";
         html = html + "<option value='Country' " + ("Country".equals(selectBoxfordisplay) ? "selected" : "")
                 + ">Country</option>";
+        html = html + "<option value='State' " + ("State".equals(selectBoxfordisplay) ? "selected" : "")
+                + ">State</option>";
+        html = html + "<option value='City' " + ("City".equals(selectBoxfordisplay) ? "selected" : "")
+                + ">City</option>";
         html = html + "</select>";
 
         html = html + "<div class='select-arrow'></div>";
         html = html + "</div>"; // Closing .select-wrapper
         html = html + "</div>";
 
-  
-
-        
         if (selectBoxfordisplay != null) {
             // Conditionally rendering Start Year or Country dropdowns based on selection
             if ("City".equals(selectBoxfordisplay)) {
                 // If "City" is selected, display Order and Sorting dropdown
-              
-                //Output
+
+                // Output
                 html = html + "<div class='search-section'>";
                 html = html + "<div class='search-title'>City</div>";
                 html = html + "<div class='select-wrapper'>";
 
-                //displaying multiple cities
+                // displaying multiple cities
                 html = html + "<input list='cities'  name = 'cities' class='select-boxfordisplay'>";
                 html += "<datalist id='cities'>";
                 for (String city : cityName) {
                     html += "<option value='" + city + "' />";
-                }       
+                }
                 html += "</datalist>";
 
-                html = html + "</div>"; //closing the select-wrapper div
-                html = html + "</div>"; //closing search-section div           
-               
+                html = html + "</div>"; // closing the select-wrapper div
+                html = html + "</div>"; // closing search-section div
 
             } else if ("Country".equals(selectBoxfordisplay)) {
                 // If "Country" is selected, display Country dropdown
@@ -159,7 +144,7 @@ public class PeriodTracker implements Handler {
                 html = html + "<div class='search-title'>Country</div>";
                 html = html + "<div class='select-wrapper'>";
 
-                //displaying multiple countries
+                // displaying multiple countries
                 html = html + "<input list='countries' name = 'countries' class='select-boxfordisplay'>";
                 html += "<datalist id='countries'>";
                 for (String name : countryname) {
@@ -168,24 +153,27 @@ public class PeriodTracker implements Handler {
 
                 html = html + "</datalist>";
 
-                html = html + "</div>"; //closing the select-wrapper div
-                html = html + "</div>"; //closing search-section div     
+                html = html + "</div>"; // closing the select-wrapper div
+                html = html + "</div>"; // closing search-section div
 
-                //display term
+                // display term
                 html = html + "<div class='search-section'>";
                 html = html + "<div class='search-title'>Term</div>";
                 html = html + "<div class='select-wrapper'>";
 
                 html = html + "<select class='select-boxfordisplay' id ='Term' name = 'Term'>";
                 html = html + "<option value='' " + (term == null ? "selected" : "") + ">--Select--</option>";
-                html = html + "<option value= 'averageTemprature'" + ("Average Temperature".equals(term) ? "selected":"") +">Average Temperature </option>";
-                html = html + "<option value= 'population'" + ("Population".equals(term) ? "selected":"") +">Population </option>";
-                html = html + "<option value= 'both'" + ("Average Temperature and Population".equals(term) ? "selected":"") +">Average Temperature and Population </option>";
+                html = html + "<option value= 'averageTemprature'"
+                        + ("Average Temperature".equals(term) ? "selected" : "") + ">Average Temperature </option>";
+                html = html + "<option value= 'population'" + ("Population".equals(term) ? "selected" : "")
+                        + ">Population </option>";
+                html = html + "<option value= 'both'"
+                        + ("Average Temperature and Population".equals(term) ? "selected" : "")
+                        + ">Average Temperature and Population </option>";
                 html = html + "</select>";
                 html = html + "<div class='select-arrow'></div>";
-                html = html + "</div>";//closing the select-wrapper div
-                html = html + "</div>";// closing search-section div     
-
+                html = html + "</div>";// closing the select-wrapper div
+                html = html + "</div>";// closing search-section div
 
             } else if ("State".equals(selectBoxfordisplay)) {
                 // If "Country" is selected, display Country dropdown
@@ -193,7 +181,7 @@ public class PeriodTracker implements Handler {
                 html = html + "<div class='search-title'>State</div>";
                 html = html + "<div class='select-wrapper'>";
 
-                //displaying multiple countries
+                // displaying multiple countries
                 html = html + "<input list='states' name = 'states' class='select-boxfordisplay'>";
                 html += "<datalist id='states'>";
                 for (String state : stateName) {
@@ -202,8 +190,8 @@ public class PeriodTracker implements Handler {
 
                 html = html + "</datalist>";
 
-                html = html + "</div>"; //closing the select-wrapper div
-                html = html + "</div>"; //closing search-section div     
+                html = html + "</div>"; // closing the select-wrapper div
+                html = html + "</div>"; // closing search-section div
             }
 
             // Start Year
@@ -212,116 +200,112 @@ public class PeriodTracker implements Handler {
             html = html + "<div class='search-section'>";
             html = html + "<div class='search-title'>Start Year</div>";
             html = html + "<div class='select-wrapper'>";
-            html += "<input type='number' id='startyear' name='startyear' class='select-type' min='" + firstyear.getYear() + "' max='" + lastyear.getYear() + "'/>";
+            html += "<input type='number' id='startyear' name='startyear' class='select-type' min='"
+                    + firstyear.getYear() + "' max='" + lastyear.getYear() + "'/>";
             html = html + "</div>";
             html = html + "</div>";
 
-            // Year length 
+            // Year length
             html = html + "<div class='search-section'>";
             html = html + "<div class='search-title'>Year Length</div>";
             html = html + "<div class='select-wrapper'>";
-            html += "<input type='number' id='yearLength' name='yearLength' class='select-type' min='" + firstyear.getYear() + "' max='" + lastyear.getYear() + "'/>";
-            html = html + "</div>";//closing the select-wrapper div
-            html = html + "</div>";// closing search-section div    
+            html += "<input type='number' id='yearLength' name='yearLength' class='select-type' min='1' max='99'>";
+            html = html + "</div>";// closing the select-wrapper div
+            html = html + "</div>";// closing search-section div
 
-            // Comparision Range 
+            // Comparision Range
             html = html + "<div class='search-section'>";
             html = html + "<div class='search-title'>Comparision Change</div>";
             html = html + "<div class='select-wrapper'>";
-            html += "<input type='number' id='comparedRange' name='comparedRange' class='select-type' min='" + firstyear.getYear() + "' max='" + lastyear.getYear() + "'/>";
-            html = html + "</div>";//closing the select-wrapper div
-            html = html + "</div>";// closing search-section div    
-                        
-           
+            html += "<input type='number' id='comparedRange' name='comparedRange' class='select-type' min='1' max='15'>";
+            html = html + "</div>";// closing the select-wrapper div
+            html = html + "</div>";// closing search-section div
+
             html = html + "</div>"; // Closing .search-panel
-            
 
             // Search Button
             html = html + "<button type='submit' class='search-button'>Search</button>";
 
             html = html + "</form>";
-    
-        if (("City".equals(selectBoxfordisplay) && selectedCities != null && selectedCities.length > 0 && yearLength != null && !yearLength.isEmpty() && 
-        startyear != null && !startyear.isEmpty() && comparedRange != null && !comparedRange.isEmpty()) ||
-        ("Country".equals(selectBoxfordisplay) && selectedCountries != null && selectedCountries.length > 0 && term != null && !term.isEmpty() && 
-        startyear != null && !startyear.isEmpty() && comparedRange != null && !comparedRange.isEmpty() && yearLength != null && !yearLength.isEmpty()) ||
-        ("State".equals(selectBoxfordisplay) && selectedCountries != null && selectedCountries.length > 0 && startyear != null && !startyear.isEmpty() && 
-        comparedRange != null && !comparedRange.isEmpty() && yearLength != null && !yearLength.isEmpty())) {
 
-            html = html + "<div class='results-container'>"; //open the result-container
-            html = html + "<div class='results-inner'>"; //open the results-inner
+            if (("City".equals(selectBoxfordisplay) && selectedCities != null && selectedCities.length > 0
+                    && yearLength != null && !yearLength.isEmpty() &&
+                    startyear != null && !startyear.isEmpty() && comparedRange != null && !comparedRange.isEmpty()) ||
+                    ("Country".equals(selectBoxfordisplay) && selectedCountries != null && selectedCountries.length > 0
+                            && term != null && !term.isEmpty() &&
+                            startyear != null && !startyear.isEmpty() && comparedRange != null
+                            && !comparedRange.isEmpty() && yearLength != null && !yearLength.isEmpty())
+                    ||
+                    ("State".equals(selectBoxfordisplay) && selectedCountries != null && selectedCountries.length > 0
+                            && startyear != null && !startyear.isEmpty() &&
+                            comparedRange != null && !comparedRange.isEmpty() && yearLength != null
+                            && !yearLength.isEmpty())) {
 
-            html = html + "<table>";
-            html = html + "<thead>";
-            html = html + "<tr>";
-            html = html + "<th>" +selectBoxfordisplay.toUpperCase() +"</th>";
-            html = html + "<th>START YEAR</th>";
-            html = html + "<th>END YEAR</th>";
-            html = html + "<th> YEAR LENGTH </th>";
-            html = html + "<th> AVERAGE TEMPERATURE </th>";
-            html = html + "<th> CHANGE </th>";
-            html = html + "</tr>";
-            html = html + "</thead>";
-            html = html + "<tbody>"; //open the table body 
+                html = html + "<div class='results-container'>"; // open the result-container
+                html = html + "<div class='results-inner'>"; // open the results-inner
 
-            if (("City".equals(selectBoxfordisplay) && selectedCities != null && selectedCities.length > 0) ||
-            ("Country".equals(selectBoxfordisplay) && selectedCountries != null && selectedCountries.length > 0) ||
-            ("State".equals(selectBoxfordisplay) && selectedStates != null && selectedStates.length > 0)) {
-        
-            String similarityCriteria = context.formParam("similarityCriteria");
-            int similarPeriodsCount = Integer.parseInt(context.formParam("similarPeriodsCount"));
-        
-            ArrayList<Global> similarPeriods = jdbcPT.findSimilarPeriods(selectBoxfordisplay, 
-                "City".equals(selectBoxfordisplay) ? selectedCities : 
-                "Country".equals(selectBoxfordisplay) ? selectedCountries : selectedStates, 
-                startyear, yearLength, comparedRange, similarityCriteria, similarPeriodsCount);
-        
-            html = html + "<h2>Similar Periods</h2>";
-            html = html + "<table>";
-            html = html + "<thead>";
-            html = html + "<tr>";
-            html = html + "<th>" + selectBoxfordisplay.toUpperCase() + "</th>";
-            html = html + "<th>START YEAR</th>";
-            html = html + "<th>END YEAR</th>";
-            html = html + "<th>AVERAGE TEMPERATURE</th>";
-            if ("Country".equals(selectBoxfordisplay) && ("population".equals(similarityCriteria) || "both".equals(similarityCriteria))) {
-                html = html + "<th>POPULATION</th>";
-            }
-            html = html + "</tr>";
-            html = html + "</thead>";
-            html = html + "<tbody>";
-        
-            for (Global period : similarPeriods) {
+                html = html + "<table>";
+                html = html + "<thead>";
                 html = html + "<tr>";
-                html = html + "<td>" + period.getName() + "</td>";
-                html = html + "<td>" + period.getYear() + "</td>";
-                html = html + "<td>" + period.getPeriod() + "</td>";
-                html = html + "<td>" + period.getFirstYearTemperature() + "</td>";
-                if ("Country".equals(selectBoxfordisplay) && ("population".equals(similarityCriteria) || "both".equals(similarityCriteria))) {
-                    html = html + "<td>" + period.getPopulation() + "</td>";
-                }
+                html = html + "<th>" + selectBoxfordisplay.toUpperCase() + "</th>";
+                html = html + "<th>START YEAR</th>";
+                html = html + "<th>END YEAR</th>";
+                html = html + "<th> YEAR LENGTH </th>";
+                html = html + "<th> AVERAGE TEMPERATURE </th>";
+                html = html + "<th> CHANGE </th>";
                 html = html + "</tr>";
+                html = html + "</thead>";
+                html = html + "<tbody>"; // open the table body
+
+                if (("City".equals(selectBoxfordisplay) && selectedCities != null && selectedCities.length > 0) ||
+                        ("Country".equals(selectBoxfordisplay) && selectedCountries != null
+                                && selectedCountries.length > 0)
+                        ||
+                        ("State".equals(selectBoxfordisplay) && selectedStates != null && selectedStates.length > 0)) {
+
+                    String comparedrange = context.formParam("comparedRange");
+
+                    ArrayList<Global> results = jdbcPT.findSimilarPeriods(selectBoxfordisplay,
+                            "Country".equals(selectBoxfordisplay) ? selectedCountries
+                                    : "City".equals(selectBoxfordisplay) ? selectedCities : selectedStates,
+                            startyear, yearLength, comparedrange, term, 5);
+
+                    if (results != null && !results.isEmpty()) {
+                        for (Global period : results) {
+                            html += "<tr>";
+                            html += "<td>" + (period.getName() == null ? "N/A" : period.getName()) + "</td>";
+                            html += "<td>" + (period.getYear() == 0 ? "N/A" : period.getYear()) + "</td>";
+                            html += "<td>" + (period.getYear() == 0 || yearLength == null ? "N/A"
+                                    : (period.getYear() + Integer.parseInt(yearLength))) + "</td>";
+                            html += "<td>" + (yearLength == null ? "N/A" : yearLength) + "</td>";
+                            html += "<td>" + String.format("%.2f", period.getFirstYearTemperature()) + "</td>";
+                            if ("City".equals(selectBoxfordisplay)) {
+                                html += "<td>" + String.format("%.2f", period.getChange()) + "</td>";
+                            } else if ("State".equals(selectBoxfordisplay)) {
+                                html += "<td>" + String.format("%.2f", period.getChange()) + "</td>";
+                            } else if ("Country".equals(selectBoxfordisplay)) {
+                                html += "<td>" + String.format("%.2f", period.getChange()) + "</td>";
+                            }
+                            html += "</tr>";
+                        }
+                    } else {
+                        html += "<tr><td colspan='6'>No results found</td></tr>";
+                    }
+                }
+
+                html += "</tbody>";
+                html += "</table>";
             }
+
+            html = html + "</div>";// close the results-inner
+            html = html + "</div>";// close the results-container
         }
-        
-            html = html + "</tbody>";
-            html = html + "</table>";
-        }
-    
-        html = html + "</div>";//close the results-inner
-        html = html + "</div>";//close the results-container
-    }
 
         html = html + "</div>"; // Closing the container
         html = html + "</body>";
         html = html + "</html>";
-       
-        context.html(html);
-        }   
 
+        context.html(html);
     }
 
-
-
-
-
+}
