@@ -254,6 +254,7 @@ public class GlobalTracker implements Handler {
         
 
             html = html + "</tbody>"; //close the table body when if World is selected
+            html = html + "</table>"; //close the table 
 
          
         }
@@ -263,7 +264,8 @@ public class GlobalTracker implements Handler {
 
        
         html = html + "<div class='results-container'>";
-        html = html + "<div class='results-inner'>";
+
+        html = html + "<div class='results-inner'>"; //first table
         html = html + "<table>"; //open the table if country was selected
         html = html + "<thead><tr>";
         html = html + "<th>NAME</th>";
@@ -280,6 +282,15 @@ public class GlobalTracker implements Handler {
 
         int rowNumber = 1;
         for (Country data : result) {
+
+        int availableStartYear = data.getStartYear();  // Year when data starts
+        int availableEndYear = data.getEndYear();      // Year when data ends
+        
+        // Check for missing years at the beginning of the range
+        if (Integer.parseInt(startyear) < availableStartYear) {
+            html = html + "<tr><td colspan='6'>No data available for " + data.getCountryName() + " from " + startyear + " to " + (availableStartYear - 1) + "</td></tr>";
+        }
+            
             html = html + "<tr>";
             html = html + "<td>" + data.getCountryName() + "</td>";
             html = html + "<td>" + data.getStartYear() + "</td>";
@@ -294,19 +305,92 @@ public class GlobalTracker implements Handler {
 
                 html = html + "<td>" + String.format("%.2f", data.getChange()) + "</td>";
             }
-            
             html = html + "</tr>";
+
+            if (Integer.parseInt(endyear) > availableEndYear) {
+                html = html + "<tr><td colspan='6'>No data available for " + data.getCountryName() + " from " + (availableEndYear + 1) + " to " + endyear + "</td></tr>";
+            }
+
             rowNumber++;
+
+          
+            // Check for missing years at the beginning of the range
+            
         }
 
-        
+        if (result.isEmpty()) {
+            html = html + "<tr><td colspan='6'>No data available from " + startyear + " to " + (Integer.parseInt(endyear) - 1) + "</td></tr>";
+        }
+    
         html = html + "</tbody>"; //close the table body if country was selected
+        html = html + "</table>"; //close the table 
+        html = html + "</div>";//close div of the first result-inner
 
+        html = html + "<div class='results-inner'>"; //second table
+        html = html + "<table>"; //open the table if country was selected
+        html = html + "<thead><tr>";
+        html = html + "<th>NAME</th>";
+        html = html + "<th>START YEAR</th>";
+        html = html + "<th>END YEAR</th>";
+        html = html + "<th>" +startyear +"<br/> POPULATION</th>";
+        html = html + "<th>" +endyear +"<br/> POPULATION</th>";
+        html = html + "<th>CHANGE</th>";
+        html = html + "</tr>";
+        html = html + "</thead>";
+
+        html = html + "<tbody>"; //open the table body if country was selected
+        List<Country> results = jdbc2.getGlobalDatafromCountry(selectedCountries, OutputType, startyear, endyear);
+
+        rowNumber = 1;
+        
+        for (Country data : results) {
+            int availableStartYear = data.getStartYear();  // Year when data starts
+            int availableEndYear = data.getEndYear();      // Year when data ends
+            
+            // Check for missing years at the beginning of the range
+            if (Integer.parseInt(startyear) < availableStartYear) {
+                html = html + "<tr><td colspan='6'>No data available for " + data.getCountryName() + " from " + startyear + " to " + (availableStartYear - 1) + "</td></tr>";
+            }
+            html = html + "<tr>";
+            html = html + "<td>" + data.getCountryName() + "</td>";
+            html = html + "<td>" + data.getStartYear() + "</td>";
+            html = html + "<td>" + data.getEndYear() + "</td>";
+            html = html + "<td>" +  String.format("%,d",data.getStartYearPopulation()) + "</td>";
+            html = html + "<td>" + String.format("%,d",data.getEndYearPopulation()) + "</td>";
+
+            if ("Proportion".equals(OutputType)) {
+
+                html = html + "<td>" + String.format("%.2f%%", data.getPopulationChange()) + "</td>";
+                
+            } else {
+
+                html = html + "<td>" + String.format("%.2f", data.getPopulationChange()) + "</td>";
+            }
+            html = html + "</tr>";
+
+            if (Integer.parseInt(endyear) > availableEndYear) {
+                html = html + "<tr><td colspan='6'>No data available for " + data.getCountryName() + " from " + (availableEndYear + 1) + " to " + endyear + "</td></tr>";
+            }
+    
+            rowNumber++;
+
+        
+        
+        }
+
+        if (results.isEmpty()) {
+            html = html + "<tr><td colspan='6'>No data available from " + startyear + " to " + endyear + "</td></tr>";
+        }
+    
+        html = html + "</tbody>"; //close the table body if country was selected
+        html = html + "</table>"; //close the table 
+        html = html + "</div>";//close the second results-inner
     }
 
-        html = html + "</table>"; //close the table 
-        html = html + "</div>";//close the results-inner
-        html = html + "</div>";//close the results-container
+   
+     
+        html = html + "</div>";//close the result-container
+
      }
 
 
