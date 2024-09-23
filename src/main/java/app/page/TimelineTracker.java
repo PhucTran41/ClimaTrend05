@@ -238,7 +238,7 @@ public class TimelineTracker implements Handler {
         for (String country : selectedRegions) {
             for (String yearStr : selectedYears) {
                 int startYear = Integer.parseInt(yearStr);
-                int endYear = startYear + periodValue - 1;
+                int endYear = startYear + periodValue;
                 Country countryData = jdbc.getCountryAvgTemp(country, startYear, endYear);
                 countryData.setInitialYear(startYear);
                 countryDataList.add(countryData);
