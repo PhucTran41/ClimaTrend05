@@ -75,11 +75,13 @@ public class TimelineTracker implements Handler {
             html += generateRegionSelection(selectBox, selectedRegions, jdbc);
             html += generateYearSelection(selectedYears);
             html += generatePeriodSelection(period);
+
+            html += "</div>"; 
+            html += "<button class='search-button'>Search</button>";
             
         }
 
-        html += "</div>"; 
-        html += "<button class='search-button'>Search</button>";
+        
         html += "</form>"; 
         return html;
     }
