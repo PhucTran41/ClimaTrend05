@@ -55,13 +55,13 @@ html {
     width: 60%;
     }
 .header.shrink {
-    height: 60px; /* Chiều cao của thanh điều hướng khi cuộn xuống */
-    padding: 0 1rem; /* Padding nhỏ hơn khi cuộn xuống */
-    transform: translateY(-40px); /* Di chuyển thanh điều hướng lên một chút để tạo cảm giác nhỏ lại */
+    height: 60px; 
+    padding: 0 1rem;
+    transform: translateY(-40px); 
 }
 body.scrolled .header {
-    height: 60px; /* Chiều cao của thanh điều hướng khi cuộn xuống */
-    padding: 0 1rem; /* Padding nhỏ hơn khi cuộn xuống */
+    height: 60px; 
+    padding: 0 1rem;
 }
 .header-elements a{
     /*navigation elements-size*/
