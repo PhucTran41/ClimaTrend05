@@ -213,16 +213,6 @@ public class PeriodTracker implements Handler {
             html = html + "</div>";
             html = html + "</div>";
 
-            if (firstyear != null && lastyear != null) {
-                int start = firstyear.getYear();
-                int end = lastyear.getYear();
-                for (int year = start; year <= end; year++) {
-                    html += "<option value='" + year + "' "
-                            + (Integer.toString(year).equals(startyear) ? "selected" : "") + ">" + year + "</option>";
-                }
-            } else {
-                html += "<option value=''>No years available</option>";
-            }
 
             // Year length
             html = html + "<div class='search-section'>";
