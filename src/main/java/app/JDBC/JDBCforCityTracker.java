@@ -2,6 +2,7 @@ package app.JDBC;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -12,8 +13,6 @@ import app.classes.City;
 import app.classes.Global;
 import app.classes.State;
 
-import java.sql.PreparedStatement;
-
 public class JDBCforCityTracker {
 
     public static final String DATABASE = "jdbc:sqlite:OfficialDatabase.db";
@@ -22,7 +21,7 @@ public class JDBCforCityTracker {
         System.out.println("Created JDBC Connection Object");
     }
 
-    // Lấy danh sách tên quốc gia
+   
     // getcountry names
     public ArrayList<String> getCountryNames() {
         ArrayList<String> countryNames = new ArrayList<>();
@@ -259,15 +258,24 @@ public class JDBCforCityTracker {
                     city.setLastYtemp(rs.getFloat("end_temp"));
                     
                     float change = rs.getFloat("temp_change");
-                    if ("Percentage".equals(outputType)) {
+                if ("Percentage".equals(outputType)) {
+                    if (city.getFirstYearTemp() != 0) {
                         float percentageChange = (change / city.getFirstYearTemp()) * 100;
                         city.setChanges(percentageChange);
                     } else {
-                        city.setChanges(change);
+                        city.setChanges(0); // Handle division by zero
                     }
-                    
-                    city.setAverageTemp((city.getFirstYearTemp() + city.getLastYtemp()) / 2);
+                } else {
+                    city.setChanges(change);
+                }
+                
+                if ((endYear - startYear) != 0) {
                     city.setAverageChange(change / (endYear - startYear));
+                } else {
+                    city.setAverageChange(0); // Handle division by zero
+                }
+                
+                city.setAverageTemp((city.getFirstYearTemp() + city.getLastYtemp()) / 2);
                     
                     cities.add(city);
                 }

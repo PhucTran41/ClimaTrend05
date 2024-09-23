@@ -3,13 +3,10 @@ package app.page;
 import java.util.ArrayList;
 import java.util.List;
 
-import app.JDBC.JDBC;
 import app.JDBC.JDBCforCityTracker;
-import app.JDBC.JDBCforGlobalTracker;
-import app.JDBC.JDBCforPeriodTracker;
 import app.classes.City;
-import app.classes.State;
 import app.classes.Global;
+import app.classes.State;
 import io.javalin.http.Context;
 import io.javalin.http.Handler;
 
@@ -94,7 +91,7 @@ public class CityTracker implements Handler {
          html = html + "<div class='search-section'>";
          html = html + "<div class='search-title'>Country</div>";
          html = html + "<div class='select-wrapper'>";
-         html = html + "<input list='countries' name = 'countries' class='select-boxfordisplay'>";
+         html = html + "<input placeholder='Enter' list='countries' name = 'countries' class='select-boxfordisplay' value='"+ (selectOnecountry != null ? selectOnecountry :"") + "' >";
 
          html += "<datalist id='countries'>";
          for (String name : countryname) {
@@ -114,7 +111,7 @@ public class CityTracker implements Handler {
         // Displaying the form with the dropdown
         
         html = html + "<select name='select-boxfordisplay' class='select-boxfordisplay'>"; 
-        html = html + "<option value='' " + (selectBoxfordisplay == null ? "selected" : "") + ">--Select--</option>";
+        html = html + "<option value='' " + (selectBoxfordisplay == null ? "selected" : "") + ">Select</option>";
         html = html + "<option value='City' " + ("City".equals(selectBoxfordisplay) ? "selected" : "")
                 + ">City</option>";
         html = html + "<option value='State' " + ("State".equals(selectBoxfordisplay) ? "selected" : "")
@@ -137,7 +134,7 @@ public class CityTracker implements Handler {
             html = html + "<div class='search-section'>";
             html = html + "<div class='search-title'>Start Year</div>";
             html = html + "<div class='select-wrapper'>";
-            html += "<input type='number' id='startyear' name='startyear' class='select-type' min='" + firstyear.getYear() + "' max='" + lastyear.getYear() + "'/>";
+            html += "<input placeholder='Enter' type='number' value ='"+startyear+"' id='startyear' name='startyear' class='select-type' min='" + firstyear.getYear() + "' max='" + lastyear.getYear() + "'/>";
             html = html + "</div>";
             html = html + "</div>";
 
@@ -145,7 +142,7 @@ public class CityTracker implements Handler {
             html = html + "<div class='search-section'>";
             html = html + "<div class='search-title'>End Year</div>";
             html = html + "<div class='select-wrapper'>";
-            html += "<input type='number' id='endyear' name='endyear' class='select-type' min='" + firstyear.getYear() + "' max='" + lastyear.getYear() + "'/>";
+            html += "<input placeholder='Enter' type='number' value ='"+endyear+"' id='endyear' name='endyear' class='select-type' min='" + firstyear.getYear() + "' max='" + lastyear.getYear() + "'/>";
             html = html + "</div>";//closing the select-wrapper div
             html = html + "</div>";// closing search-section div    
 
@@ -155,7 +152,7 @@ public class CityTracker implements Handler {
             html = html + "<div class='select-wrapper'>";
             
             html = html + "<select name='statistic' class='select-boxfordisplay'>"; 
-            html = html + "<option value='' " + (statistic == null ? "selected" : "") + ">--Select--</option>";
+            html = html + "<option value='' " + (statistic == null ? "selected" : "") + ">Select</option>";
             html = html + "<option value='Minimum Temperature' " + ("Minimum Temperature".equals(statistic) ? "selected" : "")
                     + ">Minimum Temperature</option>";
             html = html + "<option value='Maximum Temperature' " + ("Maximum Temperature".equals(statistic) ? "selected" : "")
@@ -175,7 +172,7 @@ public class CityTracker implements Handler {
             html = html + "<div class='select-wrapper'>";
             
             html = html + "<select name='outputType' class='select-boxfordisplay'>"; 
-            html = html + "<option value='' " + (outputType == null ? "selected" : "") + ">--Select--</option>";
+            html = html + "<option value='' " + (outputType == null ? "selected" : "") + ">Select</option>";
             html = html + "<option value='Raw Value' " + ("Raw Value".equals(outputType) ? "selected" : "")
                     + ">Raw Value</option>";
             html = html + "<option value='Percentage' " + ("Percentage".equals(outputType) ? "selected" : "")
@@ -206,11 +203,11 @@ public class CityTracker implements Handler {
             html = html + "<thead>";
             html = html + "<tr>";
             html = html + "<th>RANK</th>";
-            html = html + "<th>" + "NAME" +"</th>";
+            html = html + "<th> NAME </th>";
             html = html + "<th>START YEAR</th>";
             html = html + "<th>END YEAR</th>";
-            html = html + "<th>" + statistic + " in " + startyear + "</th>";
-            html = html + "<th>" + statistic + " in " + endyear + "</th>";
+            html = html + "<th>" + startyear  + " <br> " + statistic.toUpperCase()+ "</th>";
+            html = html + "<th>" + endyear + " <br> " +  statistic.toUpperCase() + "</th>";
             html = html + "<th> CHANGE </th>";
             html = html + "<th> AVERAGE CHANGE </th>";
             html = html + "</tr>";
@@ -241,8 +238,17 @@ public class CityTracker implements Handler {
                         html += "<td>" + String.format("%.2f", data.getAverageTemp()) + "</td>";
                         html += "<td>" + String.format("%.2f", data.getAverageTemp()) + "</td>";
                     }
-                    html = html + "<td>" + data.getChanges() + "</td>";
-                    html = html + "<td>" + String.format("%.2f", data.getAverageChange()) + "</td>";
+                    html = html + "<td>" + String.format("%.2f",data.getChanges()) + "</td>";    
+
+                    if ("Percentage".equals(outputType)) {
+                        if (!Float.isNaN(data.getAverageChange()) && !Float.isInfinite(data.getAverageChange())) {
+                            html += "<td>" + String.format("%.2f%%", data.getAverageChange() * 100) + "</td>"; 
+                        } else {
+                            html += "<td>N/A</td>";
+                        }
+                    } else {
+                        html = html + "<td>" + String.format("%.2f", data.getAverageChange()) + "</td>";
+                    }
                     html = html + "</tr>";
                     rowNumber++;
                 }

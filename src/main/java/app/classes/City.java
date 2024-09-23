@@ -9,7 +9,7 @@ public class City {
     private float lastYtemp;
     private float Changes;
     private float changeByPercentage;
-    private float AverageChange;
+    private float averageChange;
     private String latitude;
     private String longitude;
     private int startYear;
@@ -64,10 +64,10 @@ public class City {
         this.changeByPercentage = changeByPercentage;
     }
     public float getAverageChange() {
-        return AverageChange;
+        return averageChange;
     }
     public void setAverageChange(float averageChange) {
-        AverageChange = averageChange;
+       this.averageChange = averageChange;
     }
     public String getLatitude() {
         return latitude;
