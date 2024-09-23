@@ -52,6 +52,7 @@ public class JDBCforPeriodTracker {
 
         return worldtemperature;
     }
+
     // get last
     public Global getLastYearTemp() {
         Global worldtemperature = new Global();
@@ -169,21 +170,19 @@ public class JDBCforPeriodTracker {
         return stateName;
     }
 
-
-
     public State getStateAvgTemp(String state, int startYear, int endYear) {
         State states = new State();
         String query = """
-            SELECT AVG(averagetemperature) AS AverageTemperature,
-                MIN(year) AS StartYear,
-                MAX(year) AS EndYear
-            FROM TempOfState
-            WHERE year BETWEEN ? AND ?
-                AND AverageTemperature IS NOT NULL
-                AND StateID = (SELECT StateID FROM State WHERE stateName = ?)
-            """;
+                SELECT AVG(averagetemperature) AS AverageTemperature,
+                    MIN(year) AS StartYear,
+                    MAX(year) AS EndYear
+                FROM TempOfState
+                WHERE year BETWEEN ? AND ?
+                    AND AverageTemperature IS NOT NULL
+                    AND StateID = (SELECT StateID FROM State WHERE stateName = ?)
+                """;
         try (Connection connection = DriverManager.getConnection(DATABASE);
-             PreparedStatement statement = connection.prepareStatement(query)) {
+                PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setInt(1, startYear);
             statement.setInt(2, endYear);
             statement.setString(3, state);
@@ -208,8 +207,8 @@ public class JDBCforPeriodTracker {
                    SELECT AVG(averagetemperature) AS AverageTemperature,
                 min(year) AS StartYear,
                 max(year) AS EndYear
-            FROM TempOfCity
-            WHERE year BETWEEN ? AND ? AND
+                FROM TempOfCity
+                WHERE year BETWEEN ? AND ? AND
                 averagetemperature IS NOT NULL AND
                 cityID = ?;
 
@@ -231,17 +230,17 @@ public class JDBCforPeriodTracker {
         }
         return city;
 
-    } 
-    
-    public Country getAvgCountryTemp(String countryname, int startyear, int endyear){
+    }
+
+    public Country getAvgCountryTemp(String countryname, int startyear, int endyear) {
         Country country = new Country();
 
         String query = """
                 SELECT AVG(averagetemperature) AS AverageTemperature,
                 min(year) AS StartYear,
                 max(year) AS EndYear
-            FROM TempOfCountry
-            WHERE year BETWEEN ? AND ? AND
+                FROM TempOfCountry
+                WHERE year BETWEEN ? AND ? AND
                 averagetemperature IS NOT NULL AND
                 countryID = ?;
                 """;
@@ -262,7 +261,36 @@ public class JDBCforPeriodTracker {
         }
 
         return country;
-            
+
     }
 
+    public Country getPopulation(String countryname, int starty, int endy) {
+
+        Country country = new Country();
+        String query = """
+                    SELECT AVG(Population) AS AverageTemperature,
+                    min(year) AS StartYear,
+                    max(year) AS EndYear
+                    FROM Population
+                    WHERE year BETWEEN ? AND ? AND
+                    population IS NOT NULL AND
+                    countryID = ?;
+                    """;
+
+        try (Connection connection = DriverManager.getConnection(DATABASE);
+                PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setInt(1, starty);
+            statement.setInt(2, endy);
+            statement.setString(3, countryname);
+            ResultSet result = statement.executeQuery();
+            if (result.next()) {
+                country.setStartYear(result.getInt("StartYear"));
+                country.setEndYear(result.getInt("EndYear"));
+                country.setAveragePopulation(result.getFloat("AverageTemperature"));
+            }
+        } catch (SQLException e) {
+            System.err.println("Error found: getPopulation() in period tracker jdbc " + e.getMessage());
+        }
+        return country;
+    }
 }
