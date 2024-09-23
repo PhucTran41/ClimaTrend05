@@ -200,7 +200,7 @@ public class TimelineTracker implements Handler {
 
         for (String yearStr : selectedYears) {
             int startYear = Integer.parseInt(yearStr);
-            int endYear = startYear + periodValue - 1;
+            int endYear = startYear + periodValue;
             Global globalData = jdbc.getGlobalavgtemp(startYear, endYear);
             globalData.setInitialYear(startYear);
             globalData.setPeriod(periodValue);
