@@ -137,7 +137,7 @@ public class HomePage implements Handler {
 
                                         <div class="data-value"><span id="popStartValue">"""
 
-                                            + firstYearPopuWorld.getPopulation() + """
+                                            + String.format("%,d", firstYearPopuWorld.getPopulation()) + """
 
                                         </span> people</div>
                                     </div>
@@ -149,7 +149,7 @@ public class HomePage implements Handler {
                                         <br>
 
                                         <div class="data-value"><span id="popEndValue">"""
-                                            +  lastYearPopuWorld.getPopulation() + """
+                                            + String.format("%,d", lastYearPopuWorld.getPopulation()) + """
                                         </span> people</div>
                                     </div>
                                 </div>

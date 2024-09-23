@@ -95,7 +95,7 @@ public class GlobalTracker implements Handler {
         // Displaying the form with the dropdown
         
         html = html + "<select name='select-boxfordisplay' class='select-boxfordisplay' onchange='this.form.submit()'>"; 
-        html = html + "<option value='' " + (selectBoxfordisplay == null ? "selected" : "") + ">--Select--</option>";
+        html = html + "<option value='' " + (selectBoxfordisplay == null ? "selected" : "") + ">Select</option>";
         html = html + "<option value='World' " + ("World".equals(selectBoxfordisplay) ? "selected" : "")
                 + ">World</option>";
         html = html + "<option value='Country' " + ("Country".equals(selectBoxfordisplay) ? "selected" : "")

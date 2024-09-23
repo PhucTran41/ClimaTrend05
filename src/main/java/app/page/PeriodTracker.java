@@ -1,6 +1,5 @@
 package app.page;
 
-import java.sql.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -8,14 +7,13 @@ import java.util.Comparator;
 import java.util.List;
 
 import app.JDBC.JDBC;
-import app.JDBC.JDBCforGlobalTracker;
 import app.JDBC.JDBCforPeriodTracker;
+import app.classes.City;
+import app.classes.Country;
 import app.classes.Global;
 import app.classes.State;
 import io.javalin.http.Context;
 import io.javalin.http.Handler;
-import app.classes.City;
-import app.classes.Country;
 
 public class PeriodTracker implements Handler {
 
@@ -117,7 +115,7 @@ public class PeriodTracker implements Handler {
         // Displaying the form with the dropdown
 
         html = html + "<select name='select-boxfordisplay' class='select-boxfordisplay' onchange='this.form.submit()'>";
-        html = html + "<option value='' " + (selectBoxfordisplay == null ? "selected" : "") + ">--Select--</option>";
+        html = html + "<option value='' " + (selectBoxfordisplay == null ? "selected" : "") + ">Select</option>";
         html = html + "<option value='Country' " + ("Country".equals(selectBoxfordisplay) ? "selected" : "")
                 + ">Country</option>";
         html = html + "<option value='State' " + ("State".equals(selectBoxfordisplay) ? "selected" : "")
