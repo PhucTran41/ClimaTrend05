@@ -77,8 +77,6 @@ public class PeriodTracker implements Handler {
         int yearlength = yearLength != null && !yearLength.isEmpty() ? Integer.parseInt(yearLength) : 0;
         String period = context.formParam("period");
         int comparedRangeInt = comparedRange != null && !comparedRange.isEmpty() ? Integer.parseInt(comparedRange) : 0;
-        
-        
 
         ArrayList<String> countryname = jdbcPT.getCountryName();
         List<String> selectedCountriesList = context.formParams("countries");
@@ -105,7 +103,6 @@ public class PeriodTracker implements Handler {
         System.out.println("startyear: " + startyear);
         System.out.println("yearLength: " + yearLength);
         System.out.println("comparedRange: " + comparedRange);
-        
 
         // Search Section - Display Region Dropdown
         html = html + "<div class='search-section'>";
@@ -216,12 +213,12 @@ public class PeriodTracker implements Handler {
             html = html + "</div>";
             html = html + "</div>";
 
-
             if (firstyear != null && lastyear != null) {
                 int start = firstyear.getYear();
                 int end = lastyear.getYear();
                 for (int year = start; year <= end; year++) {
-                    html += "<option value='" + year + "' " + (Integer.toString(year).equals(startyear) ? "selected" : "") + ">" + year + "</option>";
+                    html += "<option value='" + year + "' "
+                            + (Integer.toString(year).equals(startyear) ? "selected" : "") + ">" + year + "</option>";
                 }
             } else {
                 html += "<option value=''>No years available</option>";
@@ -252,206 +249,113 @@ public class PeriodTracker implements Handler {
 
             html = html + "</form>";
 
-            if (selectBoxfordisplay != null &&
-                    ((("City".equals(selectBoxfordisplay) && selectedCities != null && selectedCities.length > 0) ||
-                            ("Country".equals(selectBoxfordisplay) && selectedCountries != null
-                                    && selectedCountries.length > 0)
-                            ||
-                            ("State".equals(selectBoxfordisplay) && selectedStates != null
-                                    && selectedStates.length > 0))
-                            &&
-                            startyear != null && !startyear.isEmpty() &&
-                            yearLength != null && !yearLength.isEmpty() &&
-                            comparedRange != null && !comparedRange.isEmpty())) {
+            if (selectBoxfordisplay != null && startyear != null && !startyear.isEmpty() &&
+                    yearLength != null && !yearLength.isEmpty() && comparedRange != null && !comparedRange.isEmpty()) {
 
-                html = html + "<div class='results-container'>"; // open the result-container
-                html = html + "<div class='results-inner'>"; // open the results-inner
+                html += "<div class='results-container'>";
+                html += "<div class='results-inner'>";
+                html += "<table>";
+                html += "<thead>";
+                html += "<tr>";
+                html += "<th>" + selectBoxfordisplay.toUpperCase() + "</th>";
+                html += "<th>START YEAR</th>";
+                html += "<th>END YEAR</th>";
+                html += "<th>YEAR LENGTH</th>";
+                html += "<th>AVERAGE TEMPERATURE</th>";
+                html += "<th>CHANGE</th>";
+                html += "</tr>";
+                html += "</thead>";
+                html += "<tbody>";
 
-                html = html + "<table>";
-                html = html + "<thead>";
-                html = html + "<tr>";
-                html = html + "<th>" + selectBoxfordisplay.toUpperCase() + "</th>";
-                html = html + "<th>START YEAR</th>";
-                html = html + "<th>END YEAR</th>";
-                html = html + "<th>YEAR LENGTH</th>";
-                html = html + "<th>AVERAGE TEMPERATURE</th>";
-                html = html + "<th>CHANGE</th>";
-                html = html + "</tr>";
-                html = html + "</thead>";
-                html = html + "<tbody>"; // open the table body
-
-                // Displaying the results
-                int samplespace = 0;
-
-                
-        if (startyear != null && !startyear.isEmpty() && period != null
-        && !period.isEmpty() && comparedRange != null && !comparedRange.isEmpty()
-        && selectBoxfordisplay != null) {
-
-                if("State".equals(selectBoxfordisplay) && jdbcPT.getStateAvgTemp(selectBoxfordisplay, startYear, startYear + yearlength).getAverageTemp() != 0) {
+                if ("State".equals(selectBoxfordisplay)) {
                     ArrayList<State> states = new ArrayList<>();
-                    for (String state : jdbcPT.getStateName()) {
-                        
-                        for (int i = startYear; i + yearlength < 2013; i++) {
-                            State s = jdbcPT.getStateAvgTemp(state, i, i + yearlength);
-                            s.setName(state);
-                            if (s.getEndYear() - s.getStartYear() == yearlength) {
-                                states.add(s);
-                            }
+                    for (String state : selectedStates) {
+                        State s = jdbcPT.getStateAvgTemp(state, startYear, startYear + yearlength);
+                        if (s.getAverageTemp() != 0) {
+                            states.add(s);
                         }
-                        System.out.println("States retrieved: " + states.size());
-
-
                     }
-                    float avgtempcompare = jdbcPT.getStateAvgTemp(selectBoxfordisplay, startYear, startYear + yearlength)
-                            .getAverageTemp();
-                            if ("State".equals(selectBoxfordisplay)) {
-                                System.out.println("line 311 is running");
-                                ArrayList<State> statess = new ArrayList<>();
-                                for (String state : jdbcPT.getStateName()) {
-                                    State s = jdbcPT.getStateAvgTemp(state, startYear, startYear + yearlength);
-                                    if (s.getAverageTemp() != 0) {
-                                        states.add(s);
-                                    }
-                                }
-                
-                                if (!states.isEmpty()) {
-                                    Collections.sort(states, Comparator.comparing(State::getAverageTemp));
-                                    for (int i = 0; i < Math.min(comparedRangeInt, states.size()); i++) {
-                                        State state = states.get(i);
-                                        html += "<tr>";
-                                        html += "<td>" + state.getName() + "</td>";
-                                        html += "<td>" + state.getStartYear() + "</td>";
-                                        html += "<td>" + state.getEndYear() + "</td>";
-                                        html += "<td>" + yearlength + "</td>";
-                                        html += "<td>" + String.format("%.2f", state.getAverageTemp()) + "</td>";
-                                        html += "<td>" + String.format("%.2f", (state.getAverageTemp() - states.get(0).getAverageTemp())) + "</td>";
-                                        html += "</tr>";
-                                    }
-                                } else {
-                                    html += "<tr><td colspan='6'>No data available for the selected period.</td></tr>";
-                                }
-                            }
-    
-                        html += "</tbody>";
-                    
 
-                }
+                    if (!states.isEmpty()) {
+                        Collections.sort(states, Comparator.comparing(State::getAverageTemp).reversed());
+                        float baselineTemp = states.get(0).getAverageTemp();
 
-
-                if ("City".equals(selectBoxfordisplay) && jdbcPT
-                        .getCityAvgTemp(selectBoxfordisplay, startYear, startYear + yearlength).getAverageTemp() != 0) {
-                            System.out.println("line 345 is running");
+                        for (int i = 0; i < Math.min(comparedRangeInt, states.size()); i++) {
+                            State state = states.get(i);
+                            html += "<tr>";
+                            html += "<td>" + state.getName() + "</td>";
+                            html += "<td>" + state.getStartYear() + "</td>";
+                            html += "<td>" + state.getEndYear() + "</td>";
+                            html += "<td>" + (state.getEndYear() - state.getStartYear()) + "</td>";
+                            html += "<td>" + String.format("%.2f", state.getAverageTemp()) + "</td>";
+                            html += "<td>" + String.format("%.2f", (state.getAverageTemp() - baselineTemp)) + "</td>";
+                            html += "</tr>";
+                        }
+                    } else {
+                        html += "<tr><td colspan='6'>No data available for the selected states and period.</td></tr>";
+                    }
+                } else if ("City".equals(selectBoxfordisplay)) {
                     ArrayList<City> cities = new ArrayList<>();
-                    for (String city : jdbcPT.getCityName()) {
-                        for (int i = startYear; i + yearlength < 2013; i++) {
-                            City c = jdbcPT.getCityAvgTemp(city, i, i + yearlength);
-                            c.setName(city);
-                            if (c.getEndYear() - c.getStartYear() == yearlength) {
-                                cities.add(c);
-                            }
+                    for (String city : selectedCities) {
+                        City c = jdbcPT.getCityAvgTemp(city, startYear, startYear + yearlength);
+                        if (c.getAverageTemp() != 0) {
+                            cities.add(c);
                         }
-                        System.out.println("Cities retrieved: " + cities.size());
                     }
-                    float avgtempcompare = jdbcPT.getCityAvgTemp(selectBoxfordisplay, startYear, startYear + yearlength)
-                            .getAverageTemp();
 
                     if (!cities.isEmpty()) {
-                        Collections.sort(cities, new Comparator<City>() {
-                            @Override
-                            public int compare(City c1, City c2) {
-                                float diff1 = Math.abs(c1.getAverageTemp() - avgtempcompare);
-                                float diff2 = Math.abs(c2.getAverageTemp() - avgtempcompare);
-                                return Float.compare(diff1, diff2);
-                            }
-                        });
+                        Collections.sort(cities, Comparator.comparing(City::getAverageTemp).reversed());
+                        float baselineTemp = cities.get(0).getAverageTemp();
 
-                        // Table
-                        html += "<table>";
-                        html += "<tr><th>City</th><th>Start Year</th><th>End Year</th><th>Period</th><th>Average Temperature</th><th>Avg Temperature Difference</th></tr>";
-
-                        for (City city : cities) {
+                        for (int i = 0; i < Math.min(comparedRangeInt, cities.size()); i++) {
+                            City city = cities.get(i);
                             html += "<tr>";
                             html += "<td>" + city.getName() + "</td>";
                             html += "<td>" + city.getStartYear() + "</td>";
                             html += "<td>" + city.getEndYear() + "</td>";
                             html += "<td>" + (city.getEndYear() - city.getStartYear()) + "</td>";
-                            html += "<td>" + city.getAverageTemp() + "</td>";
-                            html += "<td>" + (city.getAverageTemp() - avgtempcompare) + "</td>";
+                            html += "<td>" + String.format("%.2f", city.getAverageTemp()) + "</td>";
+                            html += "<td>" + String.format("%.2f", (city.getAverageTemp() - baselineTemp)) + "</td>";
                             html += "</tr>";
                         }
-                        
-
-                        html += "</tbody>";
+                    } else {
+                        html += "<tr><td colspan='6'>No data available for the selected cities and period.</td></tr>";
                     }
-                } else if (jdbcPT.getCityAvgTemp(selectBoxfordisplay, startYear, startYear + yearlength)
-                        .getAverageTemp() == 0
-                        && selectBoxfordisplay.equals("City")) {
-                    html += "<h2>There is no temperature data for your chosen period.</h2>";
-
-                }
-
-                if ("Country".equals(selectBoxfordisplay)
-                        && jdbcPT.getAvgCountryTemp(selectBoxfordisplay, startYear, startYear + yearlength)
-                                .getAverageTemp() != 0) {
-                                    System.out.println("line 398 is running");
+                } else if ("Country".equals(selectBoxfordisplay)) {
                     ArrayList<Country> countries = new ArrayList<>();
-                    for (String country : jdbcPT.getCountryName()) {
-                        for (int i = startYear; i + yearlength < 2013; i++) {
-                            Country coun = jdbcPT.getAvgCountryTemp(country, i, i + yearlength);
-                            coun.setCountryName(country);
-                            countries.add(coun);
-
+                    for (String country : selectedCountries) {
+                        Country c = jdbcPT.getAvgCountryTemp(country, startYear, startYear + yearlength);
+                        if (c.getAverageTemp() != 0) {
+                            countries.add(c);
                         }
-
                     }
-                    float avgtempcompare = jdbcPT.getCityAvgTemp(selectBoxfordisplay, startYear, startYear + yearlength)
-                            .getAverageTemp();
 
                     if (!countries.isEmpty()) {
-                        Collections.sort(countries, new Comparator<Country>() {
-                            @Override
-                            public int compare(Country c1, Country c2) {
-                                float diff1 = Math.abs(c1.getAverageTemp() - avgtempcompare);
-                                float diff2 = Math.abs(c2.getAverageTemp() - avgtempcompare);
-                                return Float.compare(diff1, diff2);
-                            }
-                        });
-                        html += "<h2>Country Temperature Data</h2>";
-                        html += "<table>";
-                        html += "<tr><th>Country</th><th>Start Year</th><th>End Year</th><th>Period</th><th>Average Temperature</th><th>Avg Temperature Difference</th></tr>";
+                        Collections.sort(countries, Comparator.comparing(Country::getAverageTemp).reversed());
+                        float baselineTemp = countries.get(0).getAverageTemp();
 
-                        for (int i = 0; i < Math.min((samplespace + 1), countries.size()); i++) {
+                        for (int i = 0; i < Math.min(comparedRangeInt, countries.size()); i++) {
                             Country country = countries.get(i);
                             html += "<tr>";
                             html += "<td>" + country.getCountryName() + "</td>";
                             html += "<td>" + country.getStartYear() + "</td>";
-                            html += "<td>" + (country.getStartYear() + yearlength) + "</td>";
-                            html += "<td>" + yearlength + " years</td>";
-                            html += "<td>" + String.format("%.4f&deg;C", country.getAveragePopulation()) + "</td>";
-                            html += "<td>"
-                                    + String.format("%.4f", Math.abs(country.getAveragePopulation() - avgtempcompare))
-                                    + "</td>";
+                            html += "<td>" + country.getEndYear() + "</td>";
+                            html += "<td>" + (country.getEndYear() - country.getStartYear()) + "</td>";
+                            html += "<td>" + String.format("%.2f", country.getAverageTemp()) + "</td>";
+                            html += "<td>" + String.format("%.2f", (country.getAverageTemp() - baselineTemp)) + "</td>";
                             html += "</tr>";
                         }
-
-                        html += "</tbody>";
                     } else {
-                        html += "<h2>There is no population data for your chosen period.</h2>";
+                        html += "<tr><td colspan='6'>No data available for the selected countries and period.</td></tr>";
                     }
-                }else if (jdbcPT.getAvgCountryTemp(selectBoxfordisplay, startYear, startYear + yearlength).getAveragePopulation() == 0
-                && selectBoxfordisplay.equals("country")) {
-            html += "<h2>There is no population data for  your chosen period.</h2>";
-        }
+                }
+
+                html += "</tbody>";
                 html += "</table>";
-                html = html + "</div>";// close the results-inner
-                html = html + "</div>";// close the results-container
+                html += "</div>";
+                html += "</div>";
             }
         }
-        }
-
-        
-      
 
         html = html + "</div>"; // Closing the container
         html = html + "</body>";
