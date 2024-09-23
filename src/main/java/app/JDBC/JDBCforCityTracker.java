@@ -226,38 +226,45 @@ public class JDBCforCityTracker {
     }
 
     
-    public List<City> getCityDatafromCountry(String cityname, int endYear, int startYear, String outputType) {
+    public List<City> getCityDatafromCountry(String countryName, int endYear, int startYear, String statistic, String outputType) {
         List<City> cities = new ArrayList<>();
         
-
-            String sql = "SELECT c.cityName, AVG(t1.AverageTemperature) as start_temp, AVG(t2.AverageTemperature) as end_temp, " +
-                         "(AVG(t2.AverageTemperature) - AVG(t1.AverageTemperature)) as temp_change " +
-                         "FROM City c " +
-                         "JOIN TempOfCity t1 ON c.cityID = t1.cityID AND t1.year = ? " +
-                         "JOIN TempOfCity t2 ON c.cityID = t2.cityID AND t2.year = ? " +
-                         "JOIN Country co ON c.countryID = co.countryID " +
-                         "WHERE co.countryName = ? " +
-                         "GROUP BY c.cityID, c.cityName " +
-                         "ORDER BY temp_change DESC";
+        String tempColumn = "AverageTemperature";  // Default to Average
+        if ("Minimum Temperature".equals(statistic)) {
+            tempColumn = "MinimumTemperature";
+        } else if ("Maximum Temperature".equals(statistic)) {
+            tempColumn = "MaximumTemperature";
+        }
     
-            try (Connection conn = DriverManager.getConnection(DATABASE);
-                 PreparedStatement pstmt = conn.prepareStatement(sql)) {
+        String sql = "SELECT c.cityName, t1." + tempColumn + " as start_temp, " +
+                     "t2." + tempColumn + " as end_temp, " +
+                     "(t2." + tempColumn + " - t1." + tempColumn + ") as temp_change " +
+                     "FROM City c " +
+                     "JOIN TempOfCity t1 ON c.cityID = t1.cityID AND t1.year = ? " +
+                     "JOIN TempOfCity t2 ON c.cityID = t2.cityID AND t2.year = ? " +
+                     "JOIN Country co ON c.countryID = co.countryID " +
+                     "WHERE co.countryName = ? " +
+                     "GROUP BY c.cityID, c.cityName " +
+                     "ORDER BY temp_change DESC";
+        
+        try (Connection conn = DriverManager.getConnection(DATABASE);
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            
+            pstmt.setInt(1, startYear);
+            pstmt.setInt(2, endYear);
+            pstmt.setString(3, countryName);
+            
+            ResultSet rs = pstmt.executeQuery();
+            
+            while (rs.next()) {
+                City city = new City();
+                city.setName(rs.getString("cityName"));
+                city.setFirstyear(startYear);
+                city.setEndYear(endYear);
+                city.setFirstYearTemp(rs.getFloat("start_temp"));
+                city.setLastYtemp(rs.getFloat("end_temp"));
                 
-                pstmt.setInt(1, startYear);
-                pstmt.setInt(2, endYear);
-                pstmt.setString(3, cityname);
-                
-                ResultSet rs = pstmt.executeQuery();
-                
-                while (rs.next()) {
-                    City city = new City();
-                    city.setName(rs.getString("cityName"));
-                    city.setFirstyear(startYear);
-                    city.setEndYear(endYear);
-                    city.setFirstYearTemp(rs.getFloat("start_temp"));
-                    city.setLastYtemp(rs.getFloat("end_temp"));
-                    
-                    float change = rs.getFloat("temp_change");
+                float change = rs.getFloat("temp_change");
                 if ("Percentage".equals(outputType)) {
                     if (city.getFirstYearTemp() != 0) {
                         float percentageChange = (change / city.getFirstYearTemp()) * 100;
@@ -268,23 +275,25 @@ public class JDBCforCityTracker {
                 } else {
                     city.setChanges(change);
                 }
-                
+    
                 if ((endYear - startYear) != 0) {
                     city.setAverageChange(change / (endYear - startYear));
                 } else {
                     city.setAverageChange(0); // Handle division by zero
                 }
-                
+    
+                // Average of first and last year temp for display
                 city.setAverageTemp((city.getFirstYearTemp() + city.getLastYtemp()) / 2);
-                    
-                    cities.add(city);
-                }
-            } catch (SQLException e) {
-                System.out.println(e.getMessage());
+                
+                cities.add(city);
             }
-            
-            return cities;
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
         }
+        
+        return cities;
+    }
+    
     
         public ArrayList<State> getStateDatafromCountry(String stateName, int startYear, int endYear, String outputType) {
             ArrayList<State> stateData = new ArrayList<>();

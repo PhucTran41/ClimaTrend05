@@ -219,7 +219,7 @@ public class CityTracker implements Handler {
                 int startYear = Integer.parseInt(startyear);
                 int endYear = Integer.parseInt(endyear);
             
-                List<City> result = jdbc2.getCityDatafromCountry(selectOnecountry, endYear, startYear, outputType);
+                List<City> result = jdbc2.getCityDatafromCountry(selectOnecountry, endYear, startYear,statistic, outputType);
             
                 int rowNumber = 1;
                 for (City data : result) {
