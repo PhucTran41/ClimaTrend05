@@ -1,17 +1,17 @@
 package app.JDBC;
 
+import java.math.BigInteger;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.sql.PreparedStatement;
-import java.util.Arrays;
+import java.util.Collections;
+
 import app.classes.Country;
 import app.classes.Global;
-import app.page.GlobalTracker;
-import java.util.Collections;
 
 
 public class JDBCforGlobalTracker {
@@ -250,47 +250,61 @@ public class JDBCforGlobalTracker {
         ArrayList<Global> globalData = new ArrayList<>();
         
         String query = """
-            SELECT p.Year, p.population, tg.AverageTemperature 
-            FROM TempOfGLobal tg
-            JOIN Population p ON p.year = tg.Year
-            WHERE p.Year BETWEEN ? AND ?
+            SELECT tg.Year, p.population, tg.AverageTemperature
+                FROM TempOfGLobal tg
+                LEFT JOIN Population p ON p.year = tg.Year
+                LEFT JOIN Country c ON p.countryID = c.countryID
+                WHERE tg.Year BETWEEN ? AND ?
+                  AND (c.countryName = 'World' OR p.countryID IS NULL)
             """;
       
                 // Adding conditions based on the user's selection for output and order
-    if ("Population".equals(output)) {
-        query += "ORDER BY p.population ";  // Sort by population
-    } else if ("Temperature".equals(output)) {
-        query += "ORDER BY CAST(tg.AverageTemperature AS DECIMAL) ";  // Sort by temperature
-    } else {
-        query += "ORDER BY p.Year ";  // Default: sort by year
-    }
+            if ("Population".equals(output)) {
+                query += " ORDER BY p.population ";  // Sort by population
+            } else if ("Average Temperature".equals(output)) {
+                query += " ORDER BY tg.AverageTemperature ";  // Sort by temperature
+            } else {
+                query += " ORDER BY tg.Year ";
+            }
 
-    // Adding ascending or descending order based on user's selection
-    if ("Ascending".equals(orderby)) {
-        query += "ASC";
-    } else if ("Descending".equals(orderby)) {
-        query += "DESC";
-    }
+            // Adding ascending or descending order based on user's selection
+            if ("Ascending".equals(orderby)) {
+                query += " ASC;";
+            } else if ("Descending".equals(orderby)) {
+                query += " DESC;";
+            }
 
 
         
-        
+            
         try (Connection connection = DriverManager.getConnection(DATABASE);
         PreparedStatement statement = connection.prepareStatement(query)) {
+
+   
             
             statement.setString(1, startYear);
             statement.setString(2, endYear);
-
+            System.out.println("Executing query: " + query);
             statement.setQueryTimeout(15);  // Set query timeout
-    
+            
             // Execute the query and process the results
             try (ResultSet resultSet = statement.executeQuery()) {
                 while (resultSet.next()) {
+                    
                     Global global = new Global();
                     global.setYear(resultSet.getInt("Year"));
-                    global.setAverageTemp(resultSet.getFloat("AverageTemperature"));  // Use getFloat() for floating point data
-                    global.setPopulation(resultSet.getInt("Population"));
+                    global.setAverageTemp(resultSet.getFloat("AverageTemperature"));
+                    
+    
+                    long population = resultSet.getLong("population");
+                    if (resultSet.wasNull()) {
+                        global.setPopulation(0);
+                    } else {
+                        global.setPopulation(population);
+                    }
+    
                     globalData.add(global);
+                    
                 }
             }
     

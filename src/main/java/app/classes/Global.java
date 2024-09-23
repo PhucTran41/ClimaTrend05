@@ -1,7 +1,7 @@
 package app.classes;
 
 public class Global {
-    private int year;
+    private int  year;
     private String name;  // Country or region name
     private double firstYearTemperature;
     private double lastYearTemperature;
@@ -9,7 +9,7 @@ public class Global {
     private float averageTemp;
     private float minimumTemp;
     private float maximumTemp;
-    private long population;
+    private long population;  // Use Integer for nullable population
     private int initialYear;
     private int startYear;
     private int endYear;
@@ -22,14 +22,14 @@ public class Global {
     // Constructor with year, population, and average temperature
     public Global(int year, int population, float averageTemp) {
         this.year = year;
-        this.population = population;
+        this.population = population;  // Allow null values for population
         this.averageTemp = averageTemp;
     }
 
     // Constructor with additional temperature data and years
     public Global(int year, float averageTemp, float minimumTemp, float maximumTemp, int initialYear, int startYear, int endYear) {
         this.year = year;
-        this.averageTemp = averageTemp;
+        this.averageTemp = averageTemp;  // Float allows null
         this.minimumTemp = minimumTemp;
         this.maximumTemp = maximumTemp;
         this.initialYear = initialYear;
@@ -114,19 +114,17 @@ public class Global {
         return population;
     }
 
-    public void setPopulation(long population) {
+    public void setPopulation(long  population) {
         this.population = population;
     }
 
-
-    //Getter and Setter for getting period
-
+    // Getter and Setter for period
     public int getPeriod() {
         return period;
     }
 
-    public int setPeriod(int period){
-        return  this.period = period;
+    public void setPeriod(int period) {
+        this.period = period;
     }
 
     // Getter and Setter for initial year

@@ -75,11 +75,12 @@ public class TimelineTracker implements Handler {
             html += generateRegionSelection(selectBox, selectedRegions, jdbc);
             html += generateYearSelection(selectedYears);
             html += generatePeriodSelection(period);
-            html += "<button class='search-button'>Search</button>";
+            
         }
 
-        html += "</div></form>";
-
+        html += "</div>"; 
+        html += "<button class='search-button'>Search</button>";
+        html += "</form>"; 
         return html;
     }
 
@@ -89,7 +90,7 @@ public class TimelineTracker implements Handler {
                       "<div class='search-title'>Display Region</div>" +
                       "<div class='select-wrapper'>" +
                       "<select name='selectBox' class='select-boxfordisplay' onchange='this.form.submit()'>" +
-                      "<option value='' " + (selectBox == null ? "selected" : "") + ">--Select--</option>" +
+                      "<option value='' " + (selectBox == null ? "selected" : "") + ">Select</option>" +
                       "<option value='Global' " + ("Global".equals(selectBox) ? "selected" : "") + ">Global</option>" +
                       "<option value='Country' " + ("Country".equals(selectBox) ? "selected" : "") + ">Country</option>" +
                       "<option value='State' " + ("State".equals(selectBox) ? "selected" : "") + ">State</option>" +

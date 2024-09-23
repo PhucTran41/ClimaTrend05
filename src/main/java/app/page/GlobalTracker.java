@@ -226,15 +226,32 @@ public class GlobalTracker implements Handler {
             html = html + "<tbody>"; //open the table body if World is selected
             List<Global> results = jdbc2.getGlobalDatafromWord(output, orderby, startyear, endyear);
 
+            if (results.isEmpty()) {
+                // If no data is available, display a message
+                html = html + "<tr>";
+                html = html + "<td colspan='6' style='text-align:center;'>No data available for the selected criteria</td>";
+                html = html + "</tr>";
+            } else {
             int rowNumber = 1;
             for (Global data : results) {
                 html = html + "<tr>";
+            
+                // YEAR (should never be null, so we just display it)
                 html = html + "<td>" + data.getYear() + "</td>";
-                html = html + "<td>" + data.getAverageTemp() + " °C </td>";
-                html = html + "<td>" + String.format("%,d", data.getPopulation()) + "</td>";
+                html = html + "<td>" + data.getAverageTemp() + " °C</td>";
+            
+            
+                // POPULATION (SQLite INTEGER cannot be null, so we assume 0 indicates no data)
+                if (data.getPopulation() != 0) {
+                    html = html + "<td>" + String.format("%,d", data.getPopulation()) + "</td>";
+                } else {
+                    html = html + "<td>No data</td>";  // Handle 0 as "No data"
+                }
+            
                 html = html + "</tr>";
-                rowNumber++;
             }
+            }
+        
 
             html = html + "</tbody>"; //close the table body when if World is selected
 
