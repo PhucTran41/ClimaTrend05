@@ -264,7 +264,7 @@ public class JDBCforPeriodTracker {
 
     }
 
-    public Country getPopulation(String countryname, int starty, int endy) {
+    public Country getPopulationavgfromcCountry(String countryname, int starty, int endy) {
 
         Country country = new Country();
         String query = """

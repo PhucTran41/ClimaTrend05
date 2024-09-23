@@ -324,16 +324,18 @@ public class PeriodTracker implements Handler {
                 } else if ("Country".equals(selectBoxfordisplay)) {
                     ArrayList<Country> countries = new ArrayList<>();
                     for (String country : selectedCountries) {
-                        Country c = jdbcPT.getAvgCountryTemp(country, startYear, startYear + yearlength);
+                        Country c = jdbcPT.getPopulationavgfromcCountry(country, startYear, startYear + yearlength);
                         if (c.getAverageTemp() != 0) {
                             countries.add(c);
                         }
                     }
-
+                    
                     if (!countries.isEmpty()) {
                         Collections.sort(countries, Comparator.comparing(Country::getAverageTemp).reversed());
-                        float baselineTemp = countries.get(0).getAverageTemp();
-
+                        float avgpoptocompare = jdbcPT.getPopulationavgfromcCountry(selectBoxfordisplay, startYear, startYear + yearlength)
+                            .getAveragePopulation();
+                        
+                        
                         for (int i = 0; i < Math.min(comparedRangeInt, countries.size()); i++) {
                             Country country = countries.get(i);
                             html += "<tr>";
@@ -341,8 +343,8 @@ public class PeriodTracker implements Handler {
                             html += "<td>" + country.getStartYear() + "</td>";
                             html += "<td>" + country.getEndYear() + "</td>";
                             html += "<td>" + (country.getEndYear() - country.getStartYear()) + "</td>";
-                            html += "<td>" + String.format("%.2f", country.getAverageTemp()) + "</td>";
-                            html += "<td>" + String.format("%.2f", (country.getAverageTemp() - baselineTemp)) + "</td>";
+                            html += "<td>" + String.format("%.2f", country.getAveragePopulation()) + "</td>";
+                            html += "<td>" + String.format("%.2f", (country.getAveragePopulation() - avgpoptocompare)) + "</td>";
                             html += "</tr>";
                         }
                     } else {
