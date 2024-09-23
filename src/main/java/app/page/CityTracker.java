@@ -221,6 +221,9 @@ public class CityTracker implements Handler {
             
                 List<City> result = jdbc2.getCityDatafromCountry(selectOnecountry, endYear, startYear, outputType);
             
+                if (result.isEmpty()) {
+                    html = html + "<tr><td colspan='8'>No data available for the selected criteria.</td></tr>";
+                } else {
                 int rowNumber = 1;
                 for (City data : result) {
                     html = html + "<tr>";
@@ -239,7 +242,7 @@ public class CityTracker implements Handler {
                         html += "<td>" + String.format("%.2f", data.getAverageTemp()) + "</td>";
                     }
                     html = html + "<td>" + String.format("%.2f",data.getChanges()) + "</td>";    
-
+                
                     if ("Percentage".equals(outputType)) {
                         if (!Float.isNaN(data.getAverageChange()) && !Float.isInfinite(data.getAverageChange())) {
                             html += "<td>" + String.format("%.2f%%", data.getAverageChange() * 100) + "</td>"; 
@@ -252,17 +255,20 @@ public class CityTracker implements Handler {
                     html = html + "</tr>";
                     rowNumber++;
                 }
+            }
                 html += "</tbody>" ;
         }   else if ("State".equals(selectBoxfordisplay)){
             System.out.println("State is selected");
 
-
+        
 
             int startYear = Integer.parseInt(startyear);
             int endYear = Integer.parseInt(endyear);
 
             List<State> resultforstate = jdbc2.getStateDatafromCountry(selectOnecountry, endYear, startYear, outputType);
-
+            if (resultforstate.isEmpty()) {
+                html = html + "<tr><td colspan='8'>No data available for the selected criteria.</td></tr>";
+            } else {
             int rowNumber = 1;
             for (State data : resultforstate) {
                 System.out.println("printing out the table...");
@@ -284,6 +290,7 @@ public class CityTracker implements Handler {
                 html = html + "</tr>";
                 rowNumber++;
             }
+        }
 
         
         html = html + "</tbody>"; //close the table body if country was selected

@@ -71,7 +71,7 @@ public class JDBCforCityTracker {
         return cityNames;
     }
 
-    // Lấy năm đầu tiên từ bảng Population của một quốc gia
+    
     public int getFirstYear(int countryID) {
         String query = """
                     SELECT MIN(year)
@@ -99,7 +99,7 @@ public class JDBCforCityTracker {
         return firstYear;
     }
 
-    // Lấy năm cuối cùng từ bảng Population của một quốc gia
+  
     public int getLastYear(int countryID) {
         String query = """
                 SELECT MAX(year)
@@ -126,12 +126,12 @@ public class JDBCforCityTracker {
         return lastYear;
     }
 
-    // Ví dụ về cách hiển thị thông tin quốc gia với năm đầu tiên và năm cuối cùng
+
     public void displayCountriesWithYears() {
         ArrayList<String> countryNames = getCountryNames();
 
         for (String countryName : countryNames) {
-            int countryID = getCountryIDByName(countryName); // Hàm để lấy countryID dựa vào countryName
+            int countryID = getCountryIDByName(countryName);
             int firstYear = getFirstYear(countryID);
             int lastYear = getLastYear(countryID);
 
@@ -139,7 +139,7 @@ public class JDBCforCityTracker {
         }
     }
 
-    // Lấy countryID dựa vào tên quốc gia
+
     public int getCountryIDByName(String countryName) {
         String query = """
                 SELECT countryID
@@ -346,56 +346,5 @@ public class JDBCforCityTracker {
     
             return stateData;
         }
-
-    // public ArrayList<State> getStateDatafromCountry(String countryName, int startYear, int endYear, String outputType) {
-    //     ArrayList<State> stateData = new ArrayList<>();
-
-    //     String query = """
-    //         SELECT 
-    //             s.stateName, 
-    //             MIN(ts.Year) AS firstyear, 
-    //             MAX(ts.Year) AS lastyear,
-    //             AVG(CASE WHEN ts.Year = MIN(ts.Year) THEN ts.%s END) AS firstyTemp,
-    //             AVG(CASE WHEN ts.Year = MAX(ts.Year) THEN ts.%s END) AS lastyTemp,
-    //             AVG(CASE WHEN ts.Year = MAX(ts.Year) THEN ts.%s END) - AVG(CASE WHEN ts.Year = MIN(ts.Year) THEN ts.%s END) AS change,
-    //             (AVG(CASE WHEN ts.Year = MAX(ts.Year) THEN ts.%s END) - AVG(CASE WHEN ts.Year = MIN(ts.Year) THEN ts.%s END)) / ABS(AVG(CASE WHEN ts.Year = MIN(ts.Year) THEN ts.%s END)) * 100 AS changebypercentage
-    //         FROM 
-    //             State s
-    //             JOIN TempOfState ts ON s.stateID = ts.stateID
-    //             JOIN Country co ON s.countryID = co.countryID
-    //         WHERE 
-    //             co.countryName = ?
-    //             AND ts.Year BETWEEN ? AND ?
-    //             AND ts.%s IS NOT NULL
-    //         GROUP BY
-    //             s.stateName
-    //     """.formatted(outputType, outputType, outputType, outputType, outputType, outputType, outputType, outputType);
-
-    //     try (Connection connection = DriverManager.getConnection(DATABASE);
-    //          PreparedStatement statement = connection.prepareStatement(query)) {
-
-    //         statement.setString(1, countryName);
-    //         statement.setInt(2, startYear);
-    //         statement.setInt(3, endYear);
-
-    //         try (ResultSet resultSet = statement.executeQuery()) {
-    //             while (resultSet.next()) {
-    //                 State state = new State();
-    //                 state.setName(resultSet.getString("stateName"));
-    //                 state.setFirstyear(resultSet.getInt("firstyear"));
-    //                 state.setLastyear(resultSet.getInt("lastyear"));
-    //                 state.setFirstYearTemp(resultSet.getFloat("firstyTemp"));
-    //                 state.setLastYtemp(resultSet.getFloat("lastyTemp"));
-    //                 state.setChanges(resultSet.getFloat("change"));
-    //                 state.setChangeByPercentage(resultSet.getFloat("changebypercentage"));
-    //                 stateData.add(state);
-    //             }
-    //         }
-    //     } catch (SQLException e) {
-    //         System.err.println("Error executing getStateDatafromCountry: " + e.getMessage());
-    //     }
-
-    //     return stateData;
-    // }
 
 }
