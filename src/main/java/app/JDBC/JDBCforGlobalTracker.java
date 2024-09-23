@@ -178,56 +178,71 @@ public class JDBCforGlobalTracker {
         
         String placeholders = String.join(",", Collections.nCopies(countries.length, "?"));
 
-        String changeOnceChosen;
+        String temperatureChange;
         if ("Proportion".equals(OutputType)) {
-            changeOnceChosen = "CASE WHEN A.AverageTemperature <> 0 THEN ((B.AverageTemperature - A.AverageTemperature) / A.AverageTemperature) * 100 ELSE NULL END AS \"CHANGE\"";
+            temperatureChange = "CASE WHEN A.AverageTemperature <> 0 THEN ((B.AverageTemperature - A.AverageTemperature) / A.AverageTemperature) * 100 ELSE NULL END AS \"Temp Change\"";
         } else {
-            changeOnceChosen = "(B.AverageTemperature - A.AverageTemperature) AS \"CHANGE\"";
+            temperatureChange = "(B.AverageTemperature - A.AverageTemperature) AS \"Temp Change\"";
+        }
+    
+        // Handle change calculation for population
+        String populationChange;
+        if ("Proportion".equals(OutputType)) {
+            // Added CASE WHEN to handle division by zero
+            populationChange = "CASE WHEN A.Population <> 0 THEN ((B.Population - A.Population) / A.Population) * 100 ELSE NULL END AS \"Population Change\"";
+        } else {
+            populationChange = "(B.Population - A.Population) AS \"Population Change\"";
         }
     
         
         String query = String.format("""
             SELECT A.countryName AS "Country", A.`Start Year`, A.AverageTemperature AS "Start Year Temperature", 
                    B.`End Year`, B.AverageTemperature AS "End Year Temperature", 
-                   %s
+                   A.Population AS "Start Year Population", B.Population AS "End Year Population", 
+                   %s, %s
             FROM
-                (SELECT c.countryName, tc.Year AS "Start Year", tc.AverageTemperature 
+                (SELECT c.countryName, tc.Year AS "Start Year", tc.AverageTemperature, p.Population 
                  FROM Country c
                  JOIN TempOfCountry tc ON c.countryID = tc.countryID
+                 JOIN Population p ON c.countryID = p.countryID AND tc.Year = p.year
                  WHERE tc.Year = ?) AS A
             JOIN
-                (SELECT c.countryName, tc.Year AS "End Year", tc.AverageTemperature 
+                (SELECT c.countryName, tc.Year AS "End Year", tc.AverageTemperature, p.Population 
                  FROM Country c
                  JOIN TempOfCountry tc ON c.countryID = tc.countryID
+                 JOIN Population p ON c.countryID = p.countryID AND tc.Year = p.year
                  WHERE tc.Year = ?) AS B
             ON A.countryName = B.countryName
-           WHERE A.countryName IN (%s)
-    """, changeOnceChosen, placeholders);
+            WHERE A.countryName IN (%s)
+        """, temperatureChange, populationChange, placeholders);
 
-   
+        System.out.println(query);
 
         try (Connection connection = DriverManager.getConnection(DATABASE);
         PreparedStatement statement = connection.prepareStatement(query)) {
 
                 statement.setString(1, startYear);
                 statement.setString(2, endYear);
+
                 for (int i = 0; i < countries.length; i++) {
                     statement.setString(3 + i, countries[i]);
                 }
-                
-            
+             
             statement.setQueryTimeout(15);  // Set query timeout
     
             // Execute the query and process the results
-            try (ResultSet resultSet = statement.executeQuery()) {
-                while (resultSet.next()) {
+            try (ResultSet rs = statement.executeQuery()) {
+                while (rs.next()) {
                     Country country = new Country();
-                    country.setCountryName(resultSet.getString("Country"));
-                    country.setStartYear(resultSet.getInt("Start Year"));
-                    country.setEndYear(resultSet.getInt("End Year"));
-                    country.setStartYearTemperature(resultSet.getFloat("Start Year Temperature"));  // Use getFloat() for floating point data
-                    country.setEndYearTemperature(resultSet.getFloat("End Year Temperature"));  // Use getFloat() for floating point data
-                    country.setChange(resultSet.getFloat("CHANGE"));  // Use getFloat() for floating point data
+                    country.setCountryName(rs.getString("Country"));
+                    country.setStartYear(rs.getInt("Start Year"));
+                    country.setEndYear(rs.getInt("End Year"));
+                    country.setStartYearTemperature(rs.getFloat("Start Year Temperature"));
+                    country.setEndYearTemperature(rs.getFloat("End Year Temperature"));
+                    country.setChange(rs.getFloat("Temp Change"));
+                    country.setStartYearPopulation(rs.getLong("Start Year Population"));
+                    country.setEndYearPopulation(rs.getLong("End Year Population"));
+                    country.setPopulationChange(rs.getDouble("Population Change"));
                     countryData.add(country);
                 }
             }

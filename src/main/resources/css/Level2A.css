@@ -195,25 +195,38 @@ input[type="checkbox"]{
 
 .results-container {
     width: calc(100% - 34px);
-    height: 610px;
+    flex:1;
     position: absolute;
     left: 17px;
     top: 394px;
     background: black;
     border-radius: 55px;
+    flex-direction: column; /* Stacking elements vertically */
+    justify-content: space-between; /* Ensure space is distributed between tables */
+    align-items: center; /* Optional: Center the tables horizontally */
+
 }
 
 .results-inner {
     width: calc(100% - 39px);
-    height: 585px;
-    position: absolute;
+    flex:1;
     left: 19px;
     top: 14px;
     background: #FFFEFF;
     border-radius: 51px;
     overflow-y: scroll;
+    margin: 10px;
     
 }
+
+.results-inner:nth-child(1){
+    padding-bottom: 50px;
+}
+.results-inner:nth-child(2){
+    padding-bottom: 50px;
+}
+
+
 
 .search-section:nth-child(1) {
     left: 45px;

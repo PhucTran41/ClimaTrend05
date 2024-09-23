@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import app.classes.City;
 import app.classes.Country;
 import app.classes.Global;
-import app.classes.Population;
 import app.classes.State;
 
 public class JDBCforPeriodTracker {
